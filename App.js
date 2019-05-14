@@ -43,11 +43,45 @@ const instructions = Platform.select({
         'Shake or press menu button for dev menu',
 });
 
-class HomeScreen extends React.Component {
+class ProfileScreen extends React.Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Home!</Text>
+                <Text>Profile!</Text>
+                <Button
+                    title="Go to Settings"
+                    onPress={() => this.props.navigation.navigate('Settings')}
+                />
+                <Button
+                    title="Go to Details"
+                    onPress={() => this.props.navigation.navigate('Details')}
+                />
+            </View>
+        );
+    }
+}
+class PointsScreen extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>PointsScreen!</Text>
+                <Button
+                    title="Go to Settings"
+                    onPress={() => this.props.navigation.navigate('Settings')}
+                />
+                <Button
+                    title="Go to Details"
+                    onPress={() => this.props.navigation.navigate('Details')}
+                />
+            </View>
+        );
+    }
+}
+class RoutesScreen extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>RoutesScreen!</Text>
                 <Button
                     title="Go to Settings"
                     onPress={() => this.props.navigation.navigate('Settings')}
@@ -67,8 +101,8 @@ class SettingsScreen extends React.Component {
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text>Settings!</Text>
                 <Button
-                    title="Go to Home"
-                    onPress={() => this.props.navigation.navigate('Home')}
+                    title="Go to Profile"
+                    onPress={() => this.props.navigation.navigate('Profile')}
                 />
                 <Button
                     title="Go to Details"
@@ -89,8 +123,18 @@ class DetailsScreen extends React.Component {
     }
 }
 
-const HomeStack = createStackNavigator({
-    Home: { screen: HomeScreen },
+const ProfileStack = createStackNavigator({
+    Profile: { screen: ProfileScreen },
+    Details: { screen: DetailsScreen },
+});
+
+const PointsStack = createStackNavigator({
+    Points: { screen: PointsScreen },
+    Details: { screen: DetailsScreen },
+});
+
+const RoutesStack = createStackNavigator({
+    Routes: { screen: RoutesScreen },
     Details: { screen: DetailsScreen },
 });
 
@@ -101,15 +145,17 @@ const SettingsStack = createStackNavigator({
 
 export default createAppContainer(createBottomTabNavigator(
     {
-        Home: { screen: HomeStack },
         Settings: { screen: SettingsStack },
+        Routes: { screen: RoutesStack },
+        Points: { screen: PointsStack },
+        Profile: { screen: ProfileStack },
     },
     {
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, tintColor }) => {
                 const { routeName } = navigation.state;
                 let iconName;
-                if (routeName === 'Home') {
+                if (routeName === 'Profile') {
                     iconName = `ios-information-circle${focused ? '' : '-outline'}`;
                 } else if (routeName === 'Settings') {
                     iconName = `ios-options${focused ? '' : '-outline'}`;
