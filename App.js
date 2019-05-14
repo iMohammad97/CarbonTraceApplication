@@ -30,6 +30,11 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 
+import ProfileScreen from "./src/Components/Profile";
+import PointsScreen from "./src/Components/Points";
+import RoutesScreen from "./src/Components/Routes.js";
+import SettingsScreen from "./src/Components/Settings.js";
+
 const color1 = '#45BB49';
 const color2 = '#424242';
 const color3 = '#00adf5';
@@ -43,75 +48,10 @@ const instructions = Platform.select({
         'Shake or press menu button for dev menu',
 });
 
-class ProfileScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Profile!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
-class PointsScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>PointsScreen!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
-class RoutesScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>RoutesScreen!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
 
-class SettingsScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Settings!</Text>
-                <Button
-                    title="Go to Profile"
-                    onPress={() => this.props.navigation.navigate('Profile')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
+
+
+
 
 class DetailsScreen extends React.Component {
     render() {
