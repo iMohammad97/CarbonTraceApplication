@@ -29,6 +29,13 @@ import {
     DrawerItems,
     createBottomTabNavigator
 } from 'react-navigation';
+// import {Icon} from 'native-base';
+
+import ProfileScreen from "./src/Components/Profile.js";
+import AboutUsScreen from "./src/Components/AboutUs.js";
+import PointsScreen from "./src/Components/Points.js";
+import RoutesScreen from "./src/Components/Routes.js";
+import SettingsScreen from "./src/Components/Settings.js";
 
 const color1 = '#45BB49';
 const color2 = '#424242';
@@ -43,92 +50,98 @@ const instructions = Platform.select({
         'Shake or press menu button for dev menu',
 });
 
-class HomeScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Home!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
 
-class SettingsScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Settings!</Text>
-                <Button
-                    title="Go to Home"
-                    onPress={() => this.props.navigation.navigate('Home')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
-            </View>
-        );
-    }
-}
 
-class DetailsScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Details!</Text>
-            </View>
-        );
-    }
-}
+const ProfileStack = createStackNavigator({
+    Profile: {screen: ProfileScreen},
+});
 
-const HomeStack = createStackNavigator({
-    Home: { screen: HomeScreen },
-    Details: { screen: DetailsScreen },
+const PointsStack = createStackNavigator({
+    Points: {screen: PointsScreen},
+});
+
+const RoutesStack = createStackNavigator({
+    Routes: {screen: RoutesScreen},
 });
 
 const SettingsStack = createStackNavigator({
-    Settings: { screen: SettingsScreen },
-    Details: { screen: DetailsScreen },
+    Settings: {screen: SettingsScreen},
+    AboutUs: {screen: AboutUsScreen},
 });
 
 export default createAppContainer(createBottomTabNavigator(
     {
-        Home: { screen: HomeStack },
-        Settings: { screen: SettingsStack },
+        Settings: {
+            screen: SettingsStack,
+            navigationOptions: () => ({
+                // header: null,
+                title: 'Billboard',
+                // label: 'hoooo',
+                tabBarIcon: ({tintColor}) => (
+                    <Image
+                        style={{height: 30, width: 30, tintColor: tintColor}}
+                        source={require('./src/Assets/Icons/icSettingsTabBar.png')}
+                    />
+                ),
+            })
+        },
+        Routes: {
+            screen: RoutesStack,
+            navigationOptions: () => ({
+                label: 'hoooo',
+                tabBarIcon: ({tintColor}) => (
+                    <Image
+                        style={{height: 30, width: 30, tintColor: tintColor}}
+                        source={require('./src/Assets/Icons/icRouteTabBar.png')}
+                    />
+                ),
+            })
+        },
+        Points: {
+            screen: PointsStack,
+            navigationOptions: () => ({
+                label: 'hoooo',
+                tabBarIcon: ({tintColor}) => (
+                    <Image
+                        style={{height: 30, width: 30, tintColor: tintColor}}
+                        source={require('./src/Assets/Icons/icPointsTabBar.png')}
+                    />
+                ),
+            })
+        },
+        Profile: {
+            screen: ProfileStack,
+            navigationOptions: () => ({
+                label: 'hoooo',
+                tabBarIcon: ({tintColor}) => (
+                    <Image
+                        style={{height: 30, width: 30, tintColor: tintColor}}
+                        source={require('./src/Assets/Icons/icInfoTabBar.png')}
+                    />
+                ),
+            })
+        },
     },
     {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, tintColor }) => {
-                const { routeName } = navigation.state;
-                let iconName;
-                if (routeName === 'Home') {
-                    iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-                } else if (routeName === 'Settings') {
-                    iconName = `ios-options${focused ? '' : '-outline'}`;
-                }
-
-                // You can return any component that you like here! We usually use an
-                // icon component from react-native-vector-icons
-                // return <Ionicons name={iconName} size={25} color={tintColor} />;
-            },
-        }),
         tabBarOptions: {
-            activeTintColor: 'tomato',
-            inactiveTintColor: 'gray',
+            showIcon: true,
+            showLabel: false,
+            activeTintColor: 'green', // active icon color
+            inactiveTintColor: '#FFFFFF',  // inactive icon color
+            style: {
+                backgroundColor: color1, // TabBar background
+                height: 50
+            }
         },
     }
 ));
 
 
 const styles = StyleSheet.create({
+    icInfoTabBar: {
+        height: 30,
+        width: 30
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
