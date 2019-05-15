@@ -43,8 +43,8 @@ export default class PointsScreen extends React.Component {
         // alignSelf: 'center',
         headerTintColor: '#fff',
         headerTitleStyle: {
-            fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
-            fontSize: 20,
+            fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+            fontSize: 22,
             fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
             textAlign: "right",
             alignSelf: 'center'
