@@ -29,6 +29,26 @@ const color4 = '#ffffff';
 const color5 = '#a0a0a0';
 
 export default class PointsScreen extends React.Component {
+
+    static navigationOptions = {
+        // header: null,
+        title: 'امتیاز ها',
+        headerStyle: {
+            backgroundColor: color1,
+            textAlign: 'right',
+            // alignSelf: 'right'
+        },
+        // alignSelf: 'center',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
+            fontSize: 20,
+            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+            textAlign: "right",
+            alignSelf: 'center'
+        },
+    };
+
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
