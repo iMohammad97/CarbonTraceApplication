@@ -31,30 +31,28 @@ const color5 = '#a0a0a0';
 export default class ProfileScreen extends React.Component {
 
     static navigationOptions = {
-
-        label: 'hooooo',
-        tabBarIcon: ({tintColor}) => (
-            <Image
-                style={styles.icInfoTabBar}
-                source={require('../Assets/Icons/icInfoTabBar.png')}
-            />
-        ),
-        showIcon: true,
-        showLabel: true
+        // header: null,
+        title: 'مشخصات',
+        headerStyle: {
+            backgroundColor: color1,
+            textAlign: 'right',
+            // alignSelf: 'right'
+        },
+        // alignSelf: 'center',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
+            fontSize: 20,
+            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+            textAlign: "right",
+            alignSelf: 'center'
+        },
     };
 
     render() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Profile!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
+            <View style={styles.container}>
+
             </View>
         );
     }
@@ -67,9 +65,10 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#ffffff',
     },
     welcome: {
         fontSize: 20,
