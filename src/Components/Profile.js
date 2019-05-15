@@ -31,16 +31,22 @@ const color5 = '#a0a0a0';
 export default class ProfileScreen extends React.Component {
 
     static navigationOptions = {
-
-        label: 'hooooo',
-        tabBarIcon: ({tintColor}) => (
-            <Image
-                style={styles.icInfoTabBar}
-                source={require('../Assets/Icons/icInfoTabBar.png')}
-            />
-        ),
-        showIcon: true,
-        showLabel: true
+        // header: null,
+        title: 'مشخصات',
+        headerStyle: {
+            backgroundColor: color1,
+            textAlign: 'right',
+            // alignSelf: 'right'
+        },
+        // alignSelf: 'center',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
+            fontSize: 20,
+            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+            textAlign: "right",
+            alignSelf: 'center'
+        },
     };
 
     render() {
