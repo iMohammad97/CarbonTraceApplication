@@ -34,7 +34,7 @@ export default class PointsScreen extends React.Component {
 
     static navigationOptions = {
         // header: null,
-        title: 'امتیاز های شما',
+        title: 'امتیاز ها',
         headerStyle: {
             backgroundColor: color1,
             textAlign: 'right',
