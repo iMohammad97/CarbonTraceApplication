@@ -112,8 +112,8 @@ export default class PointsScreen extends React.Component {
 
 const styles = StyleSheet.create({
     pointsScreenTitleLabelPointText: {
-        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
-        fontSize: 17,
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
         fontStyle: "normal",
         // width: 100,
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         // backgroundColor: color4,
     },
     pointsScreenTitleLabelText: {
-        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
-        fontSize: 17,
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
         fontStyle: "normal",
         marginLeft: 3,
@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
         // backgroundColor: color4,
     },
     pointsScreenOptionText: {
-        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
-        fontSize: 17,
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
         fontStyle: "normal",
         // marginLeft: 5,

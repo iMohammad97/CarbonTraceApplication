@@ -95,8 +95,8 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
     labelText: {
         // transform: [{rotate: '270deg'}],
-        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
-        fontSize: 17,
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
         fontStyle: "normal",
         // width: 100,
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     },
     optionText: {
         // transform: [{rotate: '270deg'}],
-        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
-        fontSize: 17,
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
         fontStyle: "normal",
         // width: 100,
