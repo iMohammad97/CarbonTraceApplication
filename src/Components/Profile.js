@@ -51,16 +51,8 @@ export default class ProfileScreen extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>Profile!</Text>
-                <Button
-                    title="Go to Settings"
-                    onPress={() => this.props.navigation.navigate('Settings')}
-                />
-                <Button
-                    title="Go to Details"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
+            <View style={styles.container}>
+
             </View>
         );
     }
@@ -73,9 +65,10 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#ffffff',
     },
     welcome: {
         fontSize: 20,
