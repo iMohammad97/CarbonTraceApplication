@@ -41,7 +41,7 @@ const color1 = '#45BB49';
 const color2 = '#424242';
 const color3 = '#00adf5';
 const color4 = '#ffffff';
-const color5 = '#a0a0a0';
+const color5 = '#e3e3e3';
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
