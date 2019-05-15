@@ -64,7 +64,7 @@ export default class PointsScreen extends React.Component {
                             ۱۰۰
                         </Text>
                         <Text style={styles.pointsScreenTitleLabelText}>
-                            موجودی :
+                            موجودی شما :
                         </Text>
                     </View>
                 </View>
