@@ -86,6 +86,15 @@
 		9EC4915DDB014ADA89389816 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93D628EF6132478A87E9BCD5 /* Roboto-Regular.ttf */; };
 		3E05209774034E36A7A537EE /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C4A118703E14B1D8EB583E7 /* Roboto-Thin.ttf */; };
 		C86240F64E4A4F9FA69EAF2B /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A78E6013755A4FC5962169E4 /* Roboto-ThinItalic.ttf */; };
+		B9F94926DF114E4880DDB438 /* B Bardiya Bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 7455AF99DDF14C5998E12B47 /* B Bardiya Bold.TTF */; };
+		733A7B1E4B7444648845CB2F /* B Bardiya.TTF in Resources */ = {isa = PBXBuildFile; fileRef = A2B2094ACA0F4910B3ACF243 /* B Bardiya.TTF */; };
+		25C75DC69B984CD38E75C53C /* B Nazanin Bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = E01320873FC448CB9DE4A1A1 /* B Nazanin Bold.TTF */; };
+		43C90BE5C7B84693927FD053 /* B Nazanin Outline.TTF in Resources */ = {isa = PBXBuildFile; fileRef = E166972D6C90447E8FE7EF70 /* B Nazanin Outline.TTF */; };
+		FA6526CF5D1147C48FC8D9AF /* B Nazanin.TTF in Resources */ = {isa = PBXBuildFile; fileRef = D57FDB6F7DF1448F9F4285A9 /* B Nazanin.TTF */; };
+		521516E68DC14181BFD03290 /* Calibri.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D86EE299D1AD45A5B91BCB4E /* Calibri.ttf */; };
+		99573FF2C2954315B6F9EC89 /* CALIBRIB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */; };
+		2421564FE80946AFAC0F40A5 /* CALIBRII.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */; };
+		7FC4981FEFC94B66947E84B0 /* CALIBRIZ.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 24642916E0824E038B518817 /* CALIBRIZ.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,6 +450,15 @@
 		93D628EF6132478A87E9BCD5 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		6C4A118703E14B1D8EB583E7 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A78E6013755A4FC5962169E4 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7455AF99DDF14C5998E12B47 /* B Bardiya Bold.TTF */ = {isa = PBXFileReference; name = "B Bardiya Bold.TTF"; path = "../assets/fonts/B Bardiya Bold.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A2B2094ACA0F4910B3ACF243 /* B Bardiya.TTF */ = {isa = PBXFileReference; name = "B Bardiya.TTF"; path = "../assets/fonts/B Bardiya.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E01320873FC448CB9DE4A1A1 /* B Nazanin Bold.TTF */ = {isa = PBXFileReference; name = "B Nazanin Bold.TTF"; path = "../assets/fonts/B Nazanin Bold.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E166972D6C90447E8FE7EF70 /* B Nazanin Outline.TTF */ = {isa = PBXFileReference; name = "B Nazanin Outline.TTF"; path = "../assets/fonts/B Nazanin Outline.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D57FDB6F7DF1448F9F4285A9 /* B Nazanin.TTF */ = {isa = PBXFileReference; name = "B Nazanin.TTF"; path = "../assets/fonts/B Nazanin.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D86EE299D1AD45A5B91BCB4E /* Calibri.ttf */ = {isa = PBXFileReference; name = "Calibri.ttf"; path = "../assets/fonts/Calibri.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */ = {isa = PBXFileReference; name = "CALIBRIB.TTF"; path = "../assets/fonts/CALIBRIB.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */ = {isa = PBXFileReference; name = "CALIBRII.TTF"; path = "../assets/fonts/CALIBRII.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		24642916E0824E038B518817 /* CALIBRIZ.TTF */ = {isa = PBXFileReference; name = "CALIBRIZ.TTF"; path = "../assets/fonts/CALIBRIZ.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -757,6 +775,15 @@
 				93D628EF6132478A87E9BCD5 /* Roboto-Regular.ttf */,
 				6C4A118703E14B1D8EB583E7 /* Roboto-Thin.ttf */,
 				A78E6013755A4FC5962169E4 /* Roboto-ThinItalic.ttf */,
+				7455AF99DDF14C5998E12B47 /* B Bardiya Bold.TTF */,
+				A2B2094ACA0F4910B3ACF243 /* B Bardiya.TTF */,
+				E01320873FC448CB9DE4A1A1 /* B Nazanin Bold.TTF */,
+				E166972D6C90447E8FE7EF70 /* B Nazanin Outline.TTF */,
+				D57FDB6F7DF1448F9F4285A9 /* B Nazanin.TTF */,
+				D86EE299D1AD45A5B91BCB4E /* Calibri.ttf */,
+				28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */,
+				BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */,
+				24642916E0824E038B518817 /* CALIBRIZ.TTF */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1253,6 +1280,15 @@
 				9EC4915DDB014ADA89389816 /* Roboto-Regular.ttf in Resources */,
 				3E05209774034E36A7A537EE /* Roboto-Thin.ttf in Resources */,
 				C86240F64E4A4F9FA69EAF2B /* Roboto-ThinItalic.ttf in Resources */,
+				B9F94926DF114E4880DDB438 /* B Bardiya Bold.TTF in Resources */,
+				733A7B1E4B7444648845CB2F /* B Bardiya.TTF in Resources */,
+				25C75DC69B984CD38E75C53C /* B Nazanin Bold.TTF in Resources */,
+				43C90BE5C7B84693927FD053 /* B Nazanin Outline.TTF in Resources */,
+				FA6526CF5D1147C48FC8D9AF /* B Nazanin.TTF in Resources */,
+				521516E68DC14181BFD03290 /* Calibri.ttf in Resources */,
+				99573FF2C2954315B6F9EC89 /* CALIBRIB.TTF in Resources */,
+				2421564FE80946AFAC0F40A5 /* CALIBRII.TTF in Resources */,
+				7FC4981FEFC94B66947E84B0 /* CALIBRIZ.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
