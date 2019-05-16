@@ -22,11 +22,11 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 
-const color1 = '#45BB49';
+const color1 = '#44678c';
 const color2 = '#424242';
-const color3 = '#00adf5';
+const color3 = '#b8b8b8';
 const color4 = '#ffffff';
-const color5 = '#a0a0a0';
+const color5 = '#eaebec';
 
 export default class AboutUsScreen extends React.Component {
 

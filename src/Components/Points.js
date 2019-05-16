@@ -22,32 +22,40 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 
-const color1 = '#45BB49';
 const color1LL = '#52ff56';
 const color1L = '#5ae35e';
+const color1 = '#44678c';
 const color2 = '#424242';
-const color3 = '#00adf5';
+const color3 = '#b8b8b8';
 const color4 = '#ffffff';
-const color5 = '#e3e3e3';
+const color5 = '#eaebec';
+
+class Header extends React.Component {
+    render() {
+        return (
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                    امتیاز ها
+                </Text>
+            </View>
+        );
+    }
+}
 
 export default class PointsScreen extends React.Component {
 
     static navigationOptions = {
         // header: null,
-        title: 'امتیاز ها',
+        headerTitle: <Header/>,
+        // title: 'تنظیمات',
         headerStyle: {
             backgroundColor: color1,
             textAlign: 'right',
-            // alignSelf: 'right'
-        },
-        // alignSelf: 'center',
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
-            fontSize: 22,
-            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
-            textAlign: "right",
-            alignSelf: 'center'
+            // height: 100,
+            // alignItems: 'flex-end',
+            // alignSelf: 'right',
+            // flex: 1,
+            // justifyContent: 'flex-end',
         },
     };
 
@@ -111,6 +119,21 @@ export default class PointsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    headerText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "B Bardiya",
+        fontSize: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        textAlign: "right",
+        alignSelf: 'center',
+        color: color4
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 10
+    },
     pointsScreenTitleLabelPointText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
         fontSize: 20,

@@ -23,11 +23,23 @@ import {
 } from 'react-navigation';
 // import FontAwesome, {Icons} from "react-native-fontawesome";
 
-const color1 = '#45BB49';
+const color1 = '#44678c';
 const color2 = '#424242';
-const color3 = '#00adf5';
+const color3 = '#b8b8b8';
 const color4 = '#ffffff';
-const color5 = '#a0a0a0';
+const color5 = '#eaebec';
+
+class Header extends React.Component {
+    render() {
+        return (
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                    تنظیمات
+                </Text>
+            </View>
+        );
+    }
+}
 
 export default class SettingsScreen extends React.Component {
     render() {
@@ -72,27 +84,48 @@ export default class SettingsScreen extends React.Component {
             </View>
         );
     }
+
     static navigationOptions = {
         // header: null,
-        title: 'تنظیمات',
+        headerTitle: <Header/>,
+        // title: 'تنظیمات',
         headerStyle: {
             backgroundColor: color1,
             textAlign: 'right',
-            // alignSelf: 'right'
+            // height: 100,
+            // alignItems: 'flex-end',
+            // alignSelf: 'right',
+            // flex: 1,
+            // justifyContent: 'flex-end',
         },
-        // alignSelf: 'center',
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
-            fontSize: 22,
-            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
-            textAlign: "right",
-            alignSelf: 'center'
-        },
+        // // alignSelf: 'center',
+        // headerTintColor: '#fff',
+        // headerTitleStyle: {
+        //     fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        //     fontSize: 22,
+        //     fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        //     textAlign: "right",
+        //     alignSelf: 'center'
+        // },
     };
 }
 
 const styles = StyleSheet.create({
+    headerText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        textAlign: "right",
+        alignSelf: 'center',
+        color: color4
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 10
+    },
     labelText: {
         // transform: [{rotate: '270deg'}],
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",

@@ -37,11 +37,11 @@ import PointsScreen from "./src/Components/Points.js";
 import RoutesScreen from "./src/Components/Routes.js";
 import SettingsScreen from "./src/Components/Settings.js";
 
-const color1 = '#45BB49';
+const color1 = '#44678c';
 const color2 = '#424242';
-const color3 = '#00adf5';
+const color3 = '#b8b8b8';
 const color4 = '#ffffff';
-const color5 = '#e3e3e3';
+const color5 = '#eaebec';
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -126,7 +126,7 @@ export default createAppContainer(createBottomTabNavigator(
         tabBarOptions: {
             showIcon: true,
             showLabel: false,
-            activeTintColor: 'green', // active icon color
+            activeTintColor: '#73cbfc', // active icon color
             inactiveTintColor: '#FFFFFF',  // inactive icon color
             style: {
                 backgroundColor: color1, // TabBar background

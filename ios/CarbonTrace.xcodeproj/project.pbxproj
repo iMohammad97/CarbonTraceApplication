@@ -95,6 +95,7 @@
 		99573FF2C2954315B6F9EC89 /* CALIBRIB.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */; };
 		2421564FE80946AFAC0F40A5 /* CALIBRII.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */; };
 		7FC4981FEFC94B66947E84B0 /* CALIBRIZ.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 24642916E0824E038B518817 /* CALIBRIZ.TTF */; };
+		3D7A7CB0869544C4B19D73C0 /* BNazaninBold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 4D1A25BBD3C14713AB3E7071 /* BNazaninBold.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -459,6 +460,7 @@
 		28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */ = {isa = PBXFileReference; name = "CALIBRIB.TTF"; path = "../assets/fonts/CALIBRIB.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */ = {isa = PBXFileReference; name = "CALIBRII.TTF"; path = "../assets/fonts/CALIBRII.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		24642916E0824E038B518817 /* CALIBRIZ.TTF */ = {isa = PBXFileReference; name = "CALIBRIZ.TTF"; path = "../assets/fonts/CALIBRIZ.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4D1A25BBD3C14713AB3E7071 /* BNazaninBold.TTF */ = {isa = PBXFileReference; name = "BNazaninBold.TTF"; path = "../assets/fonts/BNazaninBold.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -784,6 +786,7 @@
 				28E08F3DF8904447AD1F1715 /* CALIBRIB.TTF */,
 				BBA8D2A2953748C2AFD6AC6F /* CALIBRII.TTF */,
 				24642916E0824E038B518817 /* CALIBRIZ.TTF */,
+				4D1A25BBD3C14713AB3E7071 /* BNazaninBold.TTF */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1289,6 +1292,7 @@
 				99573FF2C2954315B6F9EC89 /* CALIBRIB.TTF in Resources */,
 				2421564FE80946AFAC0F40A5 /* CALIBRII.TTF in Resources */,
 				7FC4981FEFC94B66947E84B0 /* CALIBRIZ.TTF in Resources */,
+				3D7A7CB0869544C4B19D73C0 /* BNazaninBold.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
