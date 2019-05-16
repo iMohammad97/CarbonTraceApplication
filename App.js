@@ -36,6 +36,7 @@ import AboutUsScreen from "./src/Components/AboutUs.js";
 import PointsScreen from "./src/Components/Points.js";
 import RoutesScreen from "./src/Components/Routes.js";
 import SettingsScreen from "./src/Components/Settings.js";
+import {RoutingButton} from "./src/Components/RoutingButton/RoutingButton.js";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -95,6 +96,12 @@ export default createAppContainer(createBottomTabNavigator(
                         source={require('./src/Assets/Icons/icRouteTabBar.png')}
                     />
                 ),
+            })
+        },
+        Routing: {
+            screen: () => null, // Empty screen
+            navigationOptions: () => ({
+                tabBarIcon: () => (<RoutingButton />) // Plus button component
             })
         },
         Points: {
