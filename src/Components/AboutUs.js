@@ -44,21 +44,19 @@ export default class AboutUsScreen extends React.Component {
 
     static navigationOptions = {
         // header: null,
-        title: 'درباره ما',
+        headerTitle: <Header/>,
+        // title: 'تنظیمات',
         headerStyle: {
             backgroundColor: color1,
             textAlign: 'right',
-            // alignSelf: 'right'
+            // color: color4,
+            // height: 100,
+            // alignItems: 'flex-end',
+            // alignSelf: 'right',
+            // flex: 1,
+            // justifyContent: 'flex-end',
         },
-        // alignSelf: 'center',
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanBold",
-            fontSize: 20,
-            fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
-            textAlign: "right",
-            alignSelf: 'center'
-        },
+        headerTintColor: 'white',
     };
 
     render() {
@@ -72,6 +70,21 @@ export default class AboutUsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    headerText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        textAlign: "right",
+        alignSelf: 'center',
+        color: color4
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 10
+    },
     icInfoTabBar: {
         height: 10,
     },
