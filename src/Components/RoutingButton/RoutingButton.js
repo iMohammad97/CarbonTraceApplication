@@ -144,7 +144,7 @@ class RoutingButton extends Component {
                     }}>
                         <Image
                             style={{height: 24, width: 24}}
-                            source={require('../../Assets/Icons/icPlusTabBar.png')}
+                            source={require('../../Assets/Icons/icRoutingTabBar.png')}
                         />
                         {/*<Icon name="plus" size={24} color="#F8F8F8"/>*/}
                     </Animated.View>
