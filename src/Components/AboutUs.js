@@ -28,6 +28,18 @@ const color3 = '#b8b8b8';
 const color4 = '#ffffff';
 const color5 = '#eaebec';
 
+class Header extends React.Component {
+    render() {
+        return (
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>
+                    درباره ما
+                </Text>
+            </View>
+        );
+    }
+}
+
 export default class AboutUsScreen extends React.Component {
 
     static navigationOptions = {
