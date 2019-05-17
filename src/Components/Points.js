@@ -22,8 +22,8 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 
-const color1LL = '#52ff56';
-const color1L = '#5ae35e';
+const color1LL = '#72b3f1';
+const color1L = '#5e8fc2';
 const color1 = '#44678c';
 const color2 = '#424242';
 const color3 = '#b8b8b8';
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
         backgroundColor: color1,
     },
     pointsScreenSpend: {
-        height: 330,
+        height: 340,
         width: '100%',
         marginTop: 10,
         padding: 10,
