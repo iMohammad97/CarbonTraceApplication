@@ -109,6 +109,13 @@ export default class PointsScreen extends React.Component {
                                 </Text>
                             </View>
                         </TouchableOpacity>
+                        <TouchableOpacity style={styles.pointsScreenSpendOption}>
+                            <View style={styles.pointsScreenSpendOptionContainer}>
+                                <Text style={styles.pointsScreenOptionText}>
+                                    جوایز دیگر
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
                     </View>
                 </View>
@@ -214,7 +221,7 @@ const styles = StyleSheet.create({
         backgroundColor: color1,
     },
     pointsScreenSpend: {
-        height: 270,
+        height: 330,
         width: '100%',
         marginTop: 10,
         padding: 10,
