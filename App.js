@@ -130,6 +130,7 @@ export default createAppContainer(createBottomTabNavigator(
         },
     },
     {
+        initialRouteName: "Profile",
         tabBarOptions: {
             showIcon: true,
             showLabel: false,
