@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Animated, TouchableHighlight, View, Image} from "react-native";
 // import Icon from '@expo/vector-icons/FontAwesome';
 const SIZE = 80;
+
 class RoutingButton extends Component {
     mode = new Animated.Value(0);
     toggleView = () => {
@@ -10,6 +11,7 @@ class RoutingButton extends Component {
             duration: 300
         }).start();
     };
+
     render() {
         const firstX = this.mode.interpolate({
             inputRange: [0, 1],
@@ -143,7 +145,7 @@ class RoutingButton extends Component {
                         ]
                     }}>
                         <Image
-                            style={{height: 24, width: 24}}
+                            style={{height: SIZE-10, width: SIZE-10, borderRadius: (SIZE-10) / 2,}}
                             source={require('../../Assets/Icons/icRoutingTabBar.png')}
                         />
                         {/*<Icon name="plus" size={24} color="#F8F8F8"/>*/}
@@ -153,4 +155,5 @@ class RoutingButton extends Component {
         );
     }
 }
+
 export {RoutingButton};
