@@ -18,7 +18,7 @@ import {
     TouchableOpacity,
     Image,
     ActivityIndicator,
-    SafeAreaView
+    SafeAreaView, Animated, TouchableHighlight
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -36,7 +36,7 @@ import AboutUsScreen from "./src/Components/AboutUs.js";
 import PointsScreen from "./src/Components/Points.js";
 import RoutesScreen from "./src/Components/Routes.js";
 import SettingsScreen from "./src/Components/Settings.js";
-import {RoutingButton} from "./src/Components/RoutingButton/RoutingButton.js";
+// import {RoutingButton} from "./src/Components/RoutingButton/RoutingButton.js";
 import RoutingScreen from "./src/Components/Routing.js";
 
 const color1 = '#44678c';
@@ -44,13 +44,6 @@ const color2 = '#424242';
 const color3 = '#b8b8b8';
 const color4 = '#ffffff';
 const color5 = '#eaebec';
-
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-    android:
-        'Double tap R on your keyboard to reload,\n' +
-        'Shake or press menu button for dev menu',
-});
 
 
 
@@ -106,7 +99,27 @@ export default createAppContainer(createBottomTabNavigator(
         Routing: {
             screen: RoutingStack,
             navigationOptions: () => ({
-                tabBarIcon: () => (<RoutingButton />) // Plus button component
+                tabBarIcon: ({tintColor}) => (
+                    <View
+                        underlayColor="#2882D8"
+                        style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: 80,
+                            height: 80,
+                            borderRadius: 80 / 2,
+                            backgroundColor: '#48A2F8',
+                        }}
+                    >
+                        <View>
+                            <Image
+                                style={{height: 80-10, width: 80-10, borderRadius: (80-10) / 2}}
+                                source={require('./src/Assets/Icons/icRoutingTabBar.png')}
+                            />
+                            {/*<Icon name="plus" size={24} color="#F8F8F8"/>*/}
+                        </View>
+                    </View>
+                ) // Plus button component
             })
         },
         Points: {
