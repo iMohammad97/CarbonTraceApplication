@@ -104,7 +104,7 @@ export default createAppContainer(createBottomTabNavigator(
             })
         },
         Routing: {
-            screen: RoutingStack, // Empty screen
+            screen: RoutingStack,
             navigationOptions: () => ({
                 tabBarIcon: () => (<RoutingButton />) // Plus button component
             })
