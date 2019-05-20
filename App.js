@@ -37,6 +37,7 @@ import PointsScreen from "./src/Components/Points.js";
 import RoutesScreen from "./src/Components/Routes.js";
 import SettingsScreen from "./src/Components/Settings.js";
 import {RoutingButton} from "./src/Components/RoutingButton/RoutingButton.js";
+import RoutingScreen from "./src/Components/Routing.js";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -59,6 +60,10 @@ const ProfileStack = createStackNavigator({
 
 const PointsStack = createStackNavigator({
     Points: {screen: PointsScreen},
+});
+
+const RoutingStack = createStackNavigator({
+    Points: {screen: RoutingScreen},
 });
 
 const RoutesStack = createStackNavigator({
@@ -99,7 +104,7 @@ export default createAppContainer(createBottomTabNavigator(
             })
         },
         Routing: {
-            screen: () => null, // Empty screen
+            screen: RoutingStack, // Empty screen
             navigationOptions: () => ({
                 tabBarIcon: () => (<RoutingButton />) // Plus button component
             })
