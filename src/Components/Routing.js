@@ -21,6 +21,7 @@ import {
     DrawerItems,
     createBottomTabNavigator
 } from 'react-navigation';
+import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -61,6 +62,17 @@ export default class RoutingScreen extends React.Component {
         return (
             <View style={styles.container}>
 
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: 35.717691,
+                        longitude: 51.367378,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
+
             </View>
         );
     }
@@ -86,7 +98,11 @@ const styles = StyleSheet.create({
     icInfoTabBar: {
         height: 10,
     },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
     container: {
+        ...StyleSheet.absoluteFillObject,
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
