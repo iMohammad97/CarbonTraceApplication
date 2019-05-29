@@ -41,7 +41,7 @@ class Header extends React.Component {
     }
 }
 
-export default class AboutUsScreen extends React.Component {
+export default class RoutingDetailsScreen extends React.Component {
 
     static navigationOptions = {
         // header: null,
