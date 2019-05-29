@@ -163,11 +163,19 @@ export default class RoutingScreen extends React.Component {
 
             await AsyncStorage.setItem('routing_status', 'routing');
             console.log('saved');
+            console.log('stateee', this.state.markers);
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
         }
-        this.props.navigation.navigate('RoutingDetails');
+        console.log('state before if navigate', this.state.markers);
+        if (this.state.markers.length === 2) {
+            this.props.navigation.navigate('RoutingDetails');
+        } else if (this.state.markers.length === 1) {
+            alert('لطفا مقصد خود را انتخاب کنید!')
+        } else if (this.state.markers.length === 0) {
+            alert('لطفا مبدا و مقصد خود را انتخاب کنید!')
+        }
     };
     deleteRouteStatus = async () => {
         try {
