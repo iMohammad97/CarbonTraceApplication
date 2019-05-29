@@ -167,6 +167,7 @@ export default class RoutingScreen extends React.Component {
             // Error retrieving data
             console.log(error.message);
         }
+        this.props.navigation.navigate('RoutingDetails');
     };
     deleteRouteStatus = async () => {
         try {
