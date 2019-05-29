@@ -64,6 +64,51 @@ export default class RoutingDetailsScreen extends React.Component {
         return (
             <View style={styles.container}>
 
+                <View style={styles.routesScreenRouteBox}>
+                    <View style={styles.routesScreenRouteBoxContainer}>
+
+                        <View style={styles.routesScreenRouteBoxRow1}>
+                            <View style={styles.routesScreenRouteBoxRow1Container}>
+
+                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
+                                    انقلاب
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                    به
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
+                                    تجریش
+                                </Text>
+
+                            </View>
+                        </View>
+
+                        <View style={styles.routesScreenRouteBoxRow1}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2Vehicle}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Image
+                                            style={{height: 15, width: 15, marginLeft: 5}}
+                                            source={require('../Assets/Icons/icPerson.png')}
+                                        />
+                                        <Text style={styles.routesScreenRouteBoxBarText}>
+                                            ۲۱ کیلومتر
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                    ۵ روز پیش
+                                </Text>
+
+                            </View>
+                        </View>
+
+                    </View>
+                </View>
 
             </View>
         );
@@ -72,56 +117,98 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
-    aboutUsScreenCardTextTitle: {
-        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
-        fontSize: 27,
+    routesScreenRouteBoxBarText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
+        fontSize: 10,
         fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
-        // fontStyle: "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        marginRight: 5,
         // width: 100,
-        // he: '100%',
+        // height: 40,
+        // maxHeight: '100%',
         // lineHeight: 40,
-        // letterSpacing: 5,
+        letterSpacing: 1,
         textAlign: "right",
         // textAlignVertical: 'bottom',
-        color: color2,
-        marginRight: 5,
-        marginBottom: 5,
-        marginTop: 5,
+        color: color4,
         // backgroundColor: color4,
     },
-    aboutUsScreenCardTextDescription: {
-        fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
-        fontSize: 17,
+    routesScreenRouteBoxRow2VehicleContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    routesScreenRouteBoxRow2Vehicle: {
+        height: 20,
+        width: '30%',
+        borderRadius: 10,
+        backgroundColor: color2
+    },
+    routesScreenRouteBoxRow2Container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    routesScreenRouteBoxRow1SmallText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
+        fontSize: 15,
         fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
-        // fontStyle: "normal",
+        fontStyle: "normal",
+        marginLeft: 8,
         // width: 100,
-        // he: '100%',
-        lineHeight: 20,
-        // letterSpacing: 5,
-        maxHeight: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
         textAlign: "right",
         // textAlignVertical: 'bottom',
-        color: color2,
-        marginRight: 5,
-        // marginBottom: 20,
+        color: color4,
         // backgroundColor: color4,
     },
-    aboutUsScreenCardContainer: {
+    routesScreenRouteBoxRow1BoldText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 22,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        marginLeft: 8,
+        // width: 100,
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    routesScreenRouteBoxRow1Container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    routesScreenRouteBoxRow1: {
+        height: 40,
+        width: '100%',
+    },
+    routesScreenRouteBoxContainer: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        flexWrap: 'wrap',
     },
-    aboutUsScreenCard: {
-        height: '100%',
+    routesScreenRouteBox: {
+        height: 100,
         width: '100%',
-        padding: 5,
-        // borderRadius: 5,
-        backgroundColor: color4,
-        // borderWidth: 1,
-        // borderColor: color2
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+        backgroundColor: color1,
     },
+
     headerText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 30,
