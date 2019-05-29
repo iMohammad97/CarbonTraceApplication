@@ -41,6 +41,9 @@ class Header extends React.Component {
     }
 }
 
+const corp_API_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI2M2U4M2RjMzJhMWM1ZjhhZTgxNTA4YWFhNDFkM2ZiNmJmY2NlNTZmYWVjOTllMjdjMmM5ZmI4NDc2OWFiM2ViM2Q2Y2NjODgyYTQ3NDgzIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIyNjNlODNkYzMyYTFjNWY4YWU4MTUwOGFhYTQxZDNmYjZiZmNjZTU2ZmFlYzk5ZTI3YzJjOWZiODQ3NjlhYjNlYjNkNmNjYzg4MmE0NzQ4MyIsImlhdCI6MTU1ODU1MzEzNywibmJmIjoxNTU4NTUzMTM3LCJleHAiOjE1NTg1NTY3MzcsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.SmwlAhP_Lwit5fDAvaJTq5w3CwGJEqB65EBOLwmndcwtnLhNZYWyw1GFj3aSpNY7tZ8GJdOhDVyGHZy99et409ytgPkGw1yuiN2X0A5xh1pOkXktIblB20fX8Kp4PXSBgCChhknnOrr_4dixq231a5G_m6hSY6AvAwe8U5s_j8zkDAyCDWYRYEhYADpfsygORJTYBSUeP_lmCdSZjutqA0dravM3yoVN-rSElMiyfOwAU3j4QQ2dbxYBRbmbgWCI4OVWqtUiYyG_rRwh6G3u-FLdLqn5-GdYiobc2-7NYJ5unRbI6f3Uev1un9iqwffESckriviquz6ot6W2kpPRJg";
+
+
 export default class RoutingDetailsScreen extends React.Component {
 
     static navigationOptions = {
@@ -63,12 +66,59 @@ export default class RoutingDetailsScreen extends React.Component {
     constructor(props) {
         super(props);
         this.getRouteStatus();
+        // this.loadAddresses();
 
 
         this.state = {
             markers: [],
+            loading1: true,
+            loading2: true,
+            dataSource: '',
+            dataDestination: '',
         };
     }
+
+
+    loadAddressesSource = async (lat, long) => {
+        fetch("https://map.ir/fast-reverse?lat=" + String(lat) + "&lon=" + String(long), {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'x-api-key': corp_API_key
+            },
+        })
+            .then(response => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({
+                    loading1: false,
+                    dataSource: responseJson.address_compact
+                })
+            })
+            .catch(error => console.log(error));//to catch the errors if any
+
+    };
+    loadAddressesDestination = async (lat, long) => {
+        fetch("https://map.ir/fast-reverse?lat=" + String(lat) + "&lon=" + String(long), {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'x-api-key': corp_API_key
+            },
+        })
+            .then(response => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                this.setState({
+                    loading2: false,
+                    dataDestination: responseJson.address_compact
+                })
+            })
+            .catch(error => console.log(error));//to catch the errors if any
+
+    };
+
+
     getRouteStatus = async () => {
         let markers = [];
         let routing_status = '';
@@ -122,11 +172,14 @@ export default class RoutingDetailsScreen extends React.Component {
         } else {
             this.setState({markers: []})
         }
+        this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
+        this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read (detailsScreen):', markers);
     };
 
 
     render() {
+
         return (
             <View style={styles.container}>
 
@@ -140,25 +193,25 @@ export default class RoutingDetailsScreen extends React.Component {
                                     مبدا :
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
+                                    {this.state.dataSource}
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
                                     مقصد :
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
+                                    {this.state.dataDestination}
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
                                     مسافت :
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
+                                <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
+                                    ۲۲ کیلومتر
                                 </Text>
 
                             </View>
                         </View>
 
-                        <View style={styles.routesScreenRouteBoxRow1}>
+                        <View style={styles.routesScreenRouteBoxRow2}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
                                 <View style={styles.routesScreenRouteBoxRow2Vehicle}>
@@ -234,7 +287,23 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         marginLeft: 8,
         // width: 100,
-        // height: 40,
+        height: 50,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    routesScreenRouteBoxRow1SmallTextDistance: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        fontStyle: "normal",
+        marginLeft: 8,
+        // width: 100,
+        height: 25,
         // maxHeight: '100%',
         // lineHeight: 40,
         letterSpacing: 1,
@@ -267,7 +336,11 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 200,
+        height: 300,
+        width: '100%',
+    },
+    routesScreenRouteBoxRow2: {
+        height: 100,
         width: '100%',
     },
     routesScreenRouteBoxContainer: {
