@@ -141,7 +141,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
                     dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin="+String(lat1)+","+String(long1)+"&destination="+String(lat2)+","+String(long2),
                     dataRouteOuterLinkWaze: "https://waze.com/ul?ll="+String(lat2)+","+String(long2)+"&z=10",
-                    dataRouteOuterLinkNamaa: "https://namaa.ir/?ll="+String(lat1)+","+String(long1)+";"+String(lat2)+","+String(long2)+"&type=direction",
+                    dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll="+String(lat1)+","+String(long1)+";"+String(lat2)+","+String(long2)+"&type=direction",
             })
             })
             .catch(error => console.log(error));//to catch the errors if any
@@ -291,6 +291,41 @@ export default class RoutingDetailsScreen extends React.Component {
 
                             </View>
                         </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <TouchableOpacity
+                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
+                                    style={styles.routesScreenRouteBoxRow2NamaaButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Image
+                                            style={{width: width*0.25, height: (204*width*0.25)/572}}
+                                            source={require('../Assets/Icons/icNamaa.png')}
+                                        />
+
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
+                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+
+                                        <Image
+                                            style={{width: 30, height: 30, marginRight: 5}}
+                                            source={require('../Assets/Icons/icWaze.png')}
+                                        />
+                                        <Image
+                                            style={{width: width*0.2, height: (666*width*0.2)/2717}}
+                                            source={require('../Assets/Icons/icWazeName.png')}
+                                        />
+
+                                    </View>
+                                </TouchableOpacity>
+
+
+                            </View>
+                        </View>
 
                     </View>
                 </View>
@@ -352,6 +387,12 @@ const styles = StyleSheet.create({
         width: '46%',
         borderRadius: 5,
         backgroundColor: color4
+    },
+    routesScreenRouteBoxRow2NamaaButton: {
+        height: 40,
+        width: '46%',
+        borderRadius: 5,
+        backgroundColor: "#0D5F9B"
     },
     routesScreenRouteBoxRow2WazeButton: {
         height: 40,
