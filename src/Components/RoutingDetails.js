@@ -81,6 +81,7 @@ export default class RoutingDetailsScreen extends React.Component {
             dataRouteDuration: 0.0,
             dataRouteOuterLinkGoogle: '',
             dataRouteOuterLinkWaze: '',
+            dataRouteOuterLinkNamaa: '',
         };
     }
 
@@ -140,7 +141,8 @@ export default class RoutingDetailsScreen extends React.Component {
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
                     dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin="+String(lat1)+","+String(long1)+"&destination="+String(lat2)+","+String(long2),
                     dataRouteOuterLinkWaze: "https://waze.com/ul?ll="+String(lat2)+","+String(long2)+"&z=10",
-                })
+                    dataRouteOuterLinkNamaa: "https://namaa.ir/?ll="+String(lat1)+","+String(long1)+";"+String(lat2)+","+String(long2)+"&type=direction",
+            })
             })
             .catch(error => console.log(error));//to catch the errors if any
 
