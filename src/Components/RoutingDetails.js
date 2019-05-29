@@ -60,6 +60,72 @@ export default class RoutingDetailsScreen extends React.Component {
         headerTintColor: 'white',
     };
 
+    constructor(props) {
+        super(props);
+        this.getRouteStatus();
+
+
+        this.state = {
+            markers: [],
+        };
+    }
+    getRouteStatus = async () => {
+        let markers = [];
+        let routing_status = '';
+        let markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_1_key, markers_1_title,
+            markers_1_color;
+        let markers_2_coordinate_latitude, markers_2_coordinate_longitude, markers_2_key, markers_2_title,
+            markers_2_color;
+        try {
+            markers_1_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-latitude'));
+            markers_1_coordinate_longitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-longitude'));
+            markers_1_key = parseInt(await AsyncStorage.getItem('markers-1-key'));
+            markers_1_title = await AsyncStorage.getItem('markers-1-title');
+            markers_1_color = await AsyncStorage.getItem('markers-1-color');
+
+            markers_2_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-2-coordinate-latitude'));
+            markers_2_coordinate_longitude = parseFloat(await AsyncStorage.getItem('markers-2-coordinate-longitude'));
+            markers_2_key = parseInt(await AsyncStorage.getItem('markers-2-key'));
+            markers_2_title = await AsyncStorage.getItem('markers-2-title');
+            markers_2_color = await AsyncStorage.getItem('markers-2-color');
+
+
+            routing_status = await AsyncStorage.getItem('routing_status') || 'not_routing';
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+        if (routing_status === 'routing') {
+            markers = [
+                {
+                    'coordinate': {
+                        'latitude': markers_1_coordinate_latitude,
+                        'longitude': markers_1_coordinate_longitude
+                    },
+                    'key': markers_1_key,
+                    'title': markers_1_title,
+                    'color': markers_1_color
+                },
+                {
+                    'coordinate': {
+                        'latitude': markers_2_coordinate_latitude,
+                        'longitude': markers_2_coordinate_longitude
+                    },
+                    'key': markers_2_key,
+                    'title': markers_2_title,
+                    'color': markers_2_color
+                }
+            ];
+            this.setState({
+                markers: markers
+            });
+        } else {
+            this.setState({markers: []})
+        }
+        console.log('on read (detailsScreen):', markers);
+    };
+
+
     render() {
         return (
             <View style={styles.container}>
@@ -71,13 +137,22 @@ export default class RoutingDetailsScreen extends React.Component {
                             <View style={styles.routesScreenRouteBoxRow1Container}>
 
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    انقلاب
+                                    مبدا :
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    به
+                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    تجریش
+                                    مقصد :
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
+                                    مسافت :
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                    تهران, محله دانشگاه تهران, آیت الله طالقانی, برادران مظفر
                                 </Text>
 
                             </View>
@@ -170,7 +245,7 @@ const styles = StyleSheet.create({
     },
     routesScreenRouteBoxRow1BoldText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
         fontStyle: "normal",
         marginLeft: 8,
@@ -186,12 +261,13 @@ const styles = StyleSheet.create({
     },
     routesScreenRouteBoxRow1Container: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
+        flexDirection: 'column',
+        // justifyContent: 'flex-end',
+        // alignItems: 'center',
+        flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 40,
+        height: 200,
         width: '100%',
     },
     routesScreenRouteBoxContainer: {
@@ -199,9 +275,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        // flex: 1,
+        // flexDirection: 'column',
+        // // justifyContent: 'flex-end',
+        // // alignItems: 'center',
+        // flexWrap: 'wrap'
     },
     routesScreenRouteBox: {
-        height: 100,
+        height: 400,
         width: '100%',
         padding: 10,
         marginTop: 10,
