@@ -276,6 +276,7 @@ export default class RoutingCheckInScreen extends React.Component {
             if (currLong < destLongUpBound && currLong > destLongLowBound) {
                 if (timeDiffSec > travel_duration - 120) {
                     console.log('arrived');
+                    alert('شما با موفقیت چک این کردید!');
                     await AsyncStorage.setItem('travel_status', 'not_traveling');
                 } else {
                     console.log('not enough time passed')
@@ -292,9 +293,9 @@ export default class RoutingCheckInScreen extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Text>{this.state.currentLatitude}</Text>
-                <Text>{this.state.currentLongitute}</Text>
-                <Text>{this.state.currentTimestamp}</Text>
+                {/*<Text>{this.state.currentLatitude}</Text>*/}
+                {/*<Text>{this.state.currentLongitute}</Text>*/}
+                {/*<Text>{this.state.currentTimestamp}</Text>*/}
 
                 <TouchableOpacity
                     onPress={() => (this.checkInController(this.state.markers[1].coordinate.latitude, this.state.markers[1].coordinate.longitude))}
