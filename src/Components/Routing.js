@@ -254,7 +254,7 @@ export default class RoutingScreen extends React.Component {
                             <Text>مسیریابی</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            // onPress={() => this.saveRouteStatus(this.state.markers)}
+                            onPress={() => this.props.navigation.navigate('RoutingCheckIn')}
                             style={styles.bubble}
                         >
                             <Text>چک این</Text>
