@@ -60,6 +60,7 @@ const PointsStack = createStackNavigator({
 const RoutingStack = createStackNavigator({
     Routing: {screen: RoutingScreen},
     RoutingDetails: {screen: RoutingDetailsScreen},
+    RoutingCheckIn: {screen: RoutingCheckInScreen},
 });
 
 const RoutesStack = createStackNavigator({
