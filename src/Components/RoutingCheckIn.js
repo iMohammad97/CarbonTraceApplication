@@ -246,13 +246,17 @@ export default class RoutingCheckInScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                <View style={styles.checkInButton}>
+                <TouchableOpacity style={styles.checkInButton}>
                     <View style={styles.checkInButtonContainer}>
                         <View style={styles.checkInButtonOverLay}>
-
+                            <View style={styles.checkInButtonContainer}>
+                                <Text style={styles.checkInButtonText}>
+                                    چک این
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 <Modal
                     animationIn="zoomIn"
@@ -365,6 +369,22 @@ const styles = StyleSheet.create({
         height: ((width-70)/2),
         borderRadius: (((width-70)/2))/2,
         backgroundColor: '#4a85ad'
+    },
+    checkInButtonText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color2,
     },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
