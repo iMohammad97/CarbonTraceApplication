@@ -352,6 +352,19 @@ export default class RoutingDetailsScreen extends React.Component {
                                 </View>
 
                                 <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر پیاده
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
                                     <View style={styles.routesScreenSuggestionInfoContainer}>
 
 
@@ -708,6 +721,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end',
     },
+    routesScreenSuggestionSummaryContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+    },
     routesScreenSuggestionInfoContainer: {
         flex: 1,
         flexDirection: 'column',
@@ -863,6 +882,40 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         textAlign: "right",
         marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    summaryTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 14,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    summaryText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 10,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: '80%',
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // marginBottom: 5,
         // textAlignVertical: 'bottom',
         color: color4,
         // backgroundColor: color4,
