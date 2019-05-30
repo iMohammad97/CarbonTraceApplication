@@ -79,6 +79,7 @@ export default class RoutingDetailsScreen extends React.Component {
             isModalVisibleStartTravelError: false
         };
     }
+
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -96,13 +97,13 @@ export default class RoutingDetailsScreen extends React.Component {
     };
 
     toggleModal = () => {
-        this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
+        this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
     toggleModalStartTravel = () => {
-        this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+        this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
     };
     toggleModalStartTravelError = () => {
-        this.setState({ isModalVisibleStartTravelError: !this.state.isModalVisibleStartTravelError });
+        this.setState({isModalVisibleStartTravelError: !this.state.isModalVisibleStartTravelError});
     };
     cancelTravel = async () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
@@ -263,7 +264,7 @@ export default class RoutingDetailsScreen extends React.Component {
                         let startDateArr = String(startDate).split(' ');
                         await AsyncStorage.setItem('travel_start_date', String(startDate));
                         await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration*60));
+                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
                         await AsyncStorage.setItem('travel_status', 'traveling');
                         this.toggleModalStartTravel();
                     }
@@ -350,6 +351,22 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
 
                             </View>
                         </View>
@@ -389,10 +406,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleCancelTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 130,
+                    <View style={{
+                        height: 130,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 شما در حال سفر هستید!
@@ -438,10 +457,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 سفر شما آغاز شد!
@@ -476,10 +497,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravelError}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 خطا در آغاز سفر!
@@ -655,10 +678,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    routesScreenInfoRowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
     routesScreenSuggestionButtonContainer: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    routesScreenSuggestionInfoContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignItems: 'flex-end',
     },
     routesScreenRouteBoxRow2VehicleContainer: {
@@ -701,6 +736,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // padding: 5,
         backgroundColor: color4,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionInfoRow: {
+        height: '30%',
+        width: '100%',
+        borderRadius: 2,
+        // padding: 5,
+        backgroundColor: color3,
         // borderWidth: 1
     },
     routesScreenRouteBoxRow2Container: {
@@ -771,6 +814,22 @@ const styles = StyleSheet.create({
         textAlign: "right",
         // textAlignVertical: 'bottom',
         color: color4,
+        // backgroundColor: color4,
+    },
+    routesScreenInfoText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color2,
         // backgroundColor: color4,
     },
     suggestionsText: {
