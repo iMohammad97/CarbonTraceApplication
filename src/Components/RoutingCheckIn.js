@@ -81,25 +81,28 @@ export default class RoutingCheckInScreen extends React.Component {
             isModalVisibleStartTravel: false
         };
     }
+
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
-                    currentLatitude: position.coords.latitude ,
+                    currentLatitude: position.coords.latitude,
                     currentLongitute: position.coords.longitude,
-                    currentTimestamp:  position.timestamp
+                    currentTimestamp: position.timestamp
                 })
             },
-            (error) => { console.log(error); },
-            { enableHighAccuracy: true, timeout: 30000 }
+            (error) => {
+                console.log(error);
+            },
+            {enableHighAccuracy: true, timeout: 30000}
         )
     }
 
     toggleModal = () => {
-        this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
+        this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
     toggleModalStartTravel = () => {
-        this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+        this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
     };
     cancelTravel = async () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
@@ -182,6 +185,7 @@ export default class RoutingCheckInScreen extends React.Component {
             markers_1_color;
         let markers_2_coordinate_latitude, markers_2_coordinate_longitude, markers_2_key, markers_2_title,
             markers_2_color;
+        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration;
         try {
             markers_1_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-latitude'));
             markers_1_coordinate_longitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-longitude'));
@@ -194,6 +198,13 @@ export default class RoutingCheckInScreen extends React.Component {
             markers_2_key = parseInt(await AsyncStorage.getItem('markers-2-key'));
             markers_2_title = await AsyncStorage.getItem('markers-2-title');
             markers_2_color = await AsyncStorage.getItem('markers-2-color');
+
+            travel_start_date = await AsyncStorage.getItem('travel_start_date');
+            travel_start_date_time = await AsyncStorage.getItem('travel_start_date_time');
+            travel_status = await AsyncStorage.getItem('travel_status');
+            travel_duration = await AsyncStorage.getItem('travel_duration');
+
+            startDateArr = String(travel_start_date).split(' ');
 
 
             routing_status = await AsyncStorage.getItem('routing_status') || 'not_routing';
@@ -223,17 +234,24 @@ export default class RoutingCheckInScreen extends React.Component {
                 }
             ];
             this.setState({
-                markers: markers
+                markers: markers,
+                travel_start_date: travel_start_date,
+                travel_start_date_arr: startDateArr,
+                travel_start_date_time: travel_start_date_time,
+                travel_status: travel_status,
+                travel_duration: travel_duration
             });
         } else {
-            this.setState({markers: []})
+            this.setState({
+                markers: [],
+            })
         }
         // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
         // this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read check in:', markers);
     };
-    checkInController = (lat,long) => {
+    checkInController = (lat, long) => {
         let destLat = parseFloat(lat.toFixed(6));
         let destLong = parseFloat(long.toFixed(6));
         let currLat = this.state.currentLatitude.toFixed(6);
@@ -245,12 +263,25 @@ export default class RoutingCheckInScreen extends React.Component {
         let destLongUpBound = destLong + 0.002;
         let destLongLowBound = destLong - 0.002;
 
+        let endDate = new Date();
+        let startDate = new Date(this.state.travel_start_date);
+        let timeDiffSec = parseInt((endDate - startDate)/1000);
+        let travel_duration = parseInt(this.state.travel_duration);
+        console.log('date', startDate);
+        console.log('enddate', endDate);
+        console.log('difffff', timeDiffSec);
+        console.log('dur', travel_duration);
+
         if (currLat < destLatUpBound && currLat > destLatLowBound) {
             if (currLong < destLongUpBound && currLong > destLongLowBound) {
-                console.log('arrived')
+                if (timeDiffSec > travel_duration - 120) {
+                    console.log('arrived')
+                } else {
+                    console.log('not enough time passed')
+                }
             }
         } else {
-            console.log('not arrived')
+            console.log('not arrived yet')
 
         }
     };
@@ -288,10 +319,12 @@ export default class RoutingCheckInScreen extends React.Component {
                     isVisible={this.state.isModalVisibleCancelTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 130,
+                    <View style={{
+                        height: 130,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 شما در حال سفر هستید!
@@ -337,10 +370,12 @@ export default class RoutingCheckInScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 سفر شما آغاز شد!
@@ -379,15 +414,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     checkInButton: {
-        width: (width-40)/2,
-        height: (width-40)/2,
-        borderRadius: ((width-40)/2)/2,
+        width: (width - 40) / 2,
+        height: (width - 40) / 2,
+        borderRadius: ((width - 40) / 2) / 2,
         backgroundColor: color1
     },
     checkInButtonOverLay: {
-        width: ((width-70)/2),
-        height: ((width-70)/2),
-        borderRadius: (((width-70)/2))/2,
+        width: ((width - 70) / 2),
+        height: ((width - 70) / 2),
+        borderRadius: (((width - 70) / 2)) / 2,
         backgroundColor: '#4a85ad'
     },
     checkInButtonText: {
