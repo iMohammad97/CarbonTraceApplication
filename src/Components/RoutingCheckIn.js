@@ -251,7 +251,7 @@ export default class RoutingCheckInScreen extends React.Component {
         // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read check in:', markers);
     };
-    checkInController = (lat, long) => {
+    checkInController = async (lat, long) => {
         let destLat = parseFloat(lat.toFixed(6));
         let destLong = parseFloat(long.toFixed(6));
         let currLat = this.state.currentLatitude.toFixed(6);
@@ -265,7 +265,7 @@ export default class RoutingCheckInScreen extends React.Component {
 
         let endDate = new Date();
         let startDate = new Date(this.state.travel_start_date);
-        let timeDiffSec = parseInt((endDate - startDate)/1000);
+        let timeDiffSec = parseInt((endDate - startDate) / 1000);
         let travel_duration = parseInt(this.state.travel_duration);
         console.log('date', startDate);
         console.log('enddate', endDate);
@@ -275,7 +275,8 @@ export default class RoutingCheckInScreen extends React.Component {
         if (currLat < destLatUpBound && currLat > destLatLowBound) {
             if (currLong < destLongUpBound && currLong > destLongLowBound) {
                 if (timeDiffSec > travel_duration - 120) {
-                    console.log('arrived')
+                    console.log('arrived');
+                    await AsyncStorage.setItem('travel_status', 'not_traveling');
                 } else {
                     console.log('not enough time passed')
                 }
