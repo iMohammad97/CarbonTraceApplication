@@ -212,10 +212,10 @@ export default class RoutingCheckInScreen extends React.Component {
         } else {
             this.setState({markers: []})
         }
-        this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
-        this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        console.log('on read (detailsScreen):', markers);
+        // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
+        // this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        console.log('on read check in:', markers);
     };
     saveStartTravelStatus = async (lat1, long1, lat2, long2) => {
         try {
@@ -247,8 +247,10 @@ export default class RoutingCheckInScreen extends React.Component {
             <View style={styles.container}>
 
                 <View style={styles.checkInButton}>
-                    <View style={styles.checkInButtonOverLay}>
+                    <View style={styles.checkInButtonContainer}>
+                        <View style={styles.checkInButtonOverLay}>
 
+                        </View>
                     </View>
                 </View>
 
@@ -346,16 +348,22 @@ export default class RoutingCheckInScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    checkInButtonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     checkInButton: {
-        width: width-20,
-        height: width-20,
-        borderRadius: (width-20)/2,
+        width: (width-40)/2,
+        height: (width-40)/2,
+        borderRadius: ((width-40)/2)/2,
         backgroundColor: color1
     },
     checkInButtonOverLay: {
-        width: width-30,
-        height: width-30,
-        borderRadius: (width-30)/2,
+        width: ((width-70)/2),
+        height: ((width-70)/2),
+        borderRadius: (((width-70)/2))/2,
         backgroundColor: '#4a85ad'
     },
     routesScreenModalNoButtonText: {
@@ -663,9 +671,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: color3,
         padding: 10
     },
     welcome: {
