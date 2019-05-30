@@ -45,8 +45,8 @@ class Header extends React.Component {
 const {width, height} = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 35.732474329636865;
+const LONGITUDE = 51.42287135124207;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
@@ -163,9 +163,18 @@ export default class RoutingScreen extends React.Component {
 
             await AsyncStorage.setItem('routing_status', 'routing');
             console.log('saved');
+            console.log('stateee', this.state.markers);
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
+        }
+        console.log('state before if navigate', this.state.markers);
+        if (this.state.markers.length === 2) {
+            this.props.navigation.navigate('RoutingDetails');
+        } else if (this.state.markers.length === 1) {
+            alert('لطفا مقصد خود را انتخاب کنید!')
+        } else if (this.state.markers.length === 0) {
+            alert('لطفا مبدا و مقصد خود را انتخاب کنید!')
         }
     };
     deleteRouteStatus = async () => {
