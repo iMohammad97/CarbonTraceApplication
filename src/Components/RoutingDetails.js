@@ -75,15 +75,34 @@ export default class RoutingDetailsScreen extends React.Component {
             dataRouteOuterLinkWaze: '',
             dataRouteOuterLinkNamaa: '',
             isModalVisibleCancelTravel: false,
-            isModalVisibleStartTravel: false
+            isModalVisibleStartTravel: false,
+            isModalVisibleStartTravelError: false
         };
     }
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    currentLatitude: position.coords.latitude,
+                    currentLongitute: position.coords.longitude,
+                    currentTimestamp: position.timestamp
+                })
+            },
+            (error) => {
+                console.log(error);
+            },
+            {enableHighAccuracy: true, timeout: 30000}
+        )
+    };
 
     toggleModal = () => {
         this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
     };
     toggleModalStartTravel = () => {
         this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+    };
+    toggleModalStartTravelError = () => {
+        this.setState({ isModalVisibleStartTravelError: !this.state.isModalVisibleStartTravelError });
     };
     cancelTravel = async () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
@@ -218,23 +237,40 @@ export default class RoutingDetailsScreen extends React.Component {
         console.log('on read (detailsScreen):', markers);
     };
     saveStartTravelStatus = async (lat1, long1, lat2, long2) => {
+        let srcLat = parseFloat(lat1.toFixed(6));
+        let srcLong = parseFloat(long1.toFixed(6));
+        let currLat = this.state.currentLatitude.toFixed(6);
+        let currLong = this.state.currentLongitute.toFixed(6);
+
+        let srcLatUpBound = srcLat + 0.002;
+        let srcLatLowBound = srcLat - 0.002;
+
+        let srcLongUpBound = srcLong + 0.002;
+        let srcLongLowBound = srcLong - 0.002;
+
         try {
             let travel_status = await AsyncStorage.getItem('travel_status');
             if (travel_status === 'traveling') {
                 this.toggleModal();
             } else {
-                await AsyncStorage.setItem('lat1', String(lat1));
-                await AsyncStorage.setItem('long1', String(long1));
-                await AsyncStorage.setItem('lat2', String(lat2));
-                await AsyncStorage.setItem('long2', String(long2));
-                let startDate = new Date();
-                let startDateArr = String(startDate).split(' ');
-                console.log('dateeee:', startDateArr[4]);
-                await AsyncStorage.setItem('travel_start_date', String(startDate));
-                await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration*60));
-                await AsyncStorage.setItem('travel_status', 'traveling');
-                this.toggleModalStartTravel();
+                if (currLat < srcLatUpBound && currLat > srcLatLowBound) {
+                    if (currLong < srcLongUpBound && currLong > srcLongLowBound) {
+                        await AsyncStorage.setItem('lat1', String(lat1));
+                        await AsyncStorage.setItem('long1', String(long1));
+                        await AsyncStorage.setItem('lat2', String(lat2));
+                        await AsyncStorage.setItem('long2', String(long2));
+                        let startDate = new Date();
+                        let startDateArr = String(startDate).split(' ');
+                        await AsyncStorage.setItem('travel_start_date', String(startDate));
+                        await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
+                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration*60));
+                        await AsyncStorage.setItem('travel_status', 'traveling');
+                        this.toggleModalStartTravel();
+                    }
+                } else {
+                    this.toggleModalStartTravelError();
+                }
+
             }
         } catch (error) {
             // Error retrieving data
@@ -464,6 +500,44 @@ export default class RoutingDetailsScreen extends React.Component {
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
                                     onPress={this.toggleModalStartTravel}
+                                    style={styles.routesScreenModalOkButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            فهمیدم
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+                </Modal>
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    onBackdropPress={() => this.setState({isModalVisibleStartTravelError: false})}
+                    isVisible={this.state.isModalVisibleStartTravelError}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{ height: 170,
+                        width: '70%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4, }}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.routesScreenModalTitleText}>
+                                خطا در آغاز سفر!
+                            </Text>
+                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
+                                لطفا برای شروع سفر ابتدا به مبدا سفر بروید!
+                            </Text>
+                            <View style={styles.modalButtonsContainer}>
+                                <TouchableOpacity
+                                    onPress={this.toggleModalStartTravelError}
                                     style={styles.routesScreenModalOkButton}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
