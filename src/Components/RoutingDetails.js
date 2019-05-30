@@ -284,7 +284,9 @@ export default class RoutingDetailsScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                <View style={styles.routesScreenRouteBox}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={styles.routesScreenRouteBox}>
                     <View style={styles.routesScreenRouteBoxContainer}>
 
                         <View style={styles.routesScreenRouteBoxRow1}>
@@ -403,6 +405,77 @@ export default class RoutingDetailsScreen extends React.Component {
 
                             </View>
                         </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.22, height: (33 * width * 0.22) / 180}}
+                                                       source={require('../Assets/Icons/icGoogleMaps.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر پیاده
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 65)} کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
                         <View style={styles.routesScreenRouteBoxRow3}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
@@ -427,7 +500,7 @@ export default class RoutingDetailsScreen extends React.Component {
                         </View>
 
                     </View>
-                </View>
+                </ScrollView>
 
                 <Modal
                     animationIn="zoomIn"
@@ -686,7 +759,7 @@ const styles = StyleSheet.create({
     rowInfo: {
         height: 40,
         width: '100%',
-        backgroundColor: color5
+        // backgroundColor: color5
     },
     routesScreenRouteBoxBarText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
@@ -946,7 +1019,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 280,
+        height: 255,
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
@@ -955,11 +1028,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: color4,
         borderWidth: 1,
-        padding: 8
+        padding: 8,
+        marginBottom: 10
     },
     routesScreenRouteBoxRow3: {
-        height: 60,
+        height: 50,
         width: '100%',
+        marginBottom: 20,
     },
     routesScreenRouteBoxContainer: {
         flex: 1,
@@ -973,7 +1048,7 @@ const styles = StyleSheet.create({
         // flexWrap: 'wrap'
     },
     routesScreenRouteBox: {
-        height: 460,
+        height: '100%',
         width: '100%',
         padding: 10,
         marginTop: 10,
