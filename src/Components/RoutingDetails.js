@@ -304,7 +304,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
                                     امتیاز سفر :
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>
                                     {parseInt(this.state.dataRouteDuration * 60)} امتیاز
                                 </Text>
                                 <View style={styles.rowInfo}>
@@ -678,6 +678,7 @@ const styles = StyleSheet.create({
     rowInfo: {
         height: 40,
         width: '100%',
+        backgroundColor: color5
     },
     routesScreenRouteBoxBarText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
@@ -748,6 +749,22 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         // width: 100,
         height: 50,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    routesScreenRouteBoxRow1SmallTextPoint: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        fontStyle: "normal",
+        marginLeft: 8,
+        // width: 100,
+        height: 25,
         // maxHeight: '100%',
         // lineHeight: 40,
         letterSpacing: 1,
