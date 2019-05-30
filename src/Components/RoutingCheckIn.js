@@ -246,146 +246,8 @@ export default class RoutingDetailsScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                <View style={styles.routesScreenRouteBox}>
-                    <View style={styles.routesScreenRouteBoxContainer}>
-
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow1Container}>
-
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    مبدا :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {this.state.dataSource}
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    مقصد :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {this.state.dataDestination}
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    امتیاز سفر :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {parseInt(this.state.dataRouteDuration * 60)} امتیاز
-                                </Text>
-                                <View style={styles.rowInfo}>
-                                    <View style={styles.rowInfoContainer}>
-                                        <View style={styles.rowInfoContainerInner}>
-                                            <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
-                                                {this.state.dataRouteDuration.toFixed(1)} دقیقه
-                                            </Text>
-                                            <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                                زمان :
-                                            </Text>
-                                        </View>
-                                        <View style={styles.rowInfoContainerInner}>
-                                            <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
-                                                {this.state.dataRouteDistance.toFixed(2)} کیلومتر
-                                            </Text>
-                                            <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                                مسافت :
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-
-                            </View>
-                        </View>
-
-                        <View style={styles.routesScreenRouteBoxRow2}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2GoogleMapsButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Image
-                                            style={{width: width * 0.38, height: (33 * width * 0.38) / 180}}
-                                            source={require('../Assets/Icons/icGoogleMaps.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                        <View style={styles.routesScreenRouteBoxRow2}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2NamaaButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Image
-                                            style={{width: width * 0.25, height: (204 * width * 0.25) / 572}}
-                                            source={require('../Assets/Icons/icNamaa.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                        <View style={styles.routesScreenRouteBoxRow3}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => (this.saveStartTravelStatus(
-                                        this.state.markers[0].coordinate.latitude,
-                                        this.state.markers[0].coordinate.longitude,
-                                        this.state.markers[1].coordinate.latitude,
-                                        this.state.markers[1].coordinate.longitude))}
-                                    style={styles.routesScreenRouteBoxRow3Button}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenRouteBoxRow3BoldText}>
-                                            شروع سفر
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
+                <View style={styles.checkInButton}>
+                    <View style={styles.checkInButtonOverLay}>
 
                     </View>
                 </View>
@@ -484,6 +346,18 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    checkInButton: {
+        width: width-20,
+        height: width-20,
+        borderRadius: (width-20)/2,
+        backgroundColor: color1
+    },
+    checkInButtonOverLay: {
+        width: width-30,
+        height: width-30,
+        borderRadius: (width-30)/2,
+        backgroundColor: '#4a85ad'
+    },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 19,
