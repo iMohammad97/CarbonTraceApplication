@@ -145,7 +145,6 @@ export default class RoutingScreen extends React.Component {
         } else {
             this.setState({markers: []})
         }
-        console.log('on read:', markers);
     };
     saveRouteStatus = async markers => {
         try {
@@ -162,13 +161,10 @@ export default class RoutingScreen extends React.Component {
             await AsyncStorage.setItem('markers-2-color', String(markers[1].color));
 
             await AsyncStorage.setItem('routing_status', 'routing');
-            console.log('saved');
-            console.log('stateee', this.state.markers);
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
         }
-        console.log('state before if navigate', this.state.markers);
         if (this.state.markers.length === 2) {
             this.props.navigation.navigate('RoutingDetails');
         } else if (this.state.markers.length === 1) {
@@ -179,7 +175,21 @@ export default class RoutingScreen extends React.Component {
     };
     deleteRouteStatus = async () => {
         try {
-            await AsyncStorage.clear();
+            // await AsyncStorage.clear();
+            await AsyncStorage.removeItem('markers-1-coordinate-latitude');
+            await AsyncStorage.removeItem('markers-1-coordinate-longitude');
+            await AsyncStorage.removeItem('markers-1-key');
+            await AsyncStorage.removeItem('markers-1-title');
+            await AsyncStorage.removeItem('markers-1-color');
+
+            await AsyncStorage.removeItem('markers-2-coordinate-latitude');
+            await AsyncStorage.removeItem('markers-2-coordinate-longitude');
+            await AsyncStorage.removeItem('markers-2-key');
+            await AsyncStorage.removeItem('markers-2-title');
+            await AsyncStorage.removeItem('markers-2-color');
+
+
+            await AsyncStorage.removeItem('routing_status');
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
