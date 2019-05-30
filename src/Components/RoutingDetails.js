@@ -415,11 +415,11 @@ export default class RoutingDetailsScreen extends React.Component {
                                             پیشنهاد ها :
                                         </Text>
                                         <TouchableOpacity
-                                            onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
-                                            style={styles.routesScreenSuggestionButton}>
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/ir.pakcharkh.bdood/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionBicycleButton}>
                                             <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-                                                <Image style={{width: width * 0.22, height: (33 * width * 0.22) / 180}}
-                                                       source={require('../Assets/Icons/icGoogleMaps.png')}/>
+                                                <Image style={{width: width * 0.17, height: (70 * width * 0.17) / 206}}
+                                                       source={require('../Assets/Icons/icBdood.png')}/>
                                             </View>
                                         </TouchableOpacity>
 
@@ -430,7 +430,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
-                                            مسیر پیاده
+                                            مسیر دوچرخه
                                         </Text>
                                         <Text style={styles.summaryText}>
                                             شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
@@ -455,7 +455,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDistance * 65)} کالری
+                                                    {parseInt(this.state.dataRouteDistance * 35)} کالری
                                                 </Text>
                                                 <Image style={{height: 25, width: 25}}
                                                        source={require('../Assets/Icons/icCal.png')}/>
@@ -848,6 +848,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // padding: 5,
         backgroundColor: color4,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionBicycleButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: "#404042",
         // borderWidth: 1
     },
     routesScreenSuggestionInfoRow: {
