@@ -170,7 +170,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     loading3: false,
                     dataRouteDistance: (responseJson.distance[0].distance) / 1000,
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
-                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2)+"&travelmode=walking",
+                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2) + "&travelmode=walking",
                     dataRouteOuterLinkWaze: "https://waze.com/ul?ll=" + String(lat2) + "," + String(long2) + "&z=10",
                     dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll=" + String(lat1) + "," + String(long1) + ";" + String(lat2) + "," + String(long2) + "&type=direction",
                 })
@@ -363,7 +363,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر پیاده
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
                                     </View>
@@ -434,7 +435,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر دوچرخه
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
                                     </View>
@@ -505,7 +507,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر اتوبوس
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم کربن دی اکسید جلوگیری می کنید.
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
                                     </View>
@@ -519,6 +522,78 @@ export default class RoutingDetailsScreen extends React.Component {
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
                                                     {parseInt(this.state.dataRouteDuration * (10 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    0 کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/co.fardad.android.metro/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionMetroButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.08, height: (width * 0.08)}}
+                                                       source={require('../Assets/Icons/icMetro.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر مترو
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (20 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -937,6 +1012,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // padding: 5,
         backgroundColor: color4,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionMetroButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: color2,
         // borderWidth: 1
     },
     routesScreenSuggestionInfoRow: {
