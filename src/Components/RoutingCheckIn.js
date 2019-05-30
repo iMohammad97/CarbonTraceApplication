@@ -27,7 +27,7 @@ class Header extends React.Component {
         return (
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>
-                    مسیر شما
+                    چک این
                 </Text>
             </View>
         );
@@ -37,7 +37,7 @@ class Header extends React.Component {
 const corp_API_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI2M2U4M2RjMzJhMWM1ZjhhZTgxNTA4YWFhNDFkM2ZiNmJmY2NlNTZmYWVjOTllMjdjMmM5ZmI4NDc2OWFiM2ViM2Q2Y2NjODgyYTQ3NDgzIn0.eyJhdWQiOiJteWF3ZXNvbWVhcHAiLCJqdGkiOiIyNjNlODNkYzMyYTFjNWY4YWU4MTUwOGFhYTQxZDNmYjZiZmNjZTU2ZmFlYzk5ZTI3YzJjOWZiODQ3NjlhYjNlYjNkNmNjYzg4MmE0NzQ4MyIsImlhdCI6MTU1ODU1MzEzNywibmJmIjoxNTU4NTUzMTM3LCJleHAiOjE1NTg1NTY3MzcsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyIsImVtYWlsIl19.SmwlAhP_Lwit5fDAvaJTq5w3CwGJEqB65EBOLwmndcwtnLhNZYWyw1GFj3aSpNY7tZ8GJdOhDVyGHZy99et409ytgPkGw1yuiN2X0A5xh1pOkXktIblB20fX8Kp4PXSBgCChhknnOrr_4dixq231a5G_m6hSY6AvAwe8U5s_j8zkDAyCDWYRYEhYADpfsygORJTYBSUeP_lmCdSZjutqA0dravM3yoVN-rSElMiyfOwAU3j4QQ2dbxYBRbmbgWCI4OVWqtUiYyG_rRwh6G3u-FLdLqn5-GdYiobc2-7NYJ5unRbI6f3Uev1un9iqwffESckriviquz6ot6W2kpPRJg";
 
 const {width, height} = Dimensions.get('window');
-export default class RoutingDetailsScreen extends React.Component {
+export default class RoutingCheckInScreen extends React.Component {
 
     static navigationOptions = {
         // header: null,
@@ -67,6 +67,9 @@ export default class RoutingDetailsScreen extends React.Component {
             loading1: true,
             loading2: true,
             loading3: true,
+            currentLatitude: null,
+            currentLongitute: null,
+            currentTimestamp: null,
             dataSource: '',
             dataDestination: '',
             dataRouteDistance: 0.0,
@@ -79,11 +82,27 @@ export default class RoutingDetailsScreen extends React.Component {
         };
     }
 
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    currentLatitude: position.coords.latitude,
+                    currentLongitute: position.coords.longitude,
+                    currentTimestamp: position.timestamp
+                })
+            },
+            (error) => {
+                console.log(error);
+            },
+            {enableHighAccuracy: true, timeout: 30000}
+        )
+    }
+
     toggleModal = () => {
-        this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
+        this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
     toggleModalStartTravel = () => {
-        this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+        this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
     };
     cancelTravel = async () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
@@ -166,6 +185,7 @@ export default class RoutingDetailsScreen extends React.Component {
             markers_1_color;
         let markers_2_coordinate_latitude, markers_2_coordinate_longitude, markers_2_key, markers_2_title,
             markers_2_color;
+        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration;
         try {
             markers_1_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-latitude'));
             markers_1_coordinate_longitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-longitude'));
@@ -178,6 +198,13 @@ export default class RoutingDetailsScreen extends React.Component {
             markers_2_key = parseInt(await AsyncStorage.getItem('markers-2-key'));
             markers_2_title = await AsyncStorage.getItem('markers-2-title');
             markers_2_color = await AsyncStorage.getItem('markers-2-color');
+
+            travel_start_date = await AsyncStorage.getItem('travel_start_date');
+            travel_start_date_time = await AsyncStorage.getItem('travel_start_date_time');
+            travel_status = await AsyncStorage.getItem('travel_status');
+            travel_duration = await AsyncStorage.getItem('travel_duration');
+
+            startDateArr = String(travel_start_date).split(' ');
 
 
             routing_status = await AsyncStorage.getItem('routing_status') || 'not_routing';
@@ -207,189 +234,81 @@ export default class RoutingDetailsScreen extends React.Component {
                 }
             ];
             this.setState({
-                markers: markers
+                markers: markers,
+                travel_start_date: travel_start_date,
+                travel_start_date_arr: startDateArr,
+                travel_start_date_time: travel_start_date_time,
+                travel_status: travel_status,
+                travel_duration: travel_duration
             });
         } else {
-            this.setState({markers: []})
+            this.setState({
+                markers: [],
+            })
         }
-        this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
-        this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        console.log('on read (detailsScreen):', markers);
+        // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
+        // this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        console.log('on read check in:', markers);
     };
-    saveStartTravelStatus = async (lat1, long1, lat2, long2) => {
-        try {
-            let travel_status = await AsyncStorage.getItem('travel_status');
-            if (travel_status === 'traveling') {
-                this.toggleModal();
-            } else {
-                await AsyncStorage.setItem('lat1', String(lat1));
-                await AsyncStorage.setItem('long1', String(long1));
-                await AsyncStorage.setItem('lat2', String(lat2));
-                await AsyncStorage.setItem('long2', String(long2));
-                let startDate = new Date();
-                let startDateArr = String(startDate).split(' ');
-                console.log('dateeee:', startDateArr[4]);
-                await AsyncStorage.setItem('travel_start_date', String(startDate));
-                await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration*60));
-                await AsyncStorage.setItem('travel_status', 'traveling');
-                this.toggleModalStartTravel();
+    checkInController = async (lat, long) => {
+        let destLat = parseFloat(lat.toFixed(6));
+        let destLong = parseFloat(long.toFixed(6));
+        let currLat = this.state.currentLatitude.toFixed(6);
+        let currLong = this.state.currentLongitute.toFixed(6);
+
+        let destLatUpBound = destLat + 0.002;
+        let destLatLowBound = destLat - 0.002;
+
+        let destLongUpBound = destLong + 0.002;
+        let destLongLowBound = destLong - 0.002;
+
+        let endDate = new Date();
+        let startDate = new Date(this.state.travel_start_date);
+        let timeDiffSec = parseInt((endDate - startDate) / 1000);
+        let travel_duration = parseInt(this.state.travel_duration);
+        console.log('date', startDate);
+        console.log('enddate', endDate);
+        console.log('difffff', timeDiffSec);
+        console.log('dur', travel_duration);
+
+        if (currLat < destLatUpBound && currLat > destLatLowBound) {
+            if (currLong < destLongUpBound && currLong > destLongLowBound) {
+                if (timeDiffSec > travel_duration - 120) {
+                    console.log('arrived');
+                    await AsyncStorage.setItem('travel_status', 'not_traveling');
+                } else {
+                    console.log('not enough time passed')
+                }
             }
-        } catch (error) {
-            // Error retrieving data
-            console.log(error.message);
+        } else {
+            console.log('not arrived yet')
+
         }
     };
+
 
     render() {
 
         return (
             <View style={styles.container}>
+                <Text>{this.state.currentLatitude}</Text>
+                <Text>{this.state.currentLongitute}</Text>
+                <Text>{this.state.currentTimestamp}</Text>
 
-                <View style={styles.routesScreenRouteBox}>
-                    <View style={styles.routesScreenRouteBoxContainer}>
-
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow1Container}>
-
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    مبدا :
+                <TouchableOpacity
+                    onPress={() => (this.checkInController(this.state.markers[1].coordinate.latitude, this.state.markers[1].coordinate.longitude))}
+                    style={styles.checkInButton}>
+                    <View style={styles.checkInButtonContainer}>
+                        <View style={styles.checkInButtonOverLay}>
+                            <View style={styles.checkInButtonContainer}>
+                                <Text style={styles.checkInButtonText}>
+                                    چک این
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {this.state.dataSource}
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    مقصد :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {this.state.dataDestination}
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    امتیاز سفر :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {parseInt(this.state.dataRouteDuration * 60)} امتیاز
-                                </Text>
-                                <View style={styles.rowInfo}>
-                                    <View style={styles.rowInfoContainer}>
-                                        <View style={styles.rowInfoContainerInner}>
-                                            <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
-                                                {this.state.dataRouteDuration.toFixed(1)} دقیقه
-                                            </Text>
-                                            <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                                زمان :
-                                            </Text>
-                                        </View>
-                                        <View style={styles.rowInfoContainerInner}>
-                                            <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
-                                                {this.state.dataRouteDistance.toFixed(2)} کیلومتر
-                                            </Text>
-                                            <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                                مسافت :
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-
                             </View>
                         </View>
-
-                        <View style={styles.routesScreenRouteBoxRow2}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2GoogleMapsButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Image
-                                            style={{width: width * 0.38, height: (33 * width * 0.38) / 180}}
-                                            source={require('../Assets/Icons/icGoogleMaps.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                        <View style={styles.routesScreenRouteBoxRow2}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2NamaaButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Image
-                                            style={{width: width * 0.25, height: (204 * width * 0.25) / 572}}
-                                            source={require('../Assets/Icons/icNamaa.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                        <View style={styles.routesScreenRouteBoxRow3}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => (this.saveStartTravelStatus(
-                                        this.state.markers[0].coordinate.latitude,
-                                        this.state.markers[0].coordinate.longitude,
-                                        this.state.markers[1].coordinate.latitude,
-                                        this.state.markers[1].coordinate.longitude))}
-                                    style={styles.routesScreenRouteBoxRow3Button}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenRouteBoxRow3BoldText}>
-                                            شروع سفر
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 <Modal
                     animationIn="zoomIn"
@@ -401,10 +320,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleCancelTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 130,
+                    <View style={{
+                        height: 130,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 شما در حال سفر هستید!
@@ -450,10 +371,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 سفر شما آغاز شد!
@@ -485,6 +408,40 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    checkInButtonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    checkInButton: {
+        width: (width - 40) / 2,
+        height: (width - 40) / 2,
+        borderRadius: ((width - 40) / 2) / 2,
+        backgroundColor: color1
+    },
+    checkInButtonOverLay: {
+        width: ((width - 70) / 2),
+        height: ((width - 70) / 2),
+        borderRadius: (((width - 70) / 2)) / 2,
+        backgroundColor: '#4a85ad'
+    },
+    checkInButtonText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 30,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color2,
+    },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 19,
@@ -790,9 +747,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: color3,
         padding: 10
     },
     welcome: {

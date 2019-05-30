@@ -34,6 +34,7 @@ import {
 import ProfileScreen from "./src/Components/Profile.js";
 import AboutUsScreen from "./src/Components/AboutUs.js";
 import RoutingDetailsScreen from "./src/Components/RoutingDetails.js";
+import RoutingCheckInScreen from "./src/Components/RoutingCheckIn.js";
 import PointsScreen from "./src/Components/Points.js";
 import RoutesScreen from "./src/Components/Routes.js";
 import SettingsScreen from "./src/Components/Settings.js";
@@ -59,6 +60,7 @@ const PointsStack = createStackNavigator({
 const RoutingStack = createStackNavigator({
     Routing: {screen: RoutingScreen},
     RoutingDetails: {screen: RoutingDetailsScreen},
+    RoutingCheckIn: {screen: RoutingCheckInScreen},
 });
 
 const RoutesStack = createStackNavigator({
