@@ -334,69 +334,21 @@ export default class RoutingDetailsScreen extends React.Component {
                         <View style={styles.routesScreenRouteBoxRow2}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2GoogleMapsButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
 
-                                        <Image
-                                            style={{width: width * 0.38, height: (33 * width * 0.38) / 180}}
-                                            source={require('../Assets/Icons/icGoogleMaps.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity style={styles.routesScreenSuggestionButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.22, height: (33 * width * 0.22) / 180}}
+                                                       source={require('../Assets/Icons/icGoogleMaps.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
 
                                     </View>
-                                </TouchableOpacity>
-
-
-                            </View>
-                        </View>
-                        <View style={styles.routesScreenRouteBoxRow2}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
-
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2NamaaButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Image
-                                            style={{width: width * 0.25, height: (204 * width * 0.25) / 572}}
-                                            source={require('../Assets/Icons/icNamaa.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
+                                </View>
 
 
                             </View>
@@ -699,9 +651,15 @@ const styles = StyleSheet.create({
     },
     routesScreenRouteBoxRow2WazeButtonContainer: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    routesScreenSuggestionButtonContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     },
     routesScreenRouteBoxRow2VehicleContainer: {
         flex: 1,
@@ -730,10 +688,20 @@ const styles = StyleSheet.create({
         // backgroundColor: "#0D5F9B"
     },
     routesScreenRouteBoxRow2WazeButton: {
-        height: 40,
-        width: '46%',
+        height: '100%',
+        width: '30%',
         borderRadius: 5,
-        backgroundColor: color4
+        padding: 5,
+        borderColor: color4,
+        borderWidth: 1
+    },
+    routesScreenSuggestionButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: color4,
+        // borderWidth: 1
     },
     routesScreenRouteBoxRow2Container: {
         flex: 1,
@@ -805,6 +773,23 @@ const styles = StyleSheet.create({
         color: color4,
         // backgroundColor: color4,
     },
+    suggestionsText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 14,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
     routesScreenRouteBoxRow3BoldText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 25,
@@ -833,8 +818,12 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
-        height: 50,
+        height: 100,
         width: '100%',
+        borderRadius: 5,
+        borderColor: color4,
+        borderWidth: 1,
+        padding: 8
     },
     routesScreenRouteBoxRow3: {
         height: 60,
