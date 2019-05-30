@@ -67,6 +67,9 @@ export default class RoutingCheckInScreen extends React.Component {
             loading1: true,
             loading2: true,
             loading3: true,
+            currentLatitude: null,
+            currentLongitute: null,
+            currentTimestamp: null,
             dataSource: '',
             dataDestination: '',
             dataRouteDistance: 0.0,
@@ -77,6 +80,19 @@ export default class RoutingCheckInScreen extends React.Component {
             isModalVisibleCancelTravel: false,
             isModalVisibleStartTravel: false
         };
+    }
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    currentLatitude: position.coords.latitude ,
+                    currentLongitute: position.coords.longitude,
+                    currentTimestamp:  position.timestamp
+                })
+            },
+            (error) => { console.log(error); },
+            { enableHighAccuracy: true, timeout: 30000 }
+        )
     }
 
     toggleModal = () => {
@@ -217,36 +233,40 @@ export default class RoutingCheckInScreen extends React.Component {
         // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read check in:', markers);
     };
-    saveStartTravelStatus = async (lat1, long1, lat2, long2) => {
-        try {
-            let travel_status = await AsyncStorage.getItem('travel_status');
-            if (travel_status === 'traveling') {
-                this.toggleModal();
-            } else {
-                await AsyncStorage.setItem('lat1', String(lat1));
-                await AsyncStorage.setItem('long1', String(long1));
-                await AsyncStorage.setItem('lat2', String(lat2));
-                await AsyncStorage.setItem('long2', String(long2));
-                let startDate = new Date();
-                let startDateArr = String(startDate).split(' ');
-                console.log('dateeee:', startDateArr[4]);
-                await AsyncStorage.setItem('travel_start_date', String(startDate));
-                await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                await AsyncStorage.setItem('travel_status', 'traveling');
-                this.toggleModalStartTravel();
+    checkInController = (lat,long) => {
+        let destLat = parseFloat(lat.toFixed(6));
+        let destLong = parseFloat(long.toFixed(6));
+        let currLat = this.state.currentLatitude.toFixed(6);
+        let currLong = this.state.currentLongitute.toFixed(6);
+
+        let destLatUpBound = destLat + 0.002;
+        let destLatLowBound = destLat - 0.002;
+
+        let destLongUpBound = destLong + 0.002;
+        let destLongLowBound = destLong - 0.002;
+
+        if (currLat < destLatUpBound && currLat > destLatLowBound) {
+            if (currLong < destLongUpBound && currLong > destLongLowBound) {
+                console.log('arrived')
             }
-        } catch (error) {
-            // Error retrieving data
-            console.log(error.message);
+        } else {
+            console.log('not arrived')
+
         }
     };
+
 
     render() {
 
         return (
             <View style={styles.container}>
+                <Text>{this.state.currentLatitude}</Text>
+                <Text>{this.state.currentLongitute}</Text>
+                <Text>{this.state.currentTimestamp}</Text>
 
-                <TouchableOpacity style={styles.checkInButton}>
+                <TouchableOpacity
+                    onPress={() => (this.checkInController(this.state.markers[1].coordinate.latitude, this.state.markers[1].coordinate.longitude))}
+                    style={styles.checkInButton}>
                     <View style={styles.checkInButtonContainer}>
                         <View style={styles.checkInButtonOverLay}>
                             <View style={styles.checkInButtonContainer}>
