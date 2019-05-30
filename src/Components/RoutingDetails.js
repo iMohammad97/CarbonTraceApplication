@@ -373,6 +373,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                                        source={require('../Assets/Icons/icCal.png')}/>
                                             </View>
                                         </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
 
                                     </View>
                                 </View>
