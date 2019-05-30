@@ -265,7 +265,7 @@ export default class RoutingScreen extends React.Component {
                             onPress={() => this.deleteRouteStatus()}
                             style={styles.bubbleCancel}
                         >
-                            <Text style={{color: 'white'}}>لغو سفر</Text>
+                            <Text style={{color: 'white'}}>پاک کردن</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
