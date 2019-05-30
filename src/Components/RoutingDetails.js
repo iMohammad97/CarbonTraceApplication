@@ -17,6 +17,7 @@ import {
 import Modal from "react-native-modal";
 
 const color1 = '#44678c';
+const color1L = '#5e8fc2';
 const color2 = '#424242';
 const color3 = '#b8b8b8';
 const color4 = '#ffffff';
