@@ -232,6 +232,12 @@ export default class RoutingDetailsScreen extends React.Component {
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
                                     {this.state.dataDestination}
                                 </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
+                                    امتیاز سفر :
+                                </Text>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                    {parseInt(this.state.dataRouteDuration*60)} امتیاز
+                                </Text>
                                 <View style={styles.rowInfo}>
                                     <View style={styles.rowInfoContainer}>
                                         <View style={styles.rowInfoContainerInner}>
@@ -326,6 +332,24 @@ export default class RoutingDetailsScreen extends React.Component {
 
                             </View>
                         </View>
+                        <View style={styles.routesScreenRouteBoxRow3}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <TouchableOpacity
+                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
+                                    style={styles.routesScreenRouteBoxRow3Button}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenRouteBoxRow3BoldText}>
+                                            شروع سفر
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+
+
+                            </View>
+                        </View>
 
                     </View>
                 </View>
@@ -394,6 +418,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: "#0D5F9B"
     },
+    routesScreenRouteBoxRow3Button: {
+        height: 50,
+        width: '100%',
+        borderRadius: 5,
+        borderColor: color4,
+        borderWidth: 1,
+        // backgroundColor: "#0D5F9B"
+    },
     routesScreenRouteBoxRow2WazeButton: {
         height: 40,
         width: '46%',
@@ -454,6 +486,22 @@ const styles = StyleSheet.create({
         color: color4,
         // backgroundColor: color4,
     },
+    routesScreenRouteBoxRow3BoldText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 25,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 5,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
     routesScreenRouteBoxRow1Container: {
         flex: 1,
         flexDirection: 'column',
@@ -462,11 +510,15 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 200,
+        height: 280,
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
-        height: 100,
+        height: 50,
+        width: '100%',
+    },
+    routesScreenRouteBoxRow3: {
+        height: 60,
         width: '100%',
     },
     routesScreenRouteBoxContainer: {
@@ -481,7 +533,7 @@ const styles = StyleSheet.create({
         // flexWrap: 'wrap'
     },
     routesScreenRouteBox: {
-        height: 400,
+        height: 460,
         width: '100%',
         padding: 10,
         marginTop: 10,
