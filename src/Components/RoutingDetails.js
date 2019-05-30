@@ -169,7 +169,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     loading3: false,
                     dataRouteDistance: (responseJson.distance[0].distance) / 1000,
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
-                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2),
+                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2)+"&travelmode=walking",
                     dataRouteOuterLinkWaze: "https://waze.com/ul?ll=" + String(lat2) + "," + String(long2) + "&z=10",
                     dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll=" + String(lat1) + "," + String(long1) + ";" + String(lat2) + "," + String(long2) + "&type=direction",
                 })
@@ -341,7 +341,9 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <Text style={styles.suggestionsText}>
                                             پیشنهاد ها :
                                         </Text>
-                                        <TouchableOpacity style={styles.routesScreenSuggestionButton}>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionButton}>
                                             <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
                                                 <Image style={{width: width * 0.22, height: (33 * width * 0.22) / 180}}
                                                        source={require('../Assets/Icons/icGoogleMaps.png')}/>
