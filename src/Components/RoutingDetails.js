@@ -14,15 +14,7 @@ import {
     SafeAreaView,
     ScrollView, Dimensions
 } from 'react-native';
-// import { Ionicons } from '@expo/vector-icons';
-import {
-    createStackNavigator,
-    createSwitchNavigator,
-    createAppContainer,
-    createDrawerNavigator,
-    DrawerItems,
-    createBottomTabNavigator
-} from 'react-navigation';
+import Modal from "react-native-modal";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -82,9 +74,27 @@ export default class RoutingDetailsScreen extends React.Component {
             dataRouteOuterLinkGoogle: '',
             dataRouteOuterLinkWaze: '',
             dataRouteOuterLinkNamaa: '',
+            isModalVisibleCancelTravel: false,
+            isModalVisibleStartTravel: false
         };
     }
 
+    toggleModal = () => {
+        this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
+    };
+    toggleModalStartTravel = () => {
+        this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+    };
+    cancelTravel = async () => {
+        this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
+        try {
+            await AsyncStorage.setItem('travel_status', 'not_traveling');
+            console.log('traveling cleared');
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
 
     loadAddressesSource = async (lat, long) => {
         fetch("https://map.ir/fast-reverse?lat=" + String(lat) + "&lon=" + String(long), {
@@ -139,10 +149,10 @@ export default class RoutingDetailsScreen extends React.Component {
                     loading3: false,
                     dataRouteDistance: (responseJson.distance[0].distance) / 1000,
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
-                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin="+String(lat1)+","+String(long1)+"&destination="+String(lat2)+","+String(long2),
-                    dataRouteOuterLinkWaze: "https://waze.com/ul?ll="+String(lat2)+","+String(long2)+"&z=10",
-                    dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll="+String(lat1)+","+String(long1)+";"+String(lat2)+","+String(long2)+"&type=direction",
-            })
+                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2),
+                    dataRouteOuterLinkWaze: "https://waze.com/ul?ll=" + String(lat2) + "," + String(long2) + "&z=10",
+                    dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll=" + String(lat1) + "," + String(long1) + ";" + String(lat2) + "," + String(long2) + "&type=direction",
+                })
             })
             .catch(error => console.log(error));//to catch the errors if any
 
@@ -207,7 +217,29 @@ export default class RoutingDetailsScreen extends React.Component {
         this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read (detailsScreen):', markers);
     };
-
+    saveStartTravelStatus = async (lat1, long1, lat2, long2) => {
+        try {
+            let travel_status = await AsyncStorage.getItem('travel_status');
+            if (travel_status === 'traveling') {
+                this.toggleModal();
+            } else {
+                await AsyncStorage.setItem('lat1', String(lat1));
+                await AsyncStorage.setItem('long1', String(long1));
+                await AsyncStorage.setItem('lat2', String(lat2));
+                await AsyncStorage.setItem('long2', String(long2));
+                let startDate = new Date();
+                let startDateArr = String(startDate).split(' ');
+                console.log('dateeee:', startDateArr[4]);
+                await AsyncStorage.setItem('travel_start_date', String(startDate));
+                await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
+                await AsyncStorage.setItem('travel_status', 'traveling');
+                this.toggleModalStartTravel();
+            }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
 
     render() {
 
@@ -236,7 +268,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                     امتیاز سفر :
                                 </Text>
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    {parseInt(this.state.dataRouteDuration*60)} امتیاز
+                                    {parseInt(this.state.dataRouteDuration * 60)} امتیاز
                                 </Text>
                                 <View style={styles.rowInfo}>
                                     <View style={styles.rowInfoContainer}>
@@ -248,7 +280,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                                 زمان :
                                             </Text>
                                         </View>
-                                        <View  style={styles.rowInfoContainerInner}>
+                                        <View style={styles.rowInfoContainerInner}>
                                             <Text style={styles.routesScreenRouteBoxRow1SmallTextDistance}>
                                                 {this.state.dataRouteDistance.toFixed(2)} کیلومتر
                                             </Text>
@@ -271,7 +303,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
                                         <Image
-                                            style={{width: width*0.38, height: (33*width*0.38)/180}}
+                                            style={{width: width * 0.38, height: (33 * width * 0.38) / 180}}
                                             source={require('../Assets/Icons/icGoogleMaps.png')}
                                         />
 
@@ -287,7 +319,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                             source={require('../Assets/Icons/icWaze.png')}
                                         />
                                         <Image
-                                            style={{width: width*0.2, height: (666*width*0.2)/2717}}
+                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
                                             source={require('../Assets/Icons/icWazeName.png')}
                                         />
 
@@ -306,7 +338,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
                                         <Image
-                                            style={{width: width*0.25, height: (204*width*0.25)/572}}
+                                            style={{width: width * 0.25, height: (204 * width * 0.25) / 572}}
                                             source={require('../Assets/Icons/icNamaa.png')}
                                         />
 
@@ -322,7 +354,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                             source={require('../Assets/Icons/icWaze.png')}
                                         />
                                         <Image
-                                            style={{width: width*0.2, height: (666*width*0.2)/2717}}
+                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
                                             source={require('../Assets/Icons/icWazeName.png')}
                                         />
 
@@ -336,7 +368,11 @@ export default class RoutingDetailsScreen extends React.Component {
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
                                 <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
+                                    onPress={() => (this.saveStartTravelStatus(
+                                        this.state.markers[0].coordinate.latitude,
+                                        this.state.markers[0].coordinate.longitude,
+                                        this.state.markers[1].coordinate.latitude,
+                                        this.state.markers[1].coordinate.longitude))}
                                     style={styles.routesScreenRouteBoxRow3Button}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
@@ -354,6 +390,93 @@ export default class RoutingDetailsScreen extends React.Component {
                     </View>
                 </View>
 
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    onBackdropPress={() => this.setState({isModalVisibleCancelTravel: false})}
+                    isVisible={this.state.isModalVisibleCancelTravel}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{ height: 130,
+                        width: '70%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4, }}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.routesScreenModalTitleText}>
+                                شما در حال سفر هستید!
+                            </Text>
+                            <Text style={styles.routesScreenModalLowerText}>
+                                آیا مایل به لغو سفر خود هستید؟
+                            </Text>
+                            <View style={styles.modalButtonsContainer}>
+                                <TouchableOpacity
+                                    onPress={this.toggleModal}
+                                    style={styles.routesScreenModalNoButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            خیر
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={this.cancelTravel}
+                                    style={styles.routesScreenModalYesButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            بله
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+                </Modal>
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    onBackdropPress={() => this.setState({isModalVisibleStartTravel: false})}
+                    isVisible={this.state.isModalVisibleStartTravel}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{ height: 170,
+                        width: '70%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4, }}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.routesScreenModalTitleText}>
+                                سفر شما آغاز شد!
+                            </Text>
+                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
+                                پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
+                            </Text>
+                            <View style={styles.modalButtonsContainer}>
+                                <TouchableOpacity
+                                    onPress={this.toggleModalStartTravel}
+                                    style={styles.routesScreenModalOkButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            فهمیدم
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -361,6 +484,110 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    routesScreenModalNoButtonText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 19,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color2,
+    },
+    routesScreenModalNoButton: {
+        height: 30,
+        width: '40%',
+        margin: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "red"
+    },
+    routesScreenModalOkButton: {
+        height: 30,
+        width: '90%',
+        // margin: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "green"
+    },
+    routesScreenModalYesButton: {
+        height: 30,
+        width: '40%',
+        margin: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "blue"
+    },
+    modalContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+    },
+    modalButtonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    routesScreenModalTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 25,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    routesScreenModalLowerText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 17,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    routesScreenModalLowerTextStartTravel: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 17,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 80,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
     rowInfoContainerInner: {
         flex: 1,
         flexDirection: 'row',
