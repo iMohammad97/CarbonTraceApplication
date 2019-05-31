@@ -19,8 +19,11 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 
 
 const radio_props = [
-    {label: 'param1', value: 0},
-    {label: 'param2', value: 1}
+    {label: 'پیاده', value: 0},
+    {label: 'دوچرخه', value: 1},
+    {label: 'اتوبوس', value: 2},
+    {label: 'مترو', value: 3},
+    {label: 'تلفیقی', value: 4}
 ];
 
 const color1 = '#44678c';
@@ -84,7 +87,13 @@ export default class RoutingDetailsScreen extends React.Component {
             dataRouteOuterLinkNamaa: '',
             isModalVisibleCancelTravel: false,
             isModalVisibleStartTravel: false,
-            isModalVisibleStartTravelError: false
+            isModalVisibleStartTravelError: false,
+            types2: [{label: 'تلفیقی', value: 0}, {label: 'مترو', value: 1}, {
+                label: 'اتوبوس',
+                value: 2
+            }, {label: 'دوچرخه', value: 3}, {label: 'پیاده', value: 4},],
+            value2: 0,
+            value2Index: 4,
         };
     }
 
@@ -805,18 +814,60 @@ export default class RoutingDetailsScreen extends React.Component {
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
                     <View style={{
-                        height: 170,
-                        width: '70%',
+                        height: 260,
+                        width: '95%',
                         backgroundColor: '#fff',
                         borderRadius: 4,
                     }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
-                                سفر شما آغاز شد!
+                                نوع سفر خود را مشخص کنید!
                             </Text>
                             <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
+                                نوع وسیله ی نقلیه ی سفر خود را مشخص کنید و پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
                             </Text>
+                            <View style={{width: '100%'}}>
+                                <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                                    {/*<RadioForm*/}
+                                    {/*    radio_props={radio_props}*/}
+                                    {/*    initial={-1}*/}
+                                    {/*    selectedButtonColor={color1}*/}
+                                    {/*    buttonColor={color1}*/}
+                                    {/*    labelStyle={styles.giftCardCode}*/}
+                                    {/*    wrapStyle={styles.radio}*/}
+                                    {/*    onPress={(value) => {*/}
+                                    {/*        this.setState({transitionType: value})*/}
+                                    {/*    }}*/}
+                                    {/*/>*/}
+                                    <RadioForm
+                                        formHorizontal={true}
+                                        animation={true}
+                                    >
+                                        {this.state.types2.map((obj, i) => {
+                                            let that = this;
+                                            let is_selected = this.state.value2Index === i;
+                                            return (
+                                                <View key={i} style={styles.radioButtonWrap}>
+                                                    <RadioButton
+                                                        isSelected={is_selected}
+                                                        obj={obj}
+                                                        index={i}
+                                                        labelHorizontal={false}
+                                                        buttonColor={color1}
+                                                        labelColor={color1}
+                                                        style={[i !== this.state.types2.length - 1 && styles.radioStyle]}
+                                                        onPress={(value, index) => {
+                                                            this.setState({value2: value});
+                                                            this.setState({value2Index: index});
+                                                        }}
+                                                    />
+                                                </View>
+                                            )
+                                        })}
+                                    </RadioForm>
+                                </View>
+                            </View>
+
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
                                     onPress={this.toggleModalStartTravel}
@@ -881,6 +932,34 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    radioButtonWrap: {
+        marginRight: 5
+    },
+    radioStyle: {
+        borderRightWidth: 1,
+        borderColor: color1,
+        paddingRight: 10
+    },
+    giftCardCode: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+        paddingRight: 0,
+    },
+    radio: {
+        flexDirection: 'row-reverse',
+    },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 19,
