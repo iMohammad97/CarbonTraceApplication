@@ -356,14 +356,14 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر پیاده
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -428,14 +428,14 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر دوچرخه
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -500,14 +500,14 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر اتوبوس
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -572,14 +572,14 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر مترو
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -644,14 +644,14 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر تلفیقی
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
