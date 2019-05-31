@@ -255,7 +255,7 @@ export default class RoutingScreen extends React.Component {
                         <View
                             style={styles.bubbleNotif}
                         >
-                            <Text style={{color: 'white'}}>لطفا مبدا و مقصد خود را انتخاب کنید</Text>
+                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب کنید</Text>
                         </View>
                         <TouchableOpacity
                             onPress={() => this.saveRouteStatus(this.state.markers)}
