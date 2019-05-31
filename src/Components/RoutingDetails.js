@@ -274,6 +274,8 @@ export default class RoutingDetailsScreen extends React.Component {
                     } else {
                         this.toggleModalStartTravelError();
                     }
+                } else {
+                    this.toggleModalStartTravelError();
                 }
             }
         } catch (error) {
@@ -887,7 +889,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
                     <View style={{
-                        height: 170,
+                        height: 200,
                         width: '70%',
                         backgroundColor: '#fff',
                         borderRadius: 4,
