@@ -15,6 +15,13 @@ import {
     ScrollView, Dimensions
 } from 'react-native';
 import Modal from "react-native-modal";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
+
+const radio_props = [
+    {label: 'param1', value: 0},
+    {label: 'param2', value: 1}
+];
 
 const color1 = '#44678c';
 const color1L = '#5e8fc2';
@@ -257,23 +264,32 @@ export default class RoutingDetailsScreen extends React.Component {
             } else {
                 if (currLat < srcLatUpBound && currLat > srcLatLowBound) {
                     if (currLong < srcLongUpBound && currLong > srcLongLowBound) {
-                        await AsyncStorage.setItem('lat1', String(lat1));
-                        await AsyncStorage.setItem('long1', String(long1));
-                        await AsyncStorage.setItem('lat2', String(lat2));
-                        await AsyncStorage.setItem('long2', String(long2));
                         let startDate = new Date();
                         let startDateArr = String(startDate).split(' ');
-                        await AsyncStorage.setItem('travel_start_date', String(startDate));
-                        await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
-                        await AsyncStorage.setItem('travel_status', 'traveling');
-                        this.toggleModalStartTravel();
-                    }
-                } else {
-                    this.toggleModalStartTravelError();
-                }
 
+                        this.saveStartTravelStatusGo(lat1, long1, lat2, long2, startDate, startDateArr, this.state.dataRouteDuration);
+                    } else {
+                        this.toggleModalStartTravelError();
+                    }
+                }
             }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
+    saveStartTravelStatusGo = async (lat1, long1, lat2, long2, startDate, startDateArr, travel_duration) => {
+        try {
+            await AsyncStorage.setItem('lat1', String(lat1));
+            await AsyncStorage.setItem('long1', String(long1));
+            await AsyncStorage.setItem('lat2', String(lat2));
+            await AsyncStorage.setItem('long2', String(long2));
+            await AsyncStorage.setItem('travel_start_date', String(startDate));
+            await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
+            await AsyncStorage.setItem('travel_duration', String(travel_duration * 60));
+            await AsyncStorage.setItem('travel_status', 'traveling');
+            this.toggleModalStartTravel();
+
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
@@ -363,7 +379,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر پیاده
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -435,7 +452,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر دوچرخه
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -507,7 +525,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر اتوبوس
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -579,7 +598,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر مترو
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -651,7 +671,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                             مسیر تلفیقی
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما با انتخاب این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
