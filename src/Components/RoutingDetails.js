@@ -293,7 +293,7 @@ export default class RoutingDetailsScreen extends React.Component {
             await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
             await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
             await AsyncStorage.setItem('travel_status', 'traveling');
-            await AsyncStorage.setItem('travel_type', String(this.state.chosenTypeValue);
+            await AsyncStorage.setItem('travel_type', String(this.state.chosenTypeValue));
             this.toggleModalStartTravel();
         } catch (error) {
             // Error retrieving data
