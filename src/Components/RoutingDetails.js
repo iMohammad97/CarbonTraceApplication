@@ -18,7 +18,6 @@ import Modal from "react-native-modal";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 
-
 const color1 = '#44678c';
 const color1L = '#5e8fc2';
 const color2 = '#424242';
@@ -266,10 +265,11 @@ export default class RoutingDetailsScreen extends React.Component {
             } else {
                 if (currLat < srcLatUpBound && currLat > srcLatLowBound) {
                     if (currLong < srcLongUpBound && currLong > srcLongLowBound) {
-                        let startDate = new Date();
-                        let startDateArr = String(startDate).split(' ');
-
-                        this.saveStartTravelStatusGo(lat1, long1, lat2, long2, startDate, startDateArr, this.state.dataRouteDuration);
+                        // let startDate = new Date();
+                        // let startDateArr = String(startDate).split(' ');
+                        // this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
+                        this.toggleModalStartTravel();
+                        // this.saveStartTravelStatusGo(lat1, long1, lat2, long2, startDate, startDateArr, this.state.dataRouteDuration);
                     } else {
                         this.toggleModalStartTravelError();
                     }
@@ -280,15 +280,17 @@ export default class RoutingDetailsScreen extends React.Component {
             console.log(error.message);
         }
     };
-    saveStartTravelStatusGo = async (lat1, long1, lat2, long2, startDate, startDateArr, travel_duration) => {
+    saveStartTravelStatusGo = async (lat1, long1, lat2, long2) => {
         try {
+            let startDate = new Date();
+            let startDateArr = String(startDate).split(' ');
             await AsyncStorage.setItem('lat1', String(lat1));
             await AsyncStorage.setItem('long1', String(long1));
             await AsyncStorage.setItem('lat2', String(lat2));
             await AsyncStorage.setItem('long2', String(long2));
             await AsyncStorage.setItem('travel_start_date', String(startDate));
             await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-            await AsyncStorage.setItem('travel_duration', String(travel_duration * 60));
+            await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
             await AsyncStorage.setItem('travel_status', 'traveling');
             this.toggleModalStartTravel();
 
@@ -807,7 +809,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
                     <View style={{
-                        height: 260,
+                        height: 280,
                         width: '95%',
                         backgroundColor: '#fff',
                         borderRadius: 4,
@@ -817,7 +819,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                 نوع سفر خود را مشخص کنید!
                             </Text>
                             <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                نوع وسیله ی نقلیه ی سفر خود را مشخص کنید و پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
+                                نوع وسیله ی نقلیه ی سفر خود را مشخص کنید و پس از رسیدن به مقصد از منوی مسیریابی چک این
+                                کنید تا امتیازتان را دریافت کنید.
                             </Text>
                             <View style={{width: '100%'}}>
                                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
@@ -851,12 +854,16 @@ export default class RoutingDetailsScreen extends React.Component {
 
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
-                                    onPress={this.toggleModalStartTravel}
+                                    onPress={() => (this.saveStartTravelStatusGo(
+                                        this.state.markers[0].coordinate.latitude,
+                                        this.state.markers[0].coordinate.longitude,
+                                        this.state.markers[1].coordinate.latitude,
+                                        this.state.markers[1].coordinate.longitude))}
                                     style={styles.routesScreenModalOkButton}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
                                         <Text style={styles.routesScreenModalNoButtonText}>
-                                            فهمیدم
+                                            شروع سفر
                                         </Text>
 
                                     </View>
@@ -967,7 +974,7 @@ const styles = StyleSheet.create({
         backgroundColor: "red"
     },
     routesScreenModalOkButton: {
-        height: 30,
+        height: 50,
         width: '90%',
         // margin: 5,
         borderRadius: 5,
