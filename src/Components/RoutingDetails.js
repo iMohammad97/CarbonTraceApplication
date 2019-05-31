@@ -18,13 +18,6 @@ import Modal from "react-native-modal";
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 
-const radio_props = [
-    {label: 'پیاده', value: 0},
-    {label: 'دوچرخه', value: 1},
-    {label: 'اتوبوس', value: 2},
-    {label: 'مترو', value: 3},
-    {label: 'تلفیقی', value: 4}
-];
 
 const color1 = '#44678c';
 const color1L = '#5e8fc2';
@@ -828,23 +821,11 @@ export default class RoutingDetailsScreen extends React.Component {
                             </Text>
                             <View style={{width: '100%'}}>
                                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                                    {/*<RadioForm*/}
-                                    {/*    radio_props={radio_props}*/}
-                                    {/*    initial={-1}*/}
-                                    {/*    selectedButtonColor={color1}*/}
-                                    {/*    buttonColor={color1}*/}
-                                    {/*    labelStyle={styles.giftCardCode}*/}
-                                    {/*    wrapStyle={styles.radio}*/}
-                                    {/*    onPress={(value) => {*/}
-                                    {/*        this.setState({transitionType: value})*/}
-                                    {/*    }}*/}
-                                    {/*/>*/}
                                     <RadioForm
                                         formHorizontal={true}
                                         animation={true}
                                     >
                                         {this.state.types2.map((obj, i) => {
-                                            let that = this;
                                             let is_selected = this.state.value2Index === i;
                                             return (
                                                 <View key={i} style={styles.radioButtonWrap}>
