@@ -623,6 +623,78 @@ export default class RoutingDetailsScreen extends React.Component {
 
                             </View>
                         </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/org.rajman.neshan.traffic.tehran/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionBusButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.08, height: (width * 0.08)}}
+                                                       source={require('../Assets/Icons/icRaya.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر تلفیقی
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (32.5 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 25)} کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
 
                         <View style={styles.routesScreenRouteBoxRow3}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
