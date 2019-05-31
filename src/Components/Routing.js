@@ -47,7 +47,7 @@ const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE = 35.732474329636865;
 const LONGITUDE = 51.42287135124207;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.009;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
 
@@ -82,15 +82,37 @@ export default class RoutingScreen extends React.Component {
 
 
         this.state = {
-            region: {
-                latitude: LATITUDE,
-                longitude: LONGITUDE,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            },
+            // region: {
+            //     latitude: LATITUDE,
+            //     longitude: LONGITUDE,
+            //     latitudeDelta: LATITUDE_DELTA,
+            //     longitudeDelta: LONGITUDE_DELTA,
+            // },
             markers: [],
         };
     }
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    currentLatitude: position.coords.latitude,
+                    currentLongitute: position.coords.longitude,
+                    currentTimestamp: position.timestamp,
+                    region: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        latitudeDelta: LATITUDE_DELTA,
+                        longitudeDelta: LONGITUDE_DELTA,
+                    },
+                })
+            },
+            (error) => {
+                console.log(error);
+            },
+            {enableHighAccuracy: true, timeout: 30000}
+        )
+    };
+
 
     getRouteStatus = async () => {
         let markers = [];
