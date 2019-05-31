@@ -15,6 +15,8 @@ import {
     ScrollView, Dimensions
 } from 'react-native';
 import Modal from "react-native-modal";
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
 
 const color1 = '#44678c';
 const color1L = '#5e8fc2';
@@ -77,7 +79,14 @@ export default class RoutingDetailsScreen extends React.Component {
             dataRouteOuterLinkNamaa: '',
             isModalVisibleCancelTravel: false,
             isModalVisibleStartTravel: false,
-            isModalVisibleStartTravelError: false
+            isModalVisibleStartTravelError: false,
+            types2: [{label: 'تلفیقی', value: 0}, {label: 'مترو', value: 1}, {
+                label: 'اتوبوس',
+                value: 2
+            }, {label: 'دوچرخه', value: 3}, {label: 'پیاده', value: 4},],
+            value2: 0,
+            value2Index: 4,
+            chosenTypeValue: 4,
         };
     }
 
@@ -257,23 +266,35 @@ export default class RoutingDetailsScreen extends React.Component {
             } else {
                 if (currLat < srcLatUpBound && currLat > srcLatLowBound) {
                     if (currLong < srcLongUpBound && currLong > srcLongLowBound) {
-                        await AsyncStorage.setItem('lat1', String(lat1));
-                        await AsyncStorage.setItem('long1', String(long1));
-                        await AsyncStorage.setItem('lat2', String(lat2));
-                        await AsyncStorage.setItem('long2', String(long2));
-                        let startDate = new Date();
-                        let startDateArr = String(startDate).split(' ');
-                        await AsyncStorage.setItem('travel_start_date', String(startDate));
-                        await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
-                        await AsyncStorage.setItem('travel_status', 'traveling');
+                        // let startDate = new Date();
+                        // let startDateArr = String(startDate).split(' ');
+                        // this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
                         this.toggleModalStartTravel();
+                        // this.saveStartTravelStatusGo(lat1, long1, lat2, long2, startDate, startDateArr, this.state.dataRouteDuration);
+                    } else {
+                        this.toggleModalStartTravelError();
                     }
-                } else {
-                    this.toggleModalStartTravelError();
                 }
-
             }
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
+    saveStartTravelStatusGo = async (lat1, long1, lat2, long2) => {
+        try {
+            let startDate = new Date();
+            let startDateArr = String(startDate).split(' ');
+            await AsyncStorage.setItem('lat1', String(lat1));
+            await AsyncStorage.setItem('long1', String(long1));
+            await AsyncStorage.setItem('lat2', String(lat2));
+            await AsyncStorage.setItem('long2', String(long2));
+            await AsyncStorage.setItem('travel_start_date', String(startDate));
+            await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
+            await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
+            await AsyncStorage.setItem('travel_status', 'traveling');
+            await AsyncStorage.setItem('travel_type', String(this.state.chosenTypeValue));
+            this.toggleModalStartTravel();
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
@@ -305,12 +326,12 @@ export default class RoutingDetailsScreen extends React.Component {
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
                                     {this.state.dataDestination}
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    امتیاز سفر :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>
-                                    {parseInt(this.state.dataRouteDuration * 60)} امتیاز
-                                </Text>
+                                {/*<Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                                {/*    امتیاز سفر :*/}
+                                {/*</Text>*/}
+                                {/*<Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>*/}
+                                {/*    {parseInt(this.state.dataRouteDuration * 60)} امتیاز*/}
+                                {/*</Text>*/}
                                 <View style={styles.rowInfo}>
                                     <View style={styles.rowInfoContainer}>
                                         <View style={styles.rowInfoContainerInner}>
@@ -356,14 +377,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر پیاده
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -377,7 +399,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (500 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -428,14 +450,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر دوچرخه
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -449,7 +472,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (500 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -500,14 +523,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر اتوبوس
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -521,7 +545,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (10 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (100 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -572,14 +596,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر مترو
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -593,7 +618,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (20 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (200 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -644,14 +669,15 @@ export default class RoutingDetailsScreen extends React.Component {
                                     </View>
                                 </View>
 
-                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                <View style={[styles.routesScreenRouteBoxRow2WazeButton, {paddingTop: 1}]}>
                                     <View style={styles.routesScreenSuggestionSummaryContainer}>
 
                                         <Text style={styles.summaryTitleText}>
                                             مسیر تلفیقی
                                         </Text>
                                         <Text style={styles.summaryText}>
-                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            شما با انتخاب این مسیر از
+                                            انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
                                             کربن دی اکسید جلوگیری می کنید.
                                         </Text>
 
@@ -665,7 +691,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (32.5 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (325 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -784,26 +810,63 @@ export default class RoutingDetailsScreen extends React.Component {
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
                     <View style={{
-                        height: 170,
-                        width: '70%',
+                        height: 280,
+                        width: '95%',
                         backgroundColor: '#fff',
                         borderRadius: 4,
                     }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
-                                سفر شما آغاز شد!
+                                نوع سفر خود را مشخص کنید!
                             </Text>
                             <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
+                                نوع وسیله ی نقلیه ی سفر خود را مشخص کنید و پس از رسیدن به مقصد از منوی مسیریابی چک این
+                                کنید تا امتیازتان را دریافت کنید.
                             </Text>
+                            <View style={{width: '100%'}}>
+                                <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                                    <RadioForm
+                                        formHorizontal={true}
+                                        animation={true}
+                                    >
+                                        {this.state.types2.map((obj, i) => {
+                                            let is_selected = this.state.value2Index === i;
+                                            return (
+                                                <View key={i} style={styles.radioButtonWrap}>
+                                                    <RadioButton
+                                                        isSelected={is_selected}
+                                                        obj={obj}
+                                                        index={i}
+                                                        labelHorizontal={false}
+                                                        buttonColor={color1}
+                                                        labelColor={color1}
+                                                        style={[i !== this.state.types2.length - 1 && styles.radioStyle]}
+                                                        onPress={(value, index) => {
+                                                            this.setState({value2: value});
+                                                            this.setState({value2Index: index});
+                                                            this.setState({chosenTypeValue: index});
+                                                            // console.log('v,i', value, index);
+                                                        }}
+                                                    />
+                                                </View>
+                                            )
+                                        })}
+                                    </RadioForm>
+                                </View>
+                            </View>
+
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
-                                    onPress={this.toggleModalStartTravel}
+                                    onPress={() => (this.saveStartTravelStatusGo(
+                                        this.state.markers[0].coordinate.latitude,
+                                        this.state.markers[0].coordinate.longitude,
+                                        this.state.markers[1].coordinate.latitude,
+                                        this.state.markers[1].coordinate.longitude))}
                                     style={styles.routesScreenModalOkButton}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
                                         <Text style={styles.routesScreenModalNoButtonText}>
-                                            فهمیدم
+                                            شروع سفر
                                         </Text>
 
                                     </View>
@@ -860,6 +923,34 @@ export default class RoutingDetailsScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    radioButtonWrap: {
+        marginRight: 5
+    },
+    radioStyle: {
+        borderRightWidth: 1,
+        borderColor: color1,
+        paddingRight: 10
+    },
+    giftCardCode: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+        paddingRight: 0,
+    },
+    radio: {
+        flexDirection: 'row-reverse',
+    },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 19,
@@ -886,7 +977,7 @@ const styles = StyleSheet.create({
         backgroundColor: "red"
     },
     routesScreenModalOkButton: {
-        height: 30,
+        height: 50,
         width: '90%',
         // margin: 5,
         borderRadius: 5,
@@ -1263,7 +1354,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 255,
+        height: 200,
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
