@@ -305,12 +305,12 @@ export default class RoutingDetailsScreen extends React.Component {
                                 <Text style={styles.routesScreenRouteBoxRow1SmallText}>
                                     {this.state.dataDestination}
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    امتیاز سفر :
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>
-                                    {parseInt(this.state.dataRouteDuration * 60)} امتیاز
-                                </Text>
+                                {/*<Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                                {/*    امتیاز سفر :*/}
+                                {/*</Text>*/}
+                                {/*<Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>*/}
+                                {/*    {parseInt(this.state.dataRouteDuration * 60)} امتیاز*/}
+                                {/*</Text>*/}
                                 <View style={styles.rowInfo}>
                                     <View style={styles.rowInfoContainer}>
                                         <View style={styles.rowInfoContainerInner}>
@@ -1263,7 +1263,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 255,
+        height: 200,
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
