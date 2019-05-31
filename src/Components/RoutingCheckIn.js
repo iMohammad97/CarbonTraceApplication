@@ -279,12 +279,11 @@ export default class RoutingCheckInScreen extends React.Component {
                     alert('شما با موفقیت چک این کردید!');
                     await AsyncStorage.setItem('travel_status', 'not_traveling');
                 } else {
-                    console.log('not enough time passed')
+                    alert('زمان کافی نگذشته است!');
                 }
             }
         } else {
-            console.log('not arrived yet')
-
+            alert('شما به مقصد نرسیده اید!');
         }
     };
 
