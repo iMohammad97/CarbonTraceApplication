@@ -86,6 +86,7 @@ export default class RoutingDetailsScreen extends React.Component {
             }, {label: 'دوچرخه', value: 3}, {label: 'پیاده', value: 4},],
             value2: 0,
             value2Index: 4,
+            chosenTypeValue: 4,
         };
     }
 
@@ -292,8 +293,8 @@ export default class RoutingDetailsScreen extends React.Component {
             await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
             await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
             await AsyncStorage.setItem('travel_status', 'traveling');
+            await AsyncStorage.setItem('travel_type', String(this.state.chosenTypeValue);
             this.toggleModalStartTravel();
-
         } catch (error) {
             // Error retrieving data
             console.log(error.message);
@@ -843,6 +844,8 @@ export default class RoutingDetailsScreen extends React.Component {
                                                         onPress={(value, index) => {
                                                             this.setState({value2: value});
                                                             this.setState({value2Index: index});
+                                                            this.setState({chosenTypeValue: index});
+                                                            // console.log('v,i', value, index);
                                                         }}
                                                     />
                                                 </View>
