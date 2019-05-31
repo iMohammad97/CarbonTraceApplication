@@ -377,7 +377,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (500 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -449,7 +449,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (500 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -521,7 +521,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (10 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (100 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -593,7 +593,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (20 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (200 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
@@ -665,7 +665,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                         <View style={styles.routesScreenSuggestionInfoRow}>
                                             <View style={styles.routesScreenInfoRowContainer}>
                                                 <Text style={styles.routesScreenInfoText}>
-                                                    {parseInt(this.state.dataRouteDuration * (32.5 / 15))} امتیاز
+                                                    {parseInt(this.state.dataRouteDuration * (325 / 15))} امتیاز
                                                 </Text>
                                                 <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
                                                        source={require('../Assets/Icons/icBag.png')}/>
