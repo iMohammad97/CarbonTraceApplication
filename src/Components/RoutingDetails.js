@@ -17,6 +17,7 @@ import {
 import Modal from "react-native-modal";
 
 const color1 = '#44678c';
+const color1L = '#5e8fc2';
 const color2 = '#424242';
 const color3 = '#b8b8b8';
 const color4 = '#ffffff';
@@ -79,6 +80,7 @@ export default class RoutingDetailsScreen extends React.Component {
             isModalVisibleStartTravelError: false
         };
     }
+
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -96,13 +98,13 @@ export default class RoutingDetailsScreen extends React.Component {
     };
 
     toggleModal = () => {
-        this.setState({ isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel });
+        this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
     toggleModalStartTravel = () => {
-        this.setState({ isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel });
+        this.setState({isModalVisibleStartTravel: !this.state.isModalVisibleStartTravel});
     };
     toggleModalStartTravelError = () => {
-        this.setState({ isModalVisibleStartTravelError: !this.state.isModalVisibleStartTravelError });
+        this.setState({isModalVisibleStartTravelError: !this.state.isModalVisibleStartTravelError});
     };
     cancelTravel = async () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
@@ -168,7 +170,7 @@ export default class RoutingDetailsScreen extends React.Component {
                     loading3: false,
                     dataRouteDistance: (responseJson.distance[0].distance) / 1000,
                     dataRouteDuration: (responseJson.duration[0].duration) / 60,
-                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2),
+                    dataRouteOuterLinkGoogle: "https://www.google.com/maps/dir/?api=1&origin=" + String(lat1) + "," + String(long1) + "&destination=" + String(lat2) + "," + String(long2) + "&travelmode=walking",
                     dataRouteOuterLinkWaze: "https://waze.com/ul?ll=" + String(lat2) + "," + String(long2) + "&z=10",
                     dataRouteOuterLinkNamaa: "https://mobile.namaa.ir/?ll=" + String(lat1) + "," + String(long1) + ";" + String(lat2) + "," + String(long2) + "&type=direction",
                 })
@@ -263,7 +265,7 @@ export default class RoutingDetailsScreen extends React.Component {
                         let startDateArr = String(startDate).split(' ');
                         await AsyncStorage.setItem('travel_start_date', String(startDate));
                         await AsyncStorage.setItem('travel_start_date_time', startDateArr[4]);
-                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration*60));
+                        await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
                         await AsyncStorage.setItem('travel_status', 'traveling');
                         this.toggleModalStartTravel();
                     }
@@ -283,7 +285,9 @@ export default class RoutingDetailsScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                <View style={styles.routesScreenRouteBox}>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={styles.routesScreenRouteBox}>
                     <View style={styles.routesScreenRouteBoxContainer}>
 
                         <View style={styles.routesScreenRouteBoxRow1}>
@@ -304,7 +308,7 @@ export default class RoutingDetailsScreen extends React.Component {
                                 <Text style={styles.routesScreenRouteBoxRow1BoldText}>
                                     امتیاز سفر :
                                 </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
+                                <Text style={styles.routesScreenRouteBoxRow1SmallTextPoint}>
                                     {parseInt(this.state.dataRouteDuration * 60)} امتیاز
                                 </Text>
                                 <View style={styles.rowInfo}>
@@ -334,73 +338,364 @@ export default class RoutingDetailsScreen extends React.Component {
                         <View style={styles.routesScreenRouteBoxRow2}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2GoogleMapsButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
 
-                                        <Image
-                                            style={{width: width * 0.38, height: (33 * width * 0.38) / 180}}
-                                            source={require('../Assets/Icons/icGoogleMaps.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL(this.state.dataRouteOuterLinkGoogle).catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.22, height: (33 * width * 0.22) / 180}}
+                                                       source={require('../Assets/Icons/icGoogleMaps.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
 
                                     </View>
-                                </TouchableOpacity>
+                                </View>
 
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر پیاده
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 65)} کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
 
                             </View>
                         </View>
                         <View style={styles.routesScreenRouteBoxRow2}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkNamaa).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2NamaaButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
 
-                                        <Image
-                                            style={{width: width * 0.25, height: (204 * width * 0.25) / 572}}
-                                            source={require('../Assets/Icons/icNamaa.png')}
-                                        />
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => Linking.openURL(this.state.dataRouteOuterLinkWaze).catch(err => console.error('An error occurred', err))}
-                                    style={styles.routesScreenRouteBoxRow2WazeButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
-
-                                        <Image
-                                            style={{width: 30, height: 30, marginRight: 5}}
-                                            source={require('../Assets/Icons/icWaze.png')}
-                                        />
-                                        <Image
-                                            style={{width: width * 0.2, height: (666 * width * 0.2) / 2717}}
-                                            source={require('../Assets/Icons/icWazeName.png')}
-                                        />
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/ir.pakcharkh.bdood/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionBicycleButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.17, height: (70 * width * 0.17) / 206}}
+                                                       source={require('../Assets/Icons/icBdood.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
 
                                     </View>
-                                </TouchableOpacity>
+                                </View>
 
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر دوچرخه
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (50 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 35)} کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
 
                             </View>
                         </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/com.neda.buseta/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionBusButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.17, height: (303 * width * 0.17) / 600}}
+                                                       source={require('../Assets/Icons/icTehranBus.jpg')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر اتوبوس
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (10 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    0 کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/co.fardad.android.metro/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionMetroButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.08, height: (width * 0.08)}}
+                                                       source={require('../Assets/Icons/icMetro.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر مترو
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (20 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    0 کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+                        <View style={styles.routesScreenRouteBoxRow2}>
+                            <View style={styles.routesScreenRouteBoxRow2Container}>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionButtonContainer}>
+
+                                        <Text style={styles.suggestionsText}>
+                                            پیشنهاد ها :
+                                        </Text>
+                                        <TouchableOpacity
+                                            onPress={() => Linking.openURL("https://cafebazaar.ir/app/org.rajman.neshan.traffic.tehran/?l=fa").catch(err => console.error('An error occurred', err))}
+                                            style={styles.routesScreenSuggestionBusButton}>
+                                            <View style={styles.routesScreenRouteBoxRow2WazeButtonContainer}>
+                                                <Image style={{width: width * 0.08, height: (width * 0.08)}}
+                                                       source={require('../Assets/Icons/icRaya.png')}/>
+                                            </View>
+                                        </TouchableOpacity>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionSummaryContainer}>
+
+                                        <Text style={styles.summaryTitleText}>
+                                            مسیر تلفیقی
+                                        </Text>
+                                        <Text style={styles.summaryText}>
+                                            شما در این مسیر از انتشار {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                            کربن دی اکسید جلوگیری می کنید.
+                                        </Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={styles.routesScreenRouteBoxRow2WazeButton}>
+                                    <View style={styles.routesScreenSuggestionInfoContainer}>
+
+
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDuration * (32.5 / 15))} امتیاز
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icBag.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 25)} کالری
+                                                </Text>
+                                                <Image style={{height: 25, width: 25}}
+                                                       source={require('../Assets/Icons/icCal.png')}/>
+                                            </View>
+                                        </View>
+                                        <View style={styles.routesScreenSuggestionInfoRow}>
+                                            <View style={styles.routesScreenInfoRowContainer}>
+                                                <Text style={styles.routesScreenInfoText}>
+                                                    {parseInt(this.state.dataRouteDistance * 150)} گرم
+                                                </Text>
+                                                <Image style={{height: 15, width: 15, marginLeft: 5, marginRight: 5}}
+                                                       source={require('../Assets/Icons/icCO2.png')}/>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+
                         <View style={styles.routesScreenRouteBoxRow3}>
                             <View style={styles.routesScreenRouteBoxRow2Container}>
 
@@ -425,7 +720,7 @@ export default class RoutingDetailsScreen extends React.Component {
                         </View>
 
                     </View>
-                </View>
+                </ScrollView>
 
                 <Modal
                     animationIn="zoomIn"
@@ -437,10 +732,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleCancelTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 130,
+                    <View style={{
+                        height: 130,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 شما در حال سفر هستید!
@@ -486,10 +783,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravel}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 سفر شما آغاز شد!
@@ -524,10 +823,12 @@ export default class RoutingDetailsScreen extends React.Component {
                     isVisible={this.state.isModalVisibleStartTravelError}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                    <View style={{ height: 170,
+                    <View style={{
+                        height: 170,
                         width: '70%',
                         backgroundColor: '#fff',
-                        borderRadius: 4, }}>
+                        borderRadius: 4,
+                    }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
                                 خطا در آغاز سفر!
@@ -678,6 +979,7 @@ const styles = StyleSheet.create({
     rowInfo: {
         height: 40,
         width: '100%',
+        // backgroundColor: color5
     },
     routesScreenRouteBoxBarText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
@@ -698,9 +1000,33 @@ const styles = StyleSheet.create({
     },
     routesScreenRouteBoxRow2WazeButtonContainer: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    routesScreenInfoRowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    routesScreenSuggestionButtonContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    routesScreenSuggestionSummaryContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+    },
+    routesScreenSuggestionInfoContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
     },
     routesScreenRouteBoxRow2VehicleContainer: {
         flex: 1,
@@ -729,10 +1055,52 @@ const styles = StyleSheet.create({
         // backgroundColor: "#0D5F9B"
     },
     routesScreenRouteBoxRow2WazeButton: {
-        height: 40,
-        width: '46%',
+        height: '100%',
+        width: '30%',
         borderRadius: 5,
-        backgroundColor: color4
+        padding: 5,
+        borderColor: color4,
+        borderWidth: 1
+    },
+    routesScreenSuggestionButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: color4,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionBicycleButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: "#404042",
+        // borderWidth: 1
+    },
+    routesScreenSuggestionBusButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: color4,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionMetroButton: {
+        height: '50%',
+        width: '100%',
+        borderRadius: 5,
+        // padding: 5,
+        backgroundColor: color2,
+        // borderWidth: 1
+    },
+    routesScreenSuggestionInfoRow: {
+        height: '30%',
+        width: '100%',
+        borderRadius: 2,
+        // padding: 5,
+        backgroundColor: color3,
+        // borderWidth: 1
     },
     routesScreenRouteBoxRow2Container: {
         flex: 1,
@@ -748,6 +1116,22 @@ const styles = StyleSheet.create({
         marginLeft: 8,
         // width: 100,
         height: 50,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    routesScreenRouteBoxRow1SmallTextPoint: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRII",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        fontStyle: "normal",
+        marginLeft: 8,
+        // width: 100,
+        height: 25,
         // maxHeight: '100%',
         // lineHeight: 40,
         letterSpacing: 1,
@@ -788,6 +1172,73 @@ const styles = StyleSheet.create({
         color: color4,
         // backgroundColor: color4,
     },
+    routesScreenInfoText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color2,
+        // backgroundColor: color4,
+    },
+    suggestionsText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 14,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    summaryTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 14,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: 100,
+        // height: 30,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
+    summaryText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 10,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: '80%',
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // marginBottom: 5,
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color4,
+    },
     routesScreenRouteBoxRow3BoldText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 25,
@@ -812,16 +1263,23 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     routesScreenRouteBoxRow1: {
-        height: 280,
+        height: 255,
         width: '100%',
     },
     routesScreenRouteBoxRow2: {
-        height: 50,
+        height: 100,
         width: '100%',
+        borderRadius: 5,
+        borderColor: color4,
+        backgroundColor: color1L,
+        borderWidth: 1,
+        padding: 8,
+        marginBottom: 10
     },
     routesScreenRouteBoxRow3: {
-        height: 60,
+        height: 50,
         width: '100%',
+        marginBottom: 20,
     },
     routesScreenRouteBoxContainer: {
         flex: 1,
@@ -835,7 +1293,7 @@ const styles = StyleSheet.create({
         // flexWrap: 'wrap'
     },
     routesScreenRouteBox: {
-        height: 460,
+        height: '100%',
         width: '100%',
         padding: 10,
         marginTop: 10,
