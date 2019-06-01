@@ -44,42 +44,54 @@ class Header extends React.Component {
 export default class SettingsScreen extends React.Component {
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableOpacity style={styles.row}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.columnOption}>
+            <View style={styles.containerOut}>
+                <View style={styles.container11}>
+                    <View style={styles.container}>
+                        <TouchableOpacity style={styles.row}>
                             <View style={styles.rowContainer}>
-                                <Text style={styles.optionText}>فارسی</Text>
+                                <View style={styles.columnOption}>
+                                    <View style={styles.rowContainer}>
+                                        <Text style={styles.optionText}>فارسی</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.columnLabel}>
+                                    <View style={styles.rowContainer}>
+                                        <Text style={styles.labelText}>زبان :</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                        <View style={styles.columnLabel}>
-                            <View style={styles.rowContainer}>
-                                <Text style={styles.labelText}>زبان :</Text>
-                            </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.row}
-                                  onPress={() => this.props.navigation.navigate('AboutUs')}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.columnLabel}>
+                        <TouchableOpacity style={styles.row}
+                                          onPress={() => this.props.navigation.navigate('AboutUs')}>
                             <View style={styles.rowContainer}>
-                                <Text style={styles.labelText}>درباره ما</Text>
+                                <View style={styles.columnLabel}>
+                                    <View style={styles.rowContainer}>
+                                        <Text style={styles.labelText}>درباره ما</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                    </View>
-                </TouchableOpacity>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.row}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.columnLabel}>
+                        <TouchableOpacity style={styles.row}>
                             <View style={styles.rowContainer}>
-                                <Text style={styles.labelText}>خروج</Text>
+                                <View style={styles.columnLabel}>
+                                    <View style={styles.rowContainer}>
+                                        <Text style={styles.labelText}>خروج</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
+                        </TouchableOpacity>
+
                     </View>
-                </TouchableOpacity>
+                </View>
+                <View style={styles.container2}>
+                    <View style={styles.container21}>
+                        <Text>
+                            توسعه یافته توسط iMohammad97@
+                        </Text>
+                    </View>
+                </View>
 
             </View>
         );
@@ -111,6 +123,15 @@ export default class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    container11: {
+        width: '100%',
+
+    },
+    container2: {
+        width: '100%',
+        height: 30,
+        marginBottom: 20,
+    },
     headerText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 30,
@@ -190,6 +211,20 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+    },
+    container21: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+    },
+    containerOut: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },

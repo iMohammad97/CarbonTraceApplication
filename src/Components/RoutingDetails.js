@@ -253,11 +253,11 @@ export default class RoutingDetailsScreen extends React.Component {
         let currLat = this.state.currentLatitude.toFixed(6);
         let currLong = this.state.currentLongitute.toFixed(6);
 
-        let srcLatUpBound = srcLat + 0.002;
-        let srcLatLowBound = srcLat - 0.002;
+        let srcLatUpBound = srcLat + 0.006;
+        let srcLatLowBound = srcLat - 0.006;
 
-        let srcLongUpBound = srcLong + 0.002;
-        let srcLongLowBound = srcLong - 0.002;
+        let srcLongUpBound = srcLong + 0.006;
+        let srcLongLowBound = srcLong - 0.006;
 
         try {
             let travel_status = await AsyncStorage.getItem('travel_status');
