@@ -327,11 +327,11 @@ export default class RoutingCheckInScreen extends React.Component {
         let currLat = this.state.currentLatitude.toFixed(6);
         let currLong = this.state.currentLongitute.toFixed(6);
 
-        let destLatUpBound = destLat + 0.002;
-        let destLatLowBound = destLat - 0.002;
+        let destLatUpBound = destLat + 0.006;
+        let destLatLowBound = destLat - 0.006;
 
-        let destLongUpBound = destLong + 0.002;
-        let destLongLowBound = destLong - 0.002;
+        let destLongUpBound = destLong + 0.006;
+        let destLongLowBound = destLong - 0.006;
 
         let endDate = new Date();
         let startDate = new Date(this.state.travel_start_date);
