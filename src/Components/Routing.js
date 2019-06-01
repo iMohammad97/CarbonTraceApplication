@@ -11,7 +11,7 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    Dimensions
+    Dimensions, TextInput
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -23,6 +23,7 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 import MapView, {PROVIDER_GOOGLE, Marker, ProviderPropType} from "react-native-maps";
+import Modal from "react-native-modal";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -89,9 +90,12 @@ export default class RoutingScreen extends React.Component {
             //     longitudeDelta: LONGITUDE_DELTA,
             // },
             markers: [],
+            isModalVisibleUserLogIn: false,
         };
     }
+
     componentDidMount() {
+        this.checkIfUser();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -111,6 +115,41 @@ export default class RoutingScreen extends React.Component {
             },
             {enableHighAccuracy: true, timeout: 30000}
         )
+    };
+
+    checkIfUser = async () => {
+        let user, email, name;
+        try {
+            user = await AsyncStorage.getItem('user');
+            email = await AsyncStorage.getItem('email');
+            name = await AsyncStorage.getItem('name');
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+        if (!user) {
+            this.toggleModalUserLogIn();
+        }
+    };
+    toggleModalUserLogIn = () => {
+        this.setState({isModalVisibleUserLogIn: !this.state.isModalVisibleUserLogIn});
+    };
+    saveUserData = async () => {
+        if (!this.state.textInputUserEmail) {
+            alert('آدرس ایمیل نمی تواند خالی باشد!')
+        } else if (!this.state.textInputUserFullName) {
+            alert('نام نمی تواند خالی باشد!')
+        } else {
+            try {
+                await AsyncStorage.setItem('user', this.state.textInputUserEmail);
+                await AsyncStorage.setItem('email', this.state.textInputUserEmail);
+                await AsyncStorage.setItem('name', this.state.textInputUserFullName);
+                this.toggleModalUserLogIn();
+            } catch (error) {
+                // Error retrieving data
+                console.log(error.message);
+            }
+        }
     };
 
 
@@ -277,7 +316,8 @@ export default class RoutingScreen extends React.Component {
                         <View
                             style={styles.bubbleNotif}
                         >
-                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب کنید</Text>
+                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب
+                                کنید</Text>
                         </View>
                         <TouchableOpacity
                             onPress={() => this.saveRouteStatus(this.state.markers)}
@@ -301,16 +341,173 @@ export default class RoutingScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    // onBackdropPress={() => this.setState({isModalVisibleUserLogIn: false})}
+                    isVisible={this.state.isModalVisibleUserLogIn}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{
+                        height: 295,
+                        width: '70%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4,
+                    }}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.routesScreenModalTitleText}>
+                                خوش آمدید
+                            </Text>
+                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
+                                لطفا برای استفاده از ردپا ابتدا وارد حساب کاربری خود شوید.
+                            </Text>
+                            <TextInput style={styles.textInputStyle}
+                                       placeholder="نام و نام خانوادگی"
+                                       autoCapitalize='none'
+                                       placeholderTextColor={color3}
+                                       autoCorrect={false}
+                                       onChangeText={(textInputUserFullName) => this.setState({textInputUserFullName})}/>
+                            <TextInput style={styles.textInputStyle2}
+                                       placeholder="آدرس ایمیل"
+                                       autoCapitalize='none'
+                                       placeholderTextColor={color3}
+                                       autoCorrect={false}
+                                       onChangeText={(textInputUserEmail) => this.setState({textInputUserEmail})}/>
+                            <View style={styles.modalButtonsContainer}>
+                                <TouchableOpacity
+                                    onPress={this.saveUserData}
+                                    style={styles.routesScreenModalOkButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            ورود
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+                </Modal>
             </View>
         );
     }
 }
-// DefaultMarkers.propTypes = {
-//     provider: ProviderPropType,
-// };
 
 
 const styles = StyleSheet.create({
+    textInputStyle: {
+        width: '90%',
+        borderRadius: 5,
+        height: 40,
+        backgroundColor: color5,
+        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        borderColor: color4,
+        textAlign: 'right',
+        color: color2,
+        paddingRight: 5,
+        borderBottomWidth: 2,
+        borderWidth: 0
+    },
+    textInputStyle2: {
+        width: '90%',
+        borderRadius: 5,
+        height: 40,
+        backgroundColor: color5,
+        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        borderColor: color4,
+        textAlign: 'right',
+        color: color2,
+        paddingRight: 5,
+        marginTop: 8,
+        borderBottomWidth: 2,
+        borderWidth: 0
+    },
+    routesScreenModalNoButtonText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 19,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color2,
+    },
+    routesScreenRouteBoxRow2VehicleContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    routesScreenModalOkButton: {
+        height: 40,
+        width: '90%',
+        // margin: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "green"
+    },
+    modalButtonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    routesScreenModalLowerTextStartTravel: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 17,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 80,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    routesScreenModalTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 25,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    modalContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+    },
     mainBubblesContainer: {
         flex: 1,
         flexDirection: 'column',
