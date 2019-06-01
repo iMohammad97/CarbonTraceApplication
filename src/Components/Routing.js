@@ -127,15 +127,8 @@ export default class RoutingScreen extends React.Component {
             // Error retrieving data
             console.log(error.message);
         }
-        if (user) {
-            console.log('user found', user);
-            // this.setState({
-            //     markers: markers
-            // });
-        } else {
-            console.log('user not found', user);
+        if (!user) {
             this.toggleModalUserLogIn();
-            // this.setState({markers: []})
         }
     };
     toggleModalUserLogIn = () => {
@@ -151,6 +144,7 @@ export default class RoutingScreen extends React.Component {
                 await AsyncStorage.setItem('user', this.state.textInputUserEmail);
                 await AsyncStorage.setItem('email', this.state.textInputUserEmail);
                 await AsyncStorage.setItem('name', this.state.textInputUserFullName);
+                this.toggleModalUserLogIn();
             } catch (error) {
                 // Error retrieving data
                 console.log(error.message);
