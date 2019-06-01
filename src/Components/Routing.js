@@ -92,6 +92,7 @@ export default class RoutingScreen extends React.Component {
         };
     }
     componentDidMount() {
+        this.checkIfUser();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -111,6 +112,26 @@ export default class RoutingScreen extends React.Component {
             },
             {enableHighAccuracy: true, timeout: 30000}
         )
+    };
+    checkIfUser = async () => {
+        let user, email, name;
+        try {
+            user = await AsyncStorage.getItem('user');
+            email = await AsyncStorage.getItem('email');
+            name = await AsyncStorage.getItem('name');
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+        if (user) {
+            console.log('user found', user);
+            // this.setState({
+            //     markers: markers
+            // });
+        } else {
+            console.log('user not found', user);
+            // this.setState({markers: []})
+        }
     };
 
 
