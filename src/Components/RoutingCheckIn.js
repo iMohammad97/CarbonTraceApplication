@@ -98,7 +98,7 @@ export default class RoutingCheckInScreen extends React.Component {
         )
     }
 
-    handlePress = async () => {
+    postRouteToServer = async () => {
         fetch('http://127.0.0.1:5000/api/login', {
             method: 'POST',
             headers: {
@@ -329,8 +329,9 @@ export default class RoutingCheckInScreen extends React.Component {
             if (currLong < destLongUpBound && currLong > destLongLowBound) {
                 if (timeDiffSec > travel_duration - 120) {
                     console.log('arrived');
-                    alert('شما با موفقیت چک این کردید!');
                     await AsyncStorage.setItem('travel_status', 'not_traveling');
+                    this.postRouteToServer();
+                    alert('شما با موفقیت چک این کردید!');
                 } else {
                     alert('زمان کافی نگذشته است!');
                 }
@@ -362,98 +363,6 @@ export default class RoutingCheckInScreen extends React.Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-
-                <Modal
-                    animationIn="zoomIn"
-                    animationOut="zoomOut"
-                    // animationInTiming={600}
-                    // animationOutTiming={600}
-                    hideModalContentWhileAnimating={true}
-                    onBackdropPress={() => this.setState({isModalVisibleCancelTravel: false})}
-                    isVisible={this.state.isModalVisibleCancelTravel}
-                    style={{justifyContent: 'center', alignItems: 'center'}}
-                >
-                    <View style={{
-                        height: 130,
-                        width: '70%',
-                        backgroundColor: '#fff',
-                        borderRadius: 4,
-                    }}>
-                        <View style={styles.modalContainer}>
-                            <Text style={styles.routesScreenModalTitleText}>
-                                شما در حال سفر هستید!
-                            </Text>
-                            <Text style={styles.routesScreenModalLowerText}>
-                                آیا مایل به لغو سفر خود هستید؟
-                            </Text>
-                            <View style={styles.modalButtonsContainer}>
-                                <TouchableOpacity
-                                    onPress={this.toggleModal}
-                                    style={styles.routesScreenModalNoButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            خیر
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={this.cancelTravel}
-                                    style={styles.routesScreenModalYesButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            بله
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                    </View>
-                </Modal>
-                <Modal
-                    animationIn="zoomIn"
-                    animationOut="zoomOut"
-                    // animationInTiming={600}
-                    // animationOutTiming={600}
-                    hideModalContentWhileAnimating={true}
-                    onBackdropPress={() => this.setState({isModalVisibleStartTravel: false})}
-                    isVisible={this.state.isModalVisibleStartTravel}
-                    style={{justifyContent: 'center', alignItems: 'center'}}
-                >
-                    <View style={{
-                        height: 170,
-                        width: '70%',
-                        backgroundColor: '#fff',
-                        borderRadius: 4,
-                    }}>
-                        <View style={styles.modalContainer}>
-                            <Text style={styles.routesScreenModalTitleText}>
-                                سفر شما آغاز شد!
-                            </Text>
-                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
-                            </Text>
-                            <View style={styles.modalButtonsContainer}>
-                                <TouchableOpacity
-                                    onPress={this.toggleModalStartTravel}
-                                    style={styles.routesScreenModalOkButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            فهمیدم
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                    </View>
-                </Modal>
             </View>
         );
     }
