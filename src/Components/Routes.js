@@ -137,97 +137,97 @@ export default class RoutesScreen extends React.Component {
                     </View>
                 </View>
 
-                <View style={styles.routesScreenRouteBox}>
-                    <View style={styles.routesScreenRouteBoxContainer}>
+                {/*<View style={styles.routesScreenRouteBox}>*/}
+                {/*    <View style={styles.routesScreenRouteBoxContainer}>*/}
 
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow1Container}>
+                {/*        <View style={styles.routesScreenRouteBoxRow1}>*/}
+                {/*            <View style={styles.routesScreenRouteBoxRow1Container}>*/}
 
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    انقلاب
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    به
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    تجریش
-                                </Text>
+                {/*                <Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                {/*                    انقلاب*/}
+                {/*                </Text>*/}
+                {/*                <Text style={styles.routesScreenRouteBoxRow1SmallText}>*/}
+                {/*                    به*/}
+                {/*                </Text>*/}
+                {/*                <Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                {/*                    تجریش*/}
+                {/*                </Text>*/}
 
-                            </View>
-                        </View>
+                {/*            </View>*/}
+                {/*        </View>*/}
 
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
+                {/*        <View style={styles.routesScreenRouteBoxRow1}>*/}
+                {/*            <View style={styles.routesScreenRouteBoxRow2Container}>*/}
 
-                                <View style={styles.routesScreenRouteBoxRow2Vehicle}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+                {/*                <View style={styles.routesScreenRouteBoxRow2Vehicle}>*/}
+                {/*                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>*/}
 
-                                        <Image
-                                            style={{height: 15, width: 15, marginLeft: 5}}
-                                            source={require('../Assets/Icons/icPerson.png')}
-                                        />
-                                        <Text style={styles.routesScreenRouteBoxBarText}>
-                                            ۲۱ کیلومتر
-                                        </Text>
+                {/*                        <Image*/}
+                {/*                            style={{height: 15, width: 15, marginLeft: 5}}*/}
+                {/*                            source={require('../Assets/Icons/icPerson.png')}*/}
+                {/*                        />*/}
+                {/*                        <Text style={styles.routesScreenRouteBoxBarText}>*/}
+                {/*                            ۲۱ کیلومتر*/}
+                {/*                        </Text>*/}
 
-                                    </View>
-                                </View>
+                {/*                    </View>*/}
+                {/*                </View>*/}
 
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    ۵ روز پیش
-                                </Text>
+                {/*                <Text style={styles.routesScreenRouteBoxRow1SmallText}>*/}
+                {/*                    ۵ روز پیش*/}
+                {/*                </Text>*/}
 
-                            </View>
-                        </View>
+                {/*            </View>*/}
+                {/*        </View>*/}
 
-                    </View>
-                </View>
+                {/*    </View>*/}
+                {/*</View>*/}
 
-                <View style={styles.routesScreenRouteBox}>
-                    <View style={styles.routesScreenRouteBoxContainer}>
+                {/*<View style={styles.routesScreenRouteBox}>*/}
+                {/*    <View style={styles.routesScreenRouteBoxContainer}>*/}
 
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow1Container}>
+                {/*        <View style={styles.routesScreenRouteBoxRow1}>*/}
+                {/*            <View style={styles.routesScreenRouteBoxRow1Container}>*/}
 
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    جردن
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    به
-                                </Text>
-                                <Text style={styles.routesScreenRouteBoxRow1BoldText}>
-                                    ونک
-                                </Text>
+                {/*                <Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                {/*                    جردن*/}
+                {/*                </Text>*/}
+                {/*                <Text style={styles.routesScreenRouteBoxRow1SmallText}>*/}
+                {/*                    به*/}
+                {/*                </Text>*/}
+                {/*                <Text style={styles.routesScreenRouteBoxRow1BoldText}>*/}
+                {/*                    ونک*/}
+                {/*                </Text>*/}
 
-                            </View>
-                        </View>
+                {/*            </View>*/}
+                {/*        </View>*/}
 
-                        <View style={styles.routesScreenRouteBoxRow1}>
-                            <View style={styles.routesScreenRouteBoxRow2Container}>
+                {/*        <View style={styles.routesScreenRouteBoxRow1}>*/}
+                {/*            <View style={styles.routesScreenRouteBoxRow2Container}>*/}
 
-                                <View style={styles.routesScreenRouteBoxRow2Vehicle}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+                {/*                <View style={styles.routesScreenRouteBoxRow2Vehicle}>*/}
+                {/*                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>*/}
 
-                                        <Image
-                                            style={{height: 15, width: 15, marginLeft: 5}}
-                                            source={require('../Assets/Icons/ic‌Bike.png')}
-                                        />
-                                        <Text style={styles.routesScreenRouteBoxBarText}>
-                                            ۶ کیلومتر
-                                        </Text>
+                {/*                        <Image*/}
+                {/*                            style={{height: 15, width: 15, marginLeft: 5}}*/}
+                {/*                            source={require('../Assets/Icons/ic‌Bike.png')}*/}
+                {/*                        />*/}
+                {/*                        <Text style={styles.routesScreenRouteBoxBarText}>*/}
+                {/*                            ۶ کیلومتر*/}
+                {/*                        </Text>*/}
 
-                                    </View>
-                                </View>
+                {/*                    </View>*/}
+                {/*                </View>*/}
 
-                                <Text style={styles.routesScreenRouteBoxRow1SmallText}>
-                                    ۱۱ روز پیش
-                                </Text>
+                {/*                <Text style={styles.routesScreenRouteBoxRow1SmallText}>*/}
+                {/*                    ۱۱ روز پیش*/}
+                {/*                </Text>*/}
 
-                            </View>
-                        </View>
+                {/*            </View>*/}
+                {/*        </View>*/}
 
-                    </View>
-                </View>
+                {/*    </View>*/}
+                {/*</View>*/}
 
             </View>
         );
