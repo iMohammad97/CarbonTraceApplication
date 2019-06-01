@@ -296,6 +296,19 @@ export default class RoutingDetailsScreen extends React.Component {
             await AsyncStorage.setItem('travel_duration', String(this.state.dataRouteDuration * 60));
             await AsyncStorage.setItem('travel_status', 'traveling');
             await AsyncStorage.setItem('travel_type', String(this.state.chosenTypeValue));
+            if (this.state.chosenTypeValue === 4) {
+                await AsyncStorage.setItem('travel_point', String(parseInt(this.state.dataRouteDuration * (500 / 15))));
+            } else if (this.state.chosenTypeValue === 3) {
+                await AsyncStorage.setItem('travel_point', String(parseInt(this.state.dataRouteDuration * (500 / 15))));
+            } else if (this.state.chosenTypeValue === 2) {
+                await AsyncStorage.setItem('travel_point', String(parseInt(this.state.dataRouteDuration * (100 / 15))));
+            } else if (this.state.chosenTypeValue === 1) {
+                await AsyncStorage.setItem('travel_point', String(parseInt(this.state.dataRouteDuration * (200 / 15))));
+            } else if (this.state.chosenTypeValue === 0) {
+                await AsyncStorage.setItem('travel_point', String(parseInt(this.state.dataRouteDuration * (325 / 15))));
+            } else {
+                await AsyncStorage.setItem('travel_point', "-1");
+            }
             this.toggleModalStartTravel();
         } catch (error) {
             // Error retrieving data
