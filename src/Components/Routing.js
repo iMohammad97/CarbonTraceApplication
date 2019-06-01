@@ -11,7 +11,7 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    Dimensions, TextInput
+    Dimensions, TextInput, Linking
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -173,7 +173,7 @@ export default class RoutingScreen extends React.Component {
                                         </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity
-                                        // onPress={this.toggleModalEvent()}
+                                        onPress={() => Linking.openURL(responseJson[0].web_link).catch(err => console.error('An error occurred', err))}
                                         style={styles.eventModalLinkButton}>
                                         <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
