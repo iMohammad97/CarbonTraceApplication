@@ -98,6 +98,59 @@ export default class RoutingCheckInScreen extends React.Component {
         )
     }
 
+    handlePress = async () => {
+        fetch('http://127.0.0.1:5000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // credentials: 'include',
+            body: JSON.stringify({
+                "name": "string",
+                "point": "string",
+                "source": "string",
+                "destination": "string",
+                "email": "string",
+                "source_name": "string",
+                "destination_name": "string",
+                "date": "string"
+            })
+        })
+            .then((response) =>  {
+                // console.log('response', response);
+                return response.json();
+            })
+            .then((responseJson) => {
+                // console.log('json', responseJson);
+                this.setState({email: responseJson["user"]["email"]});
+                this.setState({name: responseJson["user"]["name"]});
+                this.setState({credit: String(responseJson["user"]["credit"])});
+                this.setState({role: responseJson["user"]["role"]});
+                this.setState({id: String(responseJson["user"]["id"])});
+                this.setState({status: responseJson["status"]});
+                // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                if (this.state.status === "OK") {
+                    this.signInAsync()
+                    // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                } else {
+                    let err = this.state.status;
+                    switch (err) {
+                        case "password incorrect":
+                            this.setState({errorConsole: "خطا:‌ رمز عبور اشتباه است"});
+                            break;
+                        case "user not found":
+                            this.setState({errorConsole: "خطا: نام کاربری یافت نشد"});
+                            break;
+                        default:
+                            this.setState({errorConsole: "خطا: عدم ارتباط با سرور"});
+                    }
+                    ;
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
     toggleModal = () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
