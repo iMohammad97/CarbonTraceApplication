@@ -59,6 +59,74 @@ export default class PointsScreen extends React.Component {
         },
     };
 
+    constructor(props) {
+        super(props);
+        this.getRouteStatus();
+        // this.loadAddresses();
+
+
+        this.state = {
+            markers: [],
+            loading1: true,
+            loading2: true,
+            loading3: true,
+            currentLatitude: null,
+            currentLongitute: null,
+            currentTimestamp: null,
+            dataSource: '',
+            dataDestination: '',
+            dataRouteDistance: 0.0,
+            dataRouteDuration: 0.0,
+            dataRouteOuterLinkGoogle: '',
+            dataRouteOuterLinkWaze: '',
+            dataRouteOuterLinkNamaa: '',
+            isModalVisibleCancelTravel: false,
+            isModalVisibleStartTravel: false
+        };
+    }
+    // componentDidMount() {
+    //     this.loadTotalPoints();
+    // }
+
+    loadTotalPoints = async (email) => {
+        fetch("http://198.143.182.41/v1/points/" + email + "?query_type=totalpoints", {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json'
+                // 'x-api-key': corp_API_key
+            },
+        })
+            .then(response => response.json())
+            .then((responseJson) => {
+                // console.log(responseJson);
+                this.setState({
+                    totalPoints: responseJson,
+                });
+                // console.log('rs',responseJson)
+            })
+            .catch(error => console.log(error));//to catch the errors if any
+
+    };
+    getRouteStatus = async () => {
+        let user, email, name;
+        try {
+            user = await AsyncStorage.getItem('user');
+            email = await AsyncStorage.getItem('email');
+            name = await AsyncStorage.getItem('name');
+            this.setState({
+                user: user,
+                email: email,
+                name: name,
+                // travel_point: travel_point
+            });
+            this.loadTotalPoints(email);
+        } catch (error) {
+            // Error retrieving data
+            console.log(error.message);
+        }
+    };
+
+
     render() {
         return (
             <View style={styles.container}>
@@ -69,7 +137,7 @@ export default class PointsScreen extends React.Component {
                             امتیاز
                         </Text>
                         <Text style={styles.pointsScreenTitleLabelPointText}>
-                            ۱۰۰
+                            {this.state.totalPoints}
                         </Text>
                         <Text style={styles.pointsScreenTitleLabelText}>
                             موجودی شما :
