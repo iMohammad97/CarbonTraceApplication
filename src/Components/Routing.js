@@ -150,9 +150,26 @@ export default class RoutingScreen extends React.Component {
             .then(response => response.json())
             .then((responseJson) => {
                 let count = responseJson.length;
-                for (i in responseJson) {
-
+                let events = [];
+                for (let i in responseJson) {
+                    events.push(
+                        {
+                            "img_url": i.img_url,
+                            "title": i.title,
+                            "is_active": i.is_active,
+                            "id": i.id,
+                            "web_link": i.web_link,
+                            "description": i.description,
+                            "date": i.date
+                        }
+                    )
                 }
+                this.setState({
+                    events: events
+                });
+                if (this.state.events) {
+                    this.toggleModalEvent();
+                };
                 // console.log('rs',responseJson)
             })
             .catch(error => console.log(error));//to catch the errors if any
