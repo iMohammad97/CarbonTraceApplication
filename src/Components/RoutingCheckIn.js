@@ -98,59 +98,60 @@ export default class RoutingCheckInScreen extends React.Component {
         )
     }
 
-    postRouteToServer = async () => {
-        fetch('http://127.0.0.1:5000/api/login', {
+    postRouteToServer = async (date) => {
+        fetch('http://198.143.182.41/v1/points/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             // credentials: 'include',
             body: JSON.stringify({
-                "name": "string",
-                "point": "string",
-                "source": "string",
-                "destination": "string",
-                "email": "string",
-                "source_name": "string",
-                "destination_name": "string",
-                "date": "string"
+                "name": this.state.name,
+                "point": this.state.travel_point,
+                "source": "lat:" + String(this.state.markers[0].coordinate.latitude) + "-" + "long:" + String(this.state.markers[0].coordinate.longitude),
+                "destination": "lat:" + String(this.state.markers[1].coordinate.latitude) + "-" + "long:" + String(this.state.markers[1].coordinate.longitude),
+                "email": this.state.email,
+                "source_name": this.state.dataSourceNeighbourhood,
+                "destination_name": this.state.dataDestinationNeighbourhood,
+                "date": String(date)
             })
         })
-            .then((response) =>  {
+            .then((response) => {
                 // console.log('response', response);
                 return response.json();
             })
             .then((responseJson) => {
+                console.log('reeeeee', responseJson);
                 // console.log('json', responseJson);
-                this.setState({email: responseJson["user"]["email"]});
-                this.setState({name: responseJson["user"]["name"]});
-                this.setState({credit: String(responseJson["user"]["credit"])});
-                this.setState({role: responseJson["user"]["role"]});
-                this.setState({id: String(responseJson["user"]["id"])});
-                this.setState({status: responseJson["status"]});
-                // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
-                if (this.state.status === "OK") {
-                    this.signInAsync()
-                    // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
-                } else {
-                    let err = this.state.status;
-                    switch (err) {
-                        case "password incorrect":
-                            this.setState({errorConsole: "خطا:‌ رمز عبور اشتباه است"});
-                            break;
-                        case "user not found":
-                            this.setState({errorConsole: "خطا: نام کاربری یافت نشد"});
-                            break;
-                        default:
-                            this.setState({errorConsole: "خطا: عدم ارتباط با سرور"});
-                    }
-                    ;
-                }
+                // this.setState({email: responseJson["user"]["email"]});
+                // this.setState({name: responseJson["user"]["name"]});
+                // this.setState({credit: String(responseJson["user"]["credit"])});
+                // this.setState({role: responseJson["user"]["role"]});
+                // this.setState({id: String(responseJson["user"]["id"])});
+                // this.setState({status: responseJson["status"]});
+                // // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                // if (this.state.status === "OK") {
+                //     this.signInAsync()
+                //     // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                // } else {
+                //     let err = this.state.status;
+                //     switch (err) {
+                //         case "password incorrect":
+                //             this.setState({errorConsole: "خطا:‌ رمز عبور اشتباه است"});
+                //             break;
+                //         case "user not found":
+                //             this.setState({errorConsole: "خطا: نام کاربری یافت نشد"});
+                //             break;
+                //         default:
+                //             this.setState({errorConsole: "خطا: عدم ارتباط با سرور"});
+                //     }
+                //     ;
+                // }
             })
             .catch((error) => {
                 console.error(error);
             });
-    }
+    };
     toggleModal = () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
@@ -181,7 +182,8 @@ export default class RoutingCheckInScreen extends React.Component {
                 console.log(responseJson);
                 this.setState({
                     loading1: false,
-                    dataSource: responseJson.address_compact
+                    dataSource: responseJson.address_compact,
+                    dataSourceNeighbourhood: responseJson.neighbourhood
                 })
             })
             .catch(error => console.log(error));//to catch the errors if any
@@ -200,7 +202,8 @@ export default class RoutingCheckInScreen extends React.Component {
                 console.log(responseJson);
                 this.setState({
                     loading2: false,
-                    dataDestination: responseJson.address_compact
+                    dataDestination: responseJson.address_compact,
+                    dataDestinationNeighbourhood: responseJson.neighbourhood
                 })
             })
             .catch(error => console.log(error));//to catch the errors if any
@@ -313,9 +316,9 @@ export default class RoutingCheckInScreen extends React.Component {
                 // travel_point: travel_point
             })
         }
-        // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
-        // this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
+        this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read check in:', markers);
     };
     checkInController = async (lat, long) => {
@@ -344,7 +347,7 @@ export default class RoutingCheckInScreen extends React.Component {
                 if (timeDiffSec > travel_duration - 120) {
                     console.log('arrived');
                     await AsyncStorage.setItem('travel_status', 'not_traveling');
-                    this.postRouteToServer();
+                    this.postRouteToServer(endDate);
                     alert('شما با موفقیت چک این کردید!');
                 } else {
                     alert('زمان کافی نگذشته است!');
