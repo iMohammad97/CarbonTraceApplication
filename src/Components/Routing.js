@@ -132,10 +132,13 @@ export default class RoutingScreen extends React.Component {
             // });
         } else {
             console.log('user not found', user);
+            this.toggleModalUserLogIn();
             // this.setState({markers: []})
         }
     };
-
+    toggleModalUserLogIn = () => {
+        this.setState({isModalVisibleUserLogIn: !this.state.isModalVisibleUserLogIn});
+    };
 
     getRouteStatus = async () => {
         let markers = [];
@@ -349,7 +352,7 @@ export default class RoutingScreen extends React.Component {
                             </Text>
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
-                                    onPress={this.toggleModalStartTravelError}
+                                    onPress={this.toggleModalUserLogIn}
                                     style={styles.routesScreenModalOkButton}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
