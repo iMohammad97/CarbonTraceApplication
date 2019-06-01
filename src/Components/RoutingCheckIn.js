@@ -342,20 +342,28 @@ export default class RoutingCheckInScreen extends React.Component {
         console.log('difffff', timeDiffSec);
         console.log('dur', travel_duration);
 
-        if (currLat < destLatUpBound && currLat > destLatLowBound) {
-            if (currLong < destLongUpBound && currLong > destLongLowBound) {
-                if (timeDiffSec > travel_duration - 120) {
-                    console.log('arrived');
-                    await AsyncStorage.setItem('travel_status', 'not_traveling');
-                    this.postRouteToServer(endDate);
-                    alert('شما با موفقیت چک این کردید!');
+        let travel_status = await AsyncStorage.getItem('travel_status');
+        if (travel_status === 'traveling') {
+            if (currLat < destLatUpBound && currLat > destLatLowBound) {
+                if (currLong < destLongUpBound && currLong > destLongLowBound) {
+                    if (timeDiffSec > travel_duration - 120) {
+                        console.log('arrived');
+                        await AsyncStorage.setItem('travel_status', 'not_traveling');
+                        this.postRouteToServer(endDate);
+                        alert('شما با موفقیت چک این کردید!');
+                    } else {
+                        alert('زمان کافی نگذشته است!');
+                    }
                 } else {
-                    alert('زمان کافی نگذشته است!');
+                    alert('شما به مقصد نرسیده اید!');
                 }
+            } else {
+                alert('شما به مقصد نرسیده اید!');
             }
         } else {
-            alert('شما به مقصد نرسیده اید!');
+            alert('شما در سفر نیستید!');
         }
+
     };
 
 
