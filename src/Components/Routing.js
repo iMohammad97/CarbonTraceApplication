@@ -23,6 +23,7 @@ import {
     createBottomTabNavigator
 } from 'react-navigation';
 import MapView, {PROVIDER_GOOGLE, Marker, ProviderPropType} from "react-native-maps";
+import Modal from "react-native-modal";
 
 const color1 = '#44678c';
 const color2 = '#424242';
@@ -89,6 +90,7 @@ export default class RoutingScreen extends React.Component {
             //     longitudeDelta: LONGITUDE_DELTA,
             // },
             markers: [],
+            isModalVisibleUserLogIn: false,
         };
     }
     componentDidMount() {
@@ -322,16 +324,129 @@ export default class RoutingScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    onBackdropPress={() => this.setState({isModalVisibleUserLogIn: false})}
+                    isVisible={this.state.isModalVisibleUserLogIn}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{
+                        height: 200,
+                        width: '70%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4,
+                    }}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.routesScreenModalTitleText}>
+                                خطا در آغاز سفر!
+                            </Text>
+                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
+                                لطفا برای شروع سفر ابتدا به مبدا سفر بروید!
+                            </Text>
+                            <View style={styles.modalButtonsContainer}>
+                                <TouchableOpacity
+                                    onPress={this.toggleModalStartTravelError}
+                                    style={styles.routesScreenModalOkButton}>
+                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                        <Text style={styles.routesScreenModalNoButtonText}>
+                                            فهمیدم
+                                        </Text>
+
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+                </Modal>
             </View>
         );
     }
 }
-// DefaultMarkers.propTypes = {
-//     provider: ProviderPropType,
-// };
 
 
 const styles = StyleSheet.create({
+    routesScreenModalNoButtonText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 19,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        // width: '100%',
+        // height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color4,
+        // backgroundColor: color2,
+    },
+    routesScreenRouteBoxRow2VehicleContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    routesScreenModalOkButton: {
+        height: 50,
+        width: '90%',
+        // margin: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "green"
+    },
+    modalButtonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    routesScreenModalLowerTextStartTravel: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 17,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 80,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    routesScreenModalTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 25,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    modalContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+    },
     mainBubblesContainer: {
         flex: 1,
         flexDirection: 'column',
