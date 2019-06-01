@@ -238,7 +238,7 @@ export default class RoutingCheckInScreen extends React.Component {
             markers_1_color;
         let markers_2_coordinate_latitude, markers_2_coordinate_longitude, markers_2_key, markers_2_title,
             markers_2_color;
-        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration;
+        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration, travel_point;
         let user, email, name;
         try {
             markers_1_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-latitude'));
@@ -257,6 +257,7 @@ export default class RoutingCheckInScreen extends React.Component {
             travel_start_date_time = await AsyncStorage.getItem('travel_start_date_time');
             travel_status = await AsyncStorage.getItem('travel_status');
             travel_duration = await AsyncStorage.getItem('travel_duration');
+            travel_point = await AsyncStorage.getItem('travel_point');
 
             user = await AsyncStorage.getItem('user');
             email = await AsyncStorage.getItem('email');
@@ -300,14 +301,16 @@ export default class RoutingCheckInScreen extends React.Component {
                 travel_duration: travel_duration,
                 user: user,
                 email: email,
-                name: name
+                name: name,
+                travel_point: travel_point
             });
         } else {
             this.setState({
                 markers: [],
                 user: user,
                 email: email,
-                name: name
+                name: name,
+                // travel_point: travel_point
             })
         }
         // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
