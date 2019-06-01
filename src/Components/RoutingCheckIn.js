@@ -98,6 +98,60 @@ export default class RoutingCheckInScreen extends React.Component {
         )
     }
 
+    postRouteToServer = async (date) => {
+        fetch('http://198.143.182.41/v1/points/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // credentials: 'include',
+            body: JSON.stringify({
+                "name": this.state.name,
+                "point": this.state.travel_point,
+                "source": "lat:" + String(this.state.markers[0].coordinate.latitude) + "-" + "long:" + String(this.state.markers[0].coordinate.longitude),
+                "destination": "lat:" + String(this.state.markers[1].coordinate.latitude) + "-" + "long:" + String(this.state.markers[1].coordinate.longitude),
+                "email": this.state.email,
+                "source_name": this.state.dataSourceNeighbourhood,
+                "destination_name": this.state.dataDestinationNeighbourhood,
+                "date": String(date)
+            })
+        })
+            .then((response) => {
+                // console.log('response', response);
+                return response.json();
+            })
+            .then((responseJson) => {
+                console.log('reeeeee', responseJson);
+                // console.log('json', responseJson);
+                // this.setState({email: responseJson["user"]["email"]});
+                // this.setState({name: responseJson["user"]["name"]});
+                // this.setState({credit: String(responseJson["user"]["credit"])});
+                // this.setState({role: responseJson["user"]["role"]});
+                // this.setState({id: String(responseJson["user"]["id"])});
+                // this.setState({status: responseJson["status"]});
+                // // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                // if (this.state.status === "OK") {
+                //     this.signInAsync()
+                //     // Alert.alert("Author name at 0th index:  " + responseJson["status"]);
+                // } else {
+                //     let err = this.state.status;
+                //     switch (err) {
+                //         case "password incorrect":
+                //             this.setState({errorConsole: "خطا:‌ رمز عبور اشتباه است"});
+                //             break;
+                //         case "user not found":
+                //             this.setState({errorConsole: "خطا: نام کاربری یافت نشد"});
+                //             break;
+                //         default:
+                //             this.setState({errorConsole: "خطا: عدم ارتباط با سرور"});
+                //     }
+                //     ;
+                // }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
     toggleModal = () => {
         this.setState({isModalVisibleCancelTravel: !this.state.isModalVisibleCancelTravel});
     };
@@ -128,7 +182,8 @@ export default class RoutingCheckInScreen extends React.Component {
                 console.log(responseJson);
                 this.setState({
                     loading1: false,
-                    dataSource: responseJson.address_compact
+                    dataSource: responseJson.address_compact,
+                    dataSourceNeighbourhood: responseJson.neighbourhood
                 })
             })
             .catch(error => console.log(error));//to catch the errors if any
@@ -147,7 +202,8 @@ export default class RoutingCheckInScreen extends React.Component {
                 console.log(responseJson);
                 this.setState({
                     loading2: false,
-                    dataDestination: responseJson.address_compact
+                    dataDestination: responseJson.address_compact,
+                    dataDestinationNeighbourhood: responseJson.neighbourhood
                 })
             })
             .catch(error => console.log(error));//to catch the errors if any
@@ -185,7 +241,8 @@ export default class RoutingCheckInScreen extends React.Component {
             markers_1_color;
         let markers_2_coordinate_latitude, markers_2_coordinate_longitude, markers_2_key, markers_2_title,
             markers_2_color;
-        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration;
+        let travel_start_date, travel_start_date_time, travel_status, startDateArr, travel_duration, travel_point;
+        let user, email, name;
         try {
             markers_1_coordinate_latitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-latitude'));
             markers_1_coordinate_longitude = parseFloat(await AsyncStorage.getItem('markers-1-coordinate-longitude'));
@@ -203,6 +260,11 @@ export default class RoutingCheckInScreen extends React.Component {
             travel_start_date_time = await AsyncStorage.getItem('travel_start_date_time');
             travel_status = await AsyncStorage.getItem('travel_status');
             travel_duration = await AsyncStorage.getItem('travel_duration');
+            travel_point = await AsyncStorage.getItem('travel_point');
+
+            user = await AsyncStorage.getItem('user');
+            email = await AsyncStorage.getItem('email');
+            name = await AsyncStorage.getItem('name');
 
             startDateArr = String(travel_start_date).split(' ');
 
@@ -239,16 +301,24 @@ export default class RoutingCheckInScreen extends React.Component {
                 travel_start_date_arr: startDateArr,
                 travel_start_date_time: travel_start_date_time,
                 travel_status: travel_status,
-                travel_duration: travel_duration
+                travel_duration: travel_duration,
+                user: user,
+                email: email,
+                name: name,
+                travel_point: travel_point
             });
         } else {
             this.setState({
                 markers: [],
+                user: user,
+                email: email,
+                name: name,
+                // travel_point: travel_point
             })
         }
-        // this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
-        // this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
-        // this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        this.loadAddressesSource(markers_1_coordinate_latitude, markers_1_coordinate_longitude);
+        this.loadAddressesDestination(markers_2_coordinate_latitude, markers_2_coordinate_longitude);
+        this.loadRouteDistanceDuration(markers_1_coordinate_latitude, markers_1_coordinate_longitude, markers_2_coordinate_latitude, markers_2_coordinate_longitude);
         console.log('on read check in:', markers);
     };
     checkInController = async (lat, long) => {
@@ -272,19 +342,28 @@ export default class RoutingCheckInScreen extends React.Component {
         console.log('difffff', timeDiffSec);
         console.log('dur', travel_duration);
 
-        if (currLat < destLatUpBound && currLat > destLatLowBound) {
-            if (currLong < destLongUpBound && currLong > destLongLowBound) {
-                if (timeDiffSec > travel_duration - 120) {
-                    console.log('arrived');
-                    alert('شما با موفقیت چک این کردید!');
-                    await AsyncStorage.setItem('travel_status', 'not_traveling');
+        let travel_status = await AsyncStorage.getItem('travel_status');
+        if (travel_status === 'traveling') {
+            if (currLat < destLatUpBound && currLat > destLatLowBound) {
+                if (currLong < destLongUpBound && currLong > destLongLowBound) {
+                    if (timeDiffSec > travel_duration - 120) {
+                        console.log('arrived');
+                        await AsyncStorage.setItem('travel_status', 'not_traveling');
+                        this.postRouteToServer(endDate);
+                        alert('شما با موفقیت چک این کردید!');
+                    } else {
+                        alert('زمان کافی نگذشته است!');
+                    }
                 } else {
-                    alert('زمان کافی نگذشته است!');
+                    alert('شما به مقصد نرسیده اید!');
                 }
+            } else {
+                alert('شما به مقصد نرسیده اید!');
             }
         } else {
-            alert('شما به مقصد نرسیده اید!');
+            alert('شما در سفر نیستید!');
         }
+
     };
 
 
@@ -309,98 +388,6 @@ export default class RoutingCheckInScreen extends React.Component {
                         </View>
                     </View>
                 </TouchableOpacity>
-
-                <Modal
-                    animationIn="zoomIn"
-                    animationOut="zoomOut"
-                    // animationInTiming={600}
-                    // animationOutTiming={600}
-                    hideModalContentWhileAnimating={true}
-                    onBackdropPress={() => this.setState({isModalVisibleCancelTravel: false})}
-                    isVisible={this.state.isModalVisibleCancelTravel}
-                    style={{justifyContent: 'center', alignItems: 'center'}}
-                >
-                    <View style={{
-                        height: 130,
-                        width: '70%',
-                        backgroundColor: '#fff',
-                        borderRadius: 4,
-                    }}>
-                        <View style={styles.modalContainer}>
-                            <Text style={styles.routesScreenModalTitleText}>
-                                شما در حال سفر هستید!
-                            </Text>
-                            <Text style={styles.routesScreenModalLowerText}>
-                                آیا مایل به لغو سفر خود هستید؟
-                            </Text>
-                            <View style={styles.modalButtonsContainer}>
-                                <TouchableOpacity
-                                    onPress={this.toggleModal}
-                                    style={styles.routesScreenModalNoButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            خیر
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={this.cancelTravel}
-                                    style={styles.routesScreenModalYesButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            بله
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                    </View>
-                </Modal>
-                <Modal
-                    animationIn="zoomIn"
-                    animationOut="zoomOut"
-                    // animationInTiming={600}
-                    // animationOutTiming={600}
-                    hideModalContentWhileAnimating={true}
-                    onBackdropPress={() => this.setState({isModalVisibleStartTravel: false})}
-                    isVisible={this.state.isModalVisibleStartTravel}
-                    style={{justifyContent: 'center', alignItems: 'center'}}
-                >
-                    <View style={{
-                        height: 170,
-                        width: '70%',
-                        backgroundColor: '#fff',
-                        borderRadius: 4,
-                    }}>
-                        <View style={styles.modalContainer}>
-                            <Text style={styles.routesScreenModalTitleText}>
-                                سفر شما آغاز شد!
-                            </Text>
-                            <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                پس از رسیدن به مقصد از منوی مسیریابی چک این کنید تا امتیازتان را دریافت کنید.
-                            </Text>
-                            <View style={styles.modalButtonsContainer}>
-                                <TouchableOpacity
-                                    onPress={this.toggleModalStartTravel}
-                                    style={styles.routesScreenModalOkButton}>
-                                    <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
-
-                                        <Text style={styles.routesScreenModalNoButtonText}>
-                                            فهمیدم
-                                        </Text>
-
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                    </View>
-                </Modal>
             </View>
         );
     }
