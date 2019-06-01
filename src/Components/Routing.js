@@ -93,6 +93,7 @@ export default class RoutingScreen extends React.Component {
             isModalVisibleUserLogIn: false,
         };
     }
+
     componentDidMount() {
         this.checkIfUser();
         navigator.geolocation.getCurrentPosition(
@@ -115,6 +116,7 @@ export default class RoutingScreen extends React.Component {
             {enableHighAccuracy: true, timeout: 30000}
         )
     };
+
     checkIfUser = async () => {
         let user, email, name;
         try {
@@ -139,6 +141,23 @@ export default class RoutingScreen extends React.Component {
     toggleModalUserLogIn = () => {
         this.setState({isModalVisibleUserLogIn: !this.state.isModalVisibleUserLogIn});
     };
+    saveUserData = async () => {
+        if (!this.state.textInputUserEmail) {
+            alert('آدرس ایمیل نمی تواند خالی باشد!')
+        } else if (!this.state.textInputUserFullName) {
+            alert('نام نمی تواند خالی باشد!')
+        } else {
+            try {
+                await AsyncStorage.setItem('user', this.state.textInputUserEmail);
+                await AsyncStorage.setItem('email', this.state.textInputUserEmail);
+                await AsyncStorage.setItem('name', this.state.textInputUserFullName);
+            } catch (error) {
+                // Error retrieving data
+                console.log(error.message);
+            }
+        }
+    };
+
 
     getRouteStatus = async () => {
         let markers = [];
@@ -303,7 +322,8 @@ export default class RoutingScreen extends React.Component {
                         <View
                             style={styles.bubbleNotif}
                         >
-                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب کنید</Text>
+                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب
+                                کنید</Text>
                         </View>
                         <TouchableOpacity
                             onPress={() => this.saveRouteStatus(this.state.markers)}
@@ -364,12 +384,12 @@ export default class RoutingScreen extends React.Component {
                                        onChangeText={(textInputUserEmail) => this.setState({textInputUserEmail})}/>
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
-                                    onPress={this.toggleModalUserLogIn}
+                                    onPress={this.saveUserData}
                                     style={styles.routesScreenModalOkButton}>
                                     <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
 
                                         <Text style={styles.routesScreenModalNoButtonText}>
-                                            فهمیدم
+                                            ورود
                                         </Text>
 
                                     </View>
