@@ -11,7 +11,7 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    Dimensions
+    Dimensions, TextInput
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -333,23 +333,35 @@ export default class RoutingScreen extends React.Component {
                     // animationInTiming={600}
                     // animationOutTiming={600}
                     hideModalContentWhileAnimating={true}
-                    onBackdropPress={() => this.setState({isModalVisibleUserLogIn: false})}
+                    // onBackdropPress={() => this.setState({isModalVisibleUserLogIn: false})}
                     isVisible={this.state.isModalVisibleUserLogIn}
                     style={{justifyContent: 'center', alignItems: 'center'}}
                 >
                     <View style={{
-                        height: 200,
+                        height: 295,
                         width: '70%',
                         backgroundColor: '#fff',
                         borderRadius: 4,
                     }}>
                         <View style={styles.modalContainer}>
                             <Text style={styles.routesScreenModalTitleText}>
-                                خطا در آغاز سفر!
+                                خوش آمدید
                             </Text>
                             <Text style={styles.routesScreenModalLowerTextStartTravel}>
-                                لطفا برای شروع سفر ابتدا به مبدا سفر بروید!
+                                لطفا برای استفاده از ردپا ابتدا وارد حساب کاربری خود شوید.
                             </Text>
+                            <TextInput style={styles.textInputStyle}
+                                       placeholder="نام و نام خانوادگی"
+                                       autoCapitalize='none'
+                                       placeholderTextColor={color3}
+                                       autoCorrect={false}
+                                       onChangeText={(textInputUserFullName) => this.setState({textInputUserFullName})}/>
+                            <TextInput style={styles.textInputStyle2}
+                                       placeholder="آدرس ایمیل"
+                                       autoCapitalize='none'
+                                       placeholderTextColor={color3}
+                                       autoCorrect={false}
+                                       onChangeText={(textInputUserEmail) => this.setState({textInputUserEmail})}/>
                             <View style={styles.modalButtonsContainer}>
                                 <TouchableOpacity
                                     onPress={this.toggleModalUserLogIn}
@@ -374,6 +386,37 @@ export default class RoutingScreen extends React.Component {
 
 
 const styles = StyleSheet.create({
+    textInputStyle: {
+        width: '90%',
+        borderRadius: 5,
+        height: 40,
+        backgroundColor: color5,
+        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        borderColor: color4,
+        textAlign: 'right',
+        color: color2,
+        paddingRight: 5,
+        borderBottomWidth: 2,
+        borderWidth: 0
+    },
+    textInputStyle2: {
+        width: '90%',
+        borderRadius: 5,
+        height: 40,
+        backgroundColor: color5,
+        fontFamily: Platform.OS === 'ios' ? "IRANYekan" : "IRANYekanRegular",
+        fontSize: 12,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        borderColor: color4,
+        textAlign: 'right',
+        color: color2,
+        paddingRight: 5,
+        marginTop: 8,
+        borderBottomWidth: 2,
+        borderWidth: 0
+    },
     routesScreenModalNoButtonText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 19,
@@ -397,7 +440,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     routesScreenModalOkButton: {
-        height: 50,
+        height: 40,
         width: '90%',
         // margin: 5,
         borderRadius: 5,
@@ -410,6 +453,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop: 15,
     },
     routesScreenModalLowerTextStartTravel: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
@@ -422,7 +466,7 @@ const styles = StyleSheet.create({
         // maxHeight: '100%',
         // lineHeight: 40,
         letterSpacing: 1,
-        textAlign: "center",
+        textAlign: "right",
         // textAlignVertical: 'bottom',
         color: color1,
         // backgroundColor: color2,
