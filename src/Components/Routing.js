@@ -79,6 +79,7 @@ export default class RoutingScreen extends React.Component {
                 });
             });
         });
+        console.log('ddd', new Date());
         this.getRouteStatus();
 
 
@@ -91,6 +92,7 @@ export default class RoutingScreen extends React.Component {
             // },
             markers: [],
             isModalVisibleUserLogIn: false,
+            isModalVisibleEvent: false
         };
     }
 
@@ -129,10 +131,38 @@ export default class RoutingScreen extends React.Component {
         }
         if (!user) {
             this.toggleModalUserLogIn();
+        } else {
+            let date = new Date();
+            let dateArr = String(date).split(' ').slice(1,4);
+            let dateStr = String(dateArr);
+            // console.log('dateeeee',dateStr);
+            this.checkIfEvent(dateStr);
         }
+    };
+    checkIfEvent = async (date) => {
+        fetch("http://198.143.182.41/v1/points/" + date, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json'
+                // 'x-api-key': corp_API_key
+            },
+        })
+            .then(response => response.json())
+            .then((responseJson) => {
+                let count = responseJson.length;
+                for (i in responseJson) {
+
+                }
+                // console.log('rs',responseJson)
+            })
+            .catch(error => console.log(error));//to catch the errors if any
+
     };
     toggleModalUserLogIn = () => {
         this.setState({isModalVisibleUserLogIn: !this.state.isModalVisibleUserLogIn});
+    };
+    toggleModalEvent = () => {
+        this.setState({isModalVisibleEvent: !this.state.isModalVisibleEvent});
     };
     saveUserData = async () => {
         if (!this.state.textInputUserEmail) {
