@@ -11,7 +11,7 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    Dimensions, TextInput
+    Dimensions, TextInput, Linking
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -79,7 +79,9 @@ export default class RoutingScreen extends React.Component {
                 });
             });
         });
+        // console.log('ddd', new Date());
         this.getRouteStatus();
+        // this.checkIfUser();
 
 
         this.state = {
@@ -91,6 +93,7 @@ export default class RoutingScreen extends React.Component {
             // },
             markers: [],
             isModalVisibleUserLogIn: false,
+            isModalVisibleEvent: false
         };
     }
 
@@ -129,10 +132,72 @@ export default class RoutingScreen extends React.Component {
         }
         if (!user) {
             this.toggleModalUserLogIn();
+        } else {
+            let date = new Date();
+            let dateArr = String(date).split(' ').slice(1,4);
+            let dateStr = String(dateArr);
+            console.log('dateeeee',dateStr);
+            this.checkIfEvent(dateStr);
         }
+    };
+    checkIfEvent = async (date) => {
+        fetch("http://198.143.182.41/v1/events/" + date, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json'
+                // 'x-api-key': corp_API_key
+            },
+        })
+            .then(response => response.json())
+            .then((responseJson) => {
+                if (responseJson.length !== 0) {
+                    if (responseJson[0].is_active) {
+                        this.setState({
+                            events: (<View style={styles.modalContainer}>
+                                <Text style={styles.eventModalTitleText}>
+                                    {responseJson[0].title}
+                                </Text>
+                                <Text style={styles.eventModalDescriptionText}>
+                                    {responseJson[0].description}
+                                </Text>
+                                <View style={styles.eventModalButtonsContainer}>
+                                    <TouchableOpacity
+                                        onPress={this.toggleModalEvent}
+                                        style={styles.eventModalOkButton}>
+                                        <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                            <Text style={styles.routesScreenModalNoButtonText}>
+                                                خواندم
+                                            </Text>
+
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => Linking.openURL(responseJson[0].web_link).catch(err => console.error('An error occurred', err))}
+                                        style={styles.eventModalLinkButton}>
+                                        <View style={styles.routesScreenRouteBoxRow2VehicleContainer}>
+
+                                            <Text style={styles.routesScreenModalNoButtonText}>
+                                                ادامه
+                                            </Text>
+
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>),
+                            isModalVisibleEvent: true
+                        });
+                    }
+                }
+            })
+            .catch(error => console.log(error));//to catch the errors if any
+
     };
     toggleModalUserLogIn = () => {
         this.setState({isModalVisibleUserLogIn: !this.state.isModalVisibleUserLogIn});
+    };
+    toggleModalEvent = () => {
+        this.setState({isModalVisibleEvent: !this.state.isModalVisibleEvent});
     };
     saveUserData = async () => {
         if (!this.state.textInputUserEmail) {
@@ -393,6 +458,25 @@ export default class RoutingScreen extends React.Component {
 
                     </View>
                 </Modal>
+                <Modal
+                    animationIn="zoomIn"
+                    animationOut="zoomOut"
+                    // animationInTiming={600}
+                    // animationOutTiming={600}
+                    hideModalContentWhileAnimating={true}
+                    onBackdropPress={() => this.setState({isModalVisibleEvent: false})}
+                    isVisible={this.state.isModalVisibleEvent}
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                    <View style={{
+                        height: 415,
+                        width: '90%',
+                        backgroundColor: '#fff',
+                        borderRadius: 4,
+                    }}>
+                        {this.state.events}
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -462,7 +546,34 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         backgroundColor: "green"
     },
+    eventModalOkButton: {
+        height: 40,
+        width: '40%',
+        // margin: 5,
+        borderRadius: 5,
+        marginRight: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "green"
+    },
+    eventModalLinkButton: {
+        height: 40,
+        width: '40%',
+        // margin: 5,
+        marginLeft: 5,
+        borderRadius: 5,
+        // borderColor: color4,
+        // borderWidth: 1,
+        backgroundColor: "blue"
+    },
     modalButtonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    eventModalButtonsContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -485,7 +596,39 @@ const styles = StyleSheet.create({
         color: color1,
         // backgroundColor: color2,
     },
+    eventModalDescriptionText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 15,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 300,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
     routesScreenModalTitleText: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
+        fontSize: 25,
+        fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
+        fontStyle: "normal",
+        // marginLeft: 8,
+        width: '100%',
+        height: 40,
+        // maxHeight: '100%',
+        // lineHeight: 40,
+        letterSpacing: 1,
+        textAlign: "center",
+        // textAlignVertical: 'bottom',
+        color: color1,
+        // backgroundColor: color2,
+    },
+    eventModalTitleText: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "CALIBRIB",
         fontSize: 25,
         fontWeight: Platform.OS === 'ios' ? "bold" : "normal",
