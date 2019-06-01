@@ -381,7 +381,7 @@ export default class RoutingScreen extends React.Component {
                         <View
                             style={styles.bubbleNotif}
                         >
-                            <Text style={{color: 'white', fontSize: 12}}>لطفا مبدا و مقصد خود را "روی نقشه" انتخاب
+                            <Text style={{color: 'white', fontSize: 10}}>لطفا مبدا و مقصد را "روی نقشه" انتخاب
                                 کنید</Text>
                         </View>
                         <TouchableOpacity
@@ -666,7 +666,7 @@ const styles = StyleSheet.create({
     },
     bubbleNotif: {
         backgroundColor: 'rgba(0,0,0,0.69)',
-        paddingHorizontal: 18,
+        paddingHorizontal: 3,
         paddingVertical: 12,
         borderRadius: 10,
         margin: 5
