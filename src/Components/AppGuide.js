@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-        padding: 10
+        // padding: 10
     },
     welcome: {
         fontSize: 20,
