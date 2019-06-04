@@ -63,6 +63,17 @@ export default class SettingsScreen extends React.Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.row}
+                                          onPress={() => this.props.navigation.navigate('AppGuide')}>
+                            <View style={styles.rowContainer}>
+                                <View style={styles.columnLabel}>
+                                    <View style={styles.rowContainer}>
+                                        <Text style={styles.labelText}>راهنمای استفاده از ردپا</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.row}
                                           onPress={() => this.props.navigation.navigate('AboutUs')}>
                             <View style={styles.rowContainer}>
                                 <View style={styles.columnLabel}>
@@ -136,7 +147,7 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
     container11: {
         width: '100%',
-        height: 240
+        height: 300
     },
     container2: {
         width: '100%',
@@ -197,7 +208,7 @@ const styles = StyleSheet.create({
         // marginLeft: 10
     },
     columnLabel: {
-        maxWidth: '30%',
+        maxWidth: '100%',
         height: 60,
         // backgroundColor: '#F5FCFF',
         // borderBottomColor: '#a1a1a1',
