@@ -58,9 +58,6 @@ export default class ContactUsScreen extends React.Component {
 
                 <ScrollView style={styles.aboutUsScreenCard}
                             showsVerticalScrollIndicator={false}>
-                    <Text style={styles.aboutUsScreenCardTextTitle}>
-                        «ارتباط با ما»
-                    </Text>
                     <Text style={styles.aboutUsScreenCardTextDescription}>
                         {`
 از طریق ایمیل زیر، نظرات و پیشنهادات خود را با ما در میان بگذارید: 
