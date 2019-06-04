@@ -71,6 +71,7 @@ const RoutesStack = createStackNavigator({
 const SettingsStack = createStackNavigator({
     Settings: {screen: SettingsScreen},
     AboutUs: {screen: AboutUsScreen},
+    ContactUs: {screen: ContactUsScreen},
 });
 
 export default createAppContainer(createBottomTabNavigator(
