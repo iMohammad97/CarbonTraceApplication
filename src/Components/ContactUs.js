@@ -13,15 +13,6 @@ import {
     SafeAreaView,
     ScrollView
 } from 'react-native';
-// import { Ionicons } from '@expo/vector-icons';
-import {
-    createStackNavigator,
-    createSwitchNavigator,
-    createAppContainer,
-    createDrawerNavigator,
-    DrawerItems,
-    createBottomTabNavigator
-} from 'react-navigation';
 
 const color1 = '#44678c';
 const color2 = '#424242';
