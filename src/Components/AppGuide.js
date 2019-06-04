@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     aboutUsScreenCard: {
         height: '100%',
         width: '100%',
-        padding: 5,
+        // padding: 5,
         // borderRadius: 5,
         backgroundColor: color4,
         // borderWidth: 1,
