@@ -73,6 +73,7 @@ const SettingsStack = createStackNavigator({
     Settings: {screen: SettingsScreen},
     AboutUs: {screen: AboutUsScreen},
     ContactUs: {screen: ContactUsScreen},
+    AppGuide: {screen: AppGuideScreen},
 });
 
 export default createAppContainer(createBottomTabNavigator(
