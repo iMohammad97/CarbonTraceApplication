@@ -69,6 +69,16 @@ export default class AppGuideScreen extends React.Component {
                             showsVerticalScrollIndicator={false}>
                     <Image style={{height: ((width*1487)/1209), width: width}}
                            source={require('../Assets/AppGuide/tuts1.jpg')}/>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts2.jpg')}/>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts3.jpg')}/>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts4.jpg')}/>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts5.jpg')}/>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts6.jpg')}/>
                 </ScrollView>
 
             </View>
