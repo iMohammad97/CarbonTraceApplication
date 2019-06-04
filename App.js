@@ -33,6 +33,7 @@ import {
 
 import ProfileScreen from "./src/Components/Profile.js";
 import AboutUsScreen from "./src/Components/AboutUs.js";
+import ContactUsScreen from "./src/Components/ContactUs.js";
 import RoutingDetailsScreen from "./src/Components/RoutingDetails.js";
 import RoutingCheckInScreen from "./src/Components/RoutingCheckIn.js";
 import PointsScreen from "./src/Components/Points.js";
