@@ -11,7 +11,7 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    ScrollView
+    ScrollView, Dimensions
 } from 'react-native';
 // import { Ionicons } from '@expo/vector-icons';
 import {
@@ -28,6 +28,7 @@ const color2 = '#424242';
 const color3 = '#b8b8b8';
 const color4 = '#ffffff';
 const color5 = '#eaebec';
+const {width, height} = Dimensions.get('window');
 
 class Header extends React.Component {
     render() {
@@ -66,6 +67,8 @@ export default class AppGuideScreen extends React.Component {
 
                 <ScrollView style={styles.aboutUsScreenCard}
                             showsVerticalScrollIndicator={false}>
+                    <Image style={{height: ((width*1487)/1209), width: width}}
+                           source={require('../Assets/AppGuide/tuts1.jpg')}/>
                 </ScrollView>
 
             </View>
