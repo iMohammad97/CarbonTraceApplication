@@ -11,7 +11,8 @@ import {
     Image,
     ActivityIndicator,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    TouchableHighlight, Linking
 } from 'react-native';
 
 const color1 = '#44678c';
@@ -60,6 +61,16 @@ export default class ContactUsScreen extends React.Component {
                     <Text style={styles.aboutUsScreenCardTextTitle}>
                         «ارتباط با ما»
                     </Text>
+                    <Text style={styles.aboutUsScreenCardTextDescription}>
+                        {`
+از طریق ایمیل زیر، نظرات و پیشنهادات خود را با ما در میان بگذارید: 
+
+                        `}
+                    </Text>
+                    <TouchableHighlight
+                        onPress={() => Linking.openURL('mailto:carbon_footprint@outlook.com')}>
+                        <Text style={styles.aboutUsScreenCardTextDescriptionMail}>carbon_footprint@outlook.com</Text>
+                    </TouchableHighlight>
                 </ScrollView>
 
             </View>
@@ -88,7 +99,25 @@ const styles = StyleSheet.create({
     },
     aboutUsScreenCardTextDescription: {
         fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
-        fontSize: 17,
+        fontSize: 19,
+        fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
+        // fontStyle: "normal",
+        // width: 100,
+        // he: '100%',
+        lineHeight: 20,
+        letterSpacing: 5,
+        // letterSpacing: 5,
+        maxHeight: '100%',
+        textAlign: "right",
+        // textAlignVertical: 'bottom',
+        color: color2,
+        marginRight: 5,
+        // marginBottom: 20,
+        // backgroundColor: color4,
+    },
+    aboutUsScreenCardTextDescriptionMail: {
+        fontFamily: Platform.OS === 'ios' ? "Calibri" : "Calibri",
+        fontSize: 19,
         fontWeight: Platform.OS === 'ios' ? "normal" : "normal",
         // fontStyle: "normal",
         // width: 100,
@@ -96,7 +125,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         // letterSpacing: 5,
         maxHeight: '100%',
-        textAlign: "right",
+        textAlign: "left",
         // textAlignVertical: 'bottom',
         color: color2,
         marginRight: 5,
